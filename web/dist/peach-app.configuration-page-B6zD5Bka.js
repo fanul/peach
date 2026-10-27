@@ -1,14 +1,14 @@
 (function() {
 	try {
 		var e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, t = new e.Error().stack;
-		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "56eb3a9d-19be-41c7-8300-7c52e0975a55", e._sentryDebugIdIdentifier = "sentry-dbid-56eb3a9d-19be-41c7-8300-7c52e0975a55");
+		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "309945e9-3463-47d1-8209-554dd0af25fc", e._sentryDebugIdIdentifier = "sentry-dbid-309945e9-3463-47d1-8209-554dd0af25fc");
 	} catch {}
 })();
 import { $2ec61d1d4f780267$export$a8a3e93435678ff9 as e, $3a442827418ebe87$export$eb2fcfdbd7ba97d4 as t, $542a13ca2fa5b484$export$5b6b19405a83ff9d as n, $72abaeab4d80592f$export$78efe591171d7d45 as r, $bd263d78e9bf3c56$export$f5c9f3c2c4054eec as i, $ea3928288112382f$export$439d29a4e110a164 as a, $f2ff30fde7b014be$export$3ddf2d174ce01153 as o, $fe21c36db05242bb$export$a98f0dcb43a68a25 as s, $fe21c36db05242bb$export$d7b12c4107be0d61 as c, ACCENTS as l, ApiError as u, Button as d, ButtonLink as f, CLOUD_LOCATIONS as p, CLOUD_PROXY_HELP as m, CONFIGURATION_KEY as h, CONFIGURATION_URL as g, CREDENTIAL_STATE as _, Checkbox as v, Chip as y, Disclosure as b, ENTRY_LINKS_HELP as x, ENTRY_LINKS_HINT as S, EmptyState as ee, ErrorText as C, ExternalLink as w, FEED_SCHEDULE_KEY as T, FOLLOW_CREDENTIALS_KEY as E, FOLLOW_INITIAL_RANGE_OPTIONS as D, FOLLOW_SCHEDULE_KEY as O, Fact as k, FactList as te, FieldLabel as ne, Footer as A, Help as j, HintText as re, Input as M, LIBRARY_FOLDER_HELP as ie, LIBRARY_PROCESSING_KEY as ae, Label as oe, LinkButton as se, LoadingDots as ce, M6 as le, MEDIA_PROCESSING_KEY as ue, MEDIA_PROCESSING_URL as de, MEDIA_SOURCE_ICONS as fe, MENU_POPOVER_SURFACE as pe, Note as N, PICK_FOLDER_URL as me, POLICY_COLUMNS as he, POLICY_COVER_NOTE as ge, POLICY_MATRIX as _e, POLICY_SUMMARY as ve, PathLine as ye, PillTabList as be, Progress as xe, Rows as P, SEGMENT as Se, SEGMENTED_TRACK as Ce, SETTINGS_KEY as we, SETTINGS_URL as Te, Section as F, SectionSkeleton as Ee, SegmentedRadioGroup as De, Select as Oe, Select$1 as I, SelectItem as L, SettingsCard as ke, SettingsRow as R, SiteLabel as Ae, SourceLabel as z, SourceMark as je, Stack as B, StatusLabel as V, Switch as H, THUMBNAIL_JOBS_KEY as Me, TextField as Ne, TextFieldContext as Pe, __toESM as Fe, apiGet as U, apiSend as W, appSettingsStore as Ie, boundedPreference as Le, busyProps as G, cardClass as Re, cloudProxySkeleton as ze, cn as Be, confirmModal as Ve, credentialDone as He, credentialsSkeleton as Ue, cx as We, errorMessage as K, fetchConfiguration as Ge, fetchCredentials as Ke, fetchFeedSchedule as qe, fetchFollowSchedule as Je, fetchMediaProcessing as Ye, fetchSettings as Xe, fetchThumbnailJobs as Ze, fmtSize as Qe, indexersSkeleton as $e, javBrowserSkeleton as et, momentText as tt, overlayHost as nt, peachHistory$1 as rt, previewLibraryColor as it, providerIcon as at, queryClient as q, randomId as ot, rememberShape as J, require_jsx_runtime as st, require_react as ct, saveCredential as lt, schedulePollInterval as ut, settingsPath as dt, shellNavigate as ft, sortCx as pt, sourceDefaultCost as mt, useAction as Y, useClientUpdates as ht, useLibraryTints as gt, useMutation as _t, useQuery as X, useRunSchedule as vt, useSaveFollowSchedule as yt, useSaveSettings as bt, useSaveThumbnailMode as xt } from "./peach-app.js";
 import { CodeBlock as St } from "./peach-app.code-block-C5xw-gzS.js";
 import { FolderField as Ct, FolderFieldLine as wt, FolderRow as Tt, MEDIA_SOURCES as Et, MediaReadPolicy as Dt, MediaReadPolicyHelp as Ot, SourceSelect as kt, isCloudSource as At, sourceMark as jt, useFolderRows as Mt } from "./peach-app.folder-rows-CsnrS785.js";
 import { ConnectionStatus as Nt } from "./peach-app.connection-status-B0tSnjj0.js";
-import { SourceIcon as Pt } from "./peach-app.source-view-DalWfDkm.js";
+import { SourceIcon as Pt } from "./peach-app.source-view-DYMsgrGq.js";
 // src/react/settings/configuration-panel.ts
 var Z = /* @__PURE__ */ Fe(ct(), 1), Ft = "flex flex-col gap-6";
 function Q(e) {
@@ -3695,15 +3695,15 @@ function Rr({ initial: e, receipt: t }) {
 	});
 }
 // src/react/follow-manage/credentials.tsx
-var zr = "将清除这个来源在本机和共享副本中的登录凭据。", Br = "其他系统用户可以读取此凭据文件。请在运行 Peach 的 Mac 或 Linux 电脑上，将文件权限设为仅当前用户可读写（0600）。";
+var zr = "This will clear this source’s login credentials from both this device and the shared copy.", Br = "Other system users can read this credential file. On the Mac or Linux computer running Peach, set its permissions so only the current user can read and write it (0600).";
 function Vr(e, t) {
-	return (e.shared_fields || []).includes(t) ? "来自共享，留空表示不改" : e.fields.includes(t) ? "已保存，留空表示不改" : "未填写";
+	return (e.shared_fields || []).includes(t) ? "From shared storage; leave blank to keep unchanged" : e.fields.includes(t) ? "Saved; leave blank to keep unchanged" : "Not provided";
 }
 function Hr({ row: e }) {
 	if (He(e)) return /* @__PURE__ */ (0, $.jsx)(y, {
 		variant: "caption",
 		color: "lime",
-		children: "已配置"
+		children: "Configured"
 	});
 	let t = e.requirement === "required" ? "yellow" : e.requirement === "blocked" ? "rose" : "neutral";
 	return /* @__PURE__ */ (0, $.jsx)(y, {
@@ -3719,19 +3719,19 @@ function Ur({ row: e, readOnly: t, toast: n }) {
 			e.note ? o(e.note) : (o(""), i({}), q.invalidateQueries({
 				queryKey: E,
 				exact: !0
-			}), n(Object.keys(t).length ? "已保存来源凭据" : "已清除来源凭据"));
+			}), n(Object.keys(t).length ? "Source credentials saved" : "Source credentials cleared"));
 		},
 		onError: (e) => o(K(e))
 	}), l = () => {
 		let e = Object.fromEntries(Object.entries(r).map(([e, t]) => [e, t.trim()]).filter(([, e]) => e));
-		Object.keys(e).length ? c.mutate(e) : o("没有填写内容");
+		Object.keys(e).length ? c.mutate(e) : o("Nothing was entered");
 	};
 	return /* @__PURE__ */ (0, $.jsxs)("div", {
 		className: "flex flex-col gap-3",
 		children: [
 			/* @__PURE__ */ (0, $.jsxs)(j, { children: [e.why, e.where ? /* @__PURE__ */ (0, $.jsxs)($.Fragment, { children: [" ", /* @__PURE__ */ (0, $.jsx)(w, {
 				href: e.where,
-				children: "获取凭据"
+				children: "Get credentials"
 			})] }) : null] }),
 			e.howto ? /* @__PURE__ */ (0, $.jsx)(j, { children: e.howto }) : null,
 			/* @__PURE__ */ (0, $.jsx)("div", {
@@ -3758,25 +3758,25 @@ function Ur({ row: e, readOnly: t, toast: n }) {
 					disabled: t,
 					...G(c.isPending),
 					onClick: () => void Ve({
-						title: "清除来源凭据",
+						title: "Clear source credentials",
 						body: zr,
-						confirmLabel: "清除来源凭据",
+						confirmLabel: "Clear source credentials",
 						danger: !0,
 						onConfirm: () => c.mutateAsync({})
 					}),
-					children: "清除"
+					children: "Clear"
 				}) : null, /* @__PURE__ */ (0, $.jsx)(d, {
 					variant: "primary",
 					disabled: t,
 					...G(c.isPending),
 					onClick: l,
-					children: "保存配置"
+					children: "Save configuration"
 				})]
 			}),
 			a ? /* @__PURE__ */ (0, $.jsx)(C, { children: a }) : null,
-			(e.shared_fields || []).length ? /* @__PURE__ */ (0, $.jsx)(j, { children: `${e.shared_fields.join("、")} 使用共享副本中的登录信息，本机没有单独保存。清除时，本机和共享副本中的登录信息都会删除。` }) : null,
+			(e.shared_fields || []).length ? /* @__PURE__ */ (0, $.jsx)(j, { children: `${e.shared_fields.join(", ")} uses login information from the shared copy; no separate copy is saved on this device. Clearing it deletes the login information from both this device and the shared copy.` }) : null,
 			e.path ? /* @__PURE__ */ (0, $.jsx)(b, {
-				summary: "凭据文件",
+				summary: "Credential file",
 				children: /* @__PURE__ */ (0, $.jsx)(ye, {
 					path: e.path,
 					className: "font-mono text-caption-1-regular text-text-tertiary",
@@ -3802,7 +3802,7 @@ function Wr({ row: e, readOnly: t, toast: n }) {
 			e.missing.map((e) => /* @__PURE__ */ (0, $.jsx)(y, {
 				variant: "caption",
 				color: "rose",
-				children: `缺 ${e}`
+				children: `Missing ${e}`
 			}, e))
 		]
 	});
@@ -3814,7 +3814,7 @@ function Wr({ row: e, readOnly: t, toast: n }) {
 		children: [
 			r,
 			/* @__PURE__ */ (0, $.jsx)(b, {
-				summary: He(e) ? "修改凭据" : "填写凭据",
+				summary: He(e) ? "Edit credentials" : "Enter credentials",
 				defaultOpen: e.requirement === "required" && !He(e),
 				children: /* @__PURE__ */ (0, $.jsx)(Ur, {
 					row: e,
@@ -3824,7 +3824,7 @@ function Wr({ row: e, readOnly: t, toast: n }) {
 			}),
 			e.world_readable ? /* @__PURE__ */ (0, $.jsx)(N, {
 				tone: "error",
-				title: "凭据文件权限过宽",
+				title: "Credential file permissions are too broad",
 				children: Br
 			}) : null
 		]
@@ -3837,23 +3837,23 @@ function Gr({ data: e, readOnly: t, toast: n, embedded: r = !1 }) {
 	}, [e]), !i.length) return /* @__PURE__ */ (0, $.jsx)(ee, {
 		size: "compact",
 		icon: Be,
-		title: "没有可配置的来源",
-		children: "已接入的站点及其凭据状态会显示在这里。"
+		title: "No configurable sources",
+		children: "Connected sites and their credential status will appear here."
 	});
 	let o = a.length ? /* @__PURE__ */ (0, $.jsx)("span", {
 		className: "text-body-2-regular text-text-error-primary",
-		children: `${a.length} 个待配置`
+		children: `${a.length} need configuration`
 	}) : null, s = /* @__PURE__ */ (0, $.jsx)($.Fragment, { children: [
 		{
-			title: "可配置凭据",
+			title: "Configurable credentials",
 			rows: i.filter((e) => e.requirement !== "none" && e.requirement !== "blocked")
 		},
 		{
-			title: "不需要凭据",
+			title: "No credentials required",
 			rows: i.filter((e) => e.requirement === "none")
 		},
 		{
-			title: "暂不支持",
+			title: "Not supported yet",
 			rows: i.filter((e) => e.requirement === "blocked")
 		}
 	].filter((e) => e.rows.length).map((e) => /* @__PURE__ */ (0, $.jsxs)("section", {
@@ -3876,7 +3876,7 @@ function Gr({ data: e, readOnly: t, toast: n, embedded: r = !1 }) {
 		})]
 	}, e.title)) });
 	return r ? /* @__PURE__ */ (0, $.jsx)(F, {
-		title: "来源凭据",
+		title: "Source credentials",
 		aside: o || void 0,
 		children: /* @__PURE__ */ (0, $.jsx)(B, { children: /* @__PURE__ */ (0, $.jsx)("div", {
 			className: "flex flex-col gap-4",
@@ -3891,7 +3891,7 @@ function Gr({ data: e, readOnly: t, toast: n, embedded: r = !1 }) {
 			className: "flex flex-wrap items-center gap-2",
 			children: [/* @__PURE__ */ (0, $.jsx)("h3", {
 				className: "mr-auto text-title-2-medium text-text-primary",
-				children: "来源凭据"
+				children: "Source credentials"
 			}), o]
 		}), s]
 	});
@@ -4385,4 +4385,4 @@ function ai({ data: e, receipt: t, reopenTutorial: n, section: r, diagnostics: i
 }
 export { ni as ConfigurationPage };
 
-//# debugId=56eb3a9d-19be-41c7-8300-7c52e0975a55
+//# debugId=309945e9-3463-47d1-8209-554dd0af25fc

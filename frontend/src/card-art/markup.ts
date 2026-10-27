@@ -30,7 +30,7 @@ export interface FaceRef {
 }
 
 /** 代表作画面替账号顶着圆框时，悬停与读屏读到的那句。 */
-export const STAND_IN_TITLE = '代表作画面，非本人';
+export const STAND_IN_TITLE = 'Representative work image, not the performer';
 
 /* 原地替换的图（实体图、封面、标识）地址都带服务端下发的内容版本（文件修改时间）：换头像、
    补高清封面、换标识都覆盖同一个文件，地址不跟着变的话，同一页里浏览器直接复用内存里那张
@@ -357,7 +357,7 @@ export function cardIdentity(item: IdentityItem): {
   const primaryCreator = item.is_jav && performer ? '' : item.creator || '';
   const kind = primaryCreator ? 'creator' : performer ? 'performer' : '';
   return {
-    kind, name: primaryCreator || performer || '未归属',
+    kind, name: primaryCreator || performer || 'Unassigned',
     coStarred: performers.length > 1 && !primaryCreator, performers, refs,
     total: item.performer_total || performers.length,
   };
@@ -384,5 +384,5 @@ export function queueAvatarHtml(item: IdentityItem): string {
 export function mixLabel(item: IdentityItem, tagLabel: (tag: string) => string): string {
   const performer = (item.performers || [])[0];
   return (item.is_jav && performer ? performer : item.creator) || performer || item.studio || item.code
-    || tagLabel((item.tags || [])[0] || '') || '为你推荐';
+    || tagLabel((item.tags || [])[0] || '') || 'Recommended for you';
 }

@@ -92,7 +92,7 @@ api('/api/libraries',{signal:effects.signal}).then(data=>{
   mark.innerHTML=libraryMark(choices.find(row=>row[0]===current)?.[2]||'database');boardBrand.querySelector('.mark').replaceWith(mark);
   libraryPicker.innerHTML=`<p>Library</p><div class="board-library-rows">${choices.map(([id,name,glyph])=>`<button type="button" data-library="${esc(id)}" aria-pressed="${id===current}"><span class="board-library-avatar">${libraryMark(glyph)}</span><span>${esc(name)}</span></button>`).join('')}</div><footer><button type="button" class="geist-button primary" data-library-manage>Manage libraries</button></footer>`;
   libraryPicker.querySelectorAll('[data-library]').forEach(button=>effects.handler(button, 'onclick', ()=>{sessionStorage.setItem('peach.library',button.dataset.library);sessionStorage.setItem('peach.library-label',choices.find(row=>row[0]===button.dataset.library)?.[1]||'All libraries');location.assign('/')}));
-  effects.handler(libraryPicker.querySelector('[data-library-manage]'), 'onclick', ()=>{libraryFloating.setOpen(false);openDrawer(false);openConfigurationSection('媒体库与入库')});
+  effects.handler(libraryPicker.querySelector('[data-library-manage]'), 'onclick', ()=>{libraryFloating.setOpen(false);openDrawer(false);openConfigurationSection('Library and imports')});
   /* 委托在这一列上，不挂在每个按钮身上：菜单每次取回媒体库都整块重画。
      `pointerover`／`pointerout` 而不是 enter／leave，后两个不冒泡，委托接不到。 */
   const libraryRows=libraryPicker.querySelector('.board-library-rows');
@@ -140,7 +140,7 @@ effects.own(wireGlowButton(glowButton));
 void loadGlowPicker({root:glowPicker,store:preferencesState.settingsStore,openDetails:()=>{
   if(!effects.isActive)return;
   glowFloating.setOpen(false);openDrawer(false);
-  void openSettings('外观与导航').then(panel=>{if(effects.isActive)panel.reveal('#homeGlowControls')});
+  void openSettings('Appearance and navigation').then(panel=>{if(effects.isActive)panel.reveal('#homeGlowControls')});
 }}).catch(error=>{if(effects.isActive&&error?.name!=='AbortError')console.error(error)});
 /* 品牌（媒体库选择）与开合键是壳里浮层的锚点，挪进侧栏标题行那个空槽：骨架画好时一次，路由树画上
    侧栏、换掉骨架时（`attached`）再一次。手机上抽屉收着时开合键回到顶栏原位，抽屉整块不可聚焦。 */

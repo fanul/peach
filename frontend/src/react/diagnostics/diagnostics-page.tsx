@@ -19,6 +19,11 @@ import { DiagnosticExportAction, ScrapingExport } from './scraping-export';
 const STATUS: Record<string, string> = { ok: 'Healthy', warning: 'Check needed', failed: 'Action needed', unknown: 'Unavailable', disabled: 'Not configured',
   stale: 'Needs review', unchecked: 'No record yet' };
 const TARGET_LABELS: Record<string, string> = { '/tasks': 'View tasks' };
+const CHECK_LABELS: Record<string, string> = {
+  media_mounts: 'Media mounts', data_root: 'Data directory', database: 'Database',
+  schema: 'Database migrations', ffmpeg: 'FFmpeg / OpenSSL', configured: 'Configuration',
+  security: 'Access security', port: 'Service port', version: 'Version', tasks: 'Background tasks',
+};
 const SECTIONS = [
   ['Media library and mounts', ['media_mounts', 'data_root']],
   ['Database and migrations', ['database', 'schema']],
@@ -49,12 +54,12 @@ function Check({ name, check, compact = false }: {
 }) {
   /* 访问安全与端口落在网络与访问里，即使检查项给的是媒体库那一栏。 */
   const target = check.target === '/settings/library' && (name === 'security' || name === 'port')
-    ? settingsPath('网络与访问') : check.target;
+    ? settingsPath('Network and access') : check.target;
   const Heading = compact ? 'h4' : 'h3';
   return <div data-diagnostic-check={name} className={cx('flex flex-col gap-4 border-b border-separator-border pr-3 last:border-b-0 sm:flex-row sm:items-center sm:justify-between', compact ? 'py-3' : 'py-5')}>
     <div className={cx('flex min-w-0 flex-1 flex-col', compact ? 'gap-1' : 'gap-2')}>
       <div className="flex flex-wrap items-center gap-3">
-        <Heading className={cx('text-text-primary', compact ? 'text-body-2-medium' : 'text-body-medium')}>{check.label}</Heading>
+        <Heading className={cx('text-text-primary', compact ? 'text-body-2-medium' : 'text-body-medium')}>{CHECK_LABELS[name] || check.label}</Heading>
         <DiagnosticStatus status={check.status} />
       </div>
       <p data-check-reason className={cx('text-body-2-regular break-words', compact ? 'text-text-secondary' : 'text-text-primary')}>{check.reason}</p>

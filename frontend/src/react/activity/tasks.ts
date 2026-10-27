@@ -324,7 +324,7 @@ const SUMMARY_HIDDEN = new Set([
 export function summaryItems(summary: Record<string, unknown>): string[] {
   const items = fieldItems(summary);
   // 「发现问题」要说得出是什么问题。原因已写进结论（「人脸模型不可用：…」「人像闸未生效…」）时不再说一遍。
-  if (summary?.face_match_unavailable === true && !items.some((line) => /不可用|未生效/.test(line))) {
+  if (summary?.face_match_unavailable === true && !items.some((line) => /unavailable|not applied/i.test(line))) {
     items.push('Face model unavailable; face verification was skipped');
   }
   return items;

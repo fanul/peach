@@ -346,15 +346,15 @@ const maintenance = () => {
 export function configurationContentSkeleton(chosen: string): string {
   switch (chosen) {
     case 'system diagnostics': return diagnosticsSkeleton();
-    case '来源与订阅': return subscriptions();
-    case '下载渠道': return downloads();
-    case '网络与访问': return network();
-    case '应用与维护': return maintenance();
+    case 'Sources and subscriptions': return subscriptions();
+    case 'Download sources': return downloads();
+    case 'Network and access': return network();
+    case 'Application and maintenance': return maintenance();
     default: return media();
   }
 }
 
-export function configurationSkeleton(chosen = '媒体库与入库'): string {
+export function configurationSkeleton(chosen = 'Library and imports'): string {
   const nav = `<div class="ui-board-local-nav" data-section-nav data-section-items>${Object.values(CONFIGURATION_SECTIONS).map(title => `<button type="button" tabindex="-1" aria-selected="${title === chosen}">${title}</button>`).join('')}</div>`;
   return `<div class="peach-react"><div class="ui-configpage">${nav}<div class="flex min-w-0 flex-col gap-6">${configurationContentSkeleton(chosen)}</div></div></div>`;
 }

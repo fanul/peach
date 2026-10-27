@@ -52,7 +52,7 @@ const SortUpIcon = spriteGlyph('arrow-up'), SortDownIcon = spriteGlyph('arrow-do
 
 /** 照片墙那一排的图片布局两档，同壳里 `PHOTO_LAYOUTS`。 */
 export const FOLLOW_PHOTO_LAYOUTS: readonly SegmentOption[] = [
-  ['fixed', '固定比例', 'layout-grid'], ['masonry', '瀑布流', 'columns-2'],
+  ['fixed', 'Fixed ratio', 'layout-grid'], ['masonry', 'Masonry', 'columns-2'],
 ];
 
 /** 这一页从数据里推出来的那几样：两排的取样、筛选条的选项、可见的组。只随数据、视图与种子变。 */
@@ -195,7 +195,7 @@ export function FollowFeedPage(props: FollowFeedProps) {
                 {data.groups.length < FOLLOW_AUTO_LOAD_LIMIT ? (
                   <LoadMore key={result.data?.pages.length} entity enabled={() => !job.busyRef.current}
                     load={async () => { await result.fetchNextPage({ throwOnError: true }) }}>
-                    <CHEVRON_DOWN className="size-(--icon-inline)" />加载更多
+                    <CHEVRON_DOWN className="size-(--icon-inline)" />Load more
                   </LoadMore>
                 ) : (
                   <ManualMore busy={result.isFetchingNextPage}
@@ -244,7 +244,7 @@ function ManualMore({ busy, error, load }: { busy: boolean; error: string; load(
   return (
     <>
       <button type="button" data-entity-more="" aria-busy={busy || undefined} aria-disabled={busy || undefined} onClick={load}>
-        <CHEVRON_DOWN className="size-(--icon-inline)" />加载更多
+        <CHEVRON_DOWN className="size-(--icon-inline)" />Load more
       </button>
       {error ? <RetryNote message={error} onRetry={load} /> : null}
     </>
@@ -347,7 +347,7 @@ function Authors({ facets, pressed, context, props, onPick }: {
           </>;
           return entity ? (
             <FollowAuthorLink key={key} name={entity} actions={props.actions} data-follow-author={key}
-              aria-label={`查看 ${nameOf(key)} 的作者页`}>{content}</FollowAuthorLink>
+              aria-label={`View ${nameOf(key)}’s creator page`}>{content}</FollowAuthorLink>
           ) : (
             <button key={key} type="button" data-follow-author={key} aria-pressed={pressed === key} onClick={() => onPick(key)}>
               {content}
@@ -512,7 +512,8 @@ function Combo({ conditions, onDrop, onClear }: {
       {conditions.length ? (
         <>
           {conditions.map((row) => {
-            const text = `${row.kind === '标签' ? '' : `${row.kind} `}${row.label}`;
+            const prefix = { 创作者: 'Creator', 来源: 'Source', 题材: 'Subject', 标签: '' }[row.kind];
+            const text = `${prefix ? `${prefix} ` : ''}${row.label}`;
             return (
               <span key={`${row.kind}:${row.key}`} data-combo-chip="">
                 {text}

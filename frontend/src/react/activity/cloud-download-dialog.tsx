@@ -145,7 +145,7 @@ function SubmitForm({ header, snapshot, prefill, close, receipt, provider: prefe
           {provider === '115' ? <Help>Each submission uses one offline-download quota, including resubmissions.</Help> : null}
         </div>
         {!snapshot.available ? <Note tone="neutral">Cloud downloads are only available on devices allowed to modify the database.</Note> : null}
-        {!configured.length ? <Note tone="neutral">No download provider is configured. <a href={'/settings/library?section=' + encodeURIComponent('下载渠道')}>Download provider settings</a></Note> : null}
+        {!configured.length ? <Note tone="neutral">No download provider is configured. <a href={'/settings/library?section=' + encodeURIComponent('Download sources')}>Download provider settings</a></Note> : null}
         <Input label="Target folder" placeholder="/Cloud Downloads" autoComplete="off" maxLength={300}
           value={target} onChange={setTarget} />
         {/* 带着番号进来时它和搜索框是同一个值，选中候选也会跟着换，不再单列一格。 */}

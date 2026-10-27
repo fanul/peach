@@ -2,7 +2,7 @@
 (function() {
 	try {
 		var e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, t = new e.Error().stack;
-		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "64e69298-bfe4-4658-9cfc-dd57d7998551", e._sentryDebugIdIdentifier = "sentry-dbid-64e69298-bfe4-4658-9cfc-dd57d7998551");
+		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "ce5aaf43-d3ee-49f4-a509-88882da06b3e", e._sentryDebugIdIdentifier = "sentry-dbid-ce5aaf43-d3ee-49f4-a509-88882da06b3e");
 	} catch {}
 })();
 var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescriptor, r = Object.getOwnPropertyNames, i = Object.getPrototypeOf, a = Object.prototype.hasOwnProperty, o = (e, t) => () => (t || (e((t = { exports: {} }).exports, t, t.exports), e = null), t.exports), s = (e, i, o, s) => {
@@ -184,7 +184,7 @@ function E() {
 		credentials: "same-origin",
 		body: JSON.stringify({
 			kind: "context",
-			message: "浏览器环境快照",
+			message: "Browser environment snapshot",
 			browser: e
 		})
 	})).catch(() => {});
@@ -216,11 +216,11 @@ function E() {
 			keepalive: !0
 		}).catch(() => {}));
 	};
-	window.addEventListener("error", (e) => r("error", e.error, e.message, e)), window.addEventListener("unhandledrejection", (e) => r("unhandledrejection", e.reason, "Promise 未处理的异常")), document.addEventListener("error", (e) => {
+	window.addEventListener("error", (e) => r("error", e.error, e.message, e)), window.addEventListener("unhandledrejection", (e) => r("unhandledrejection", e.reason, "Unhandled Promise rejection")), document.addEventListener("error", (e) => {
 		let t = e.target, n = t instanceof HTMLMediaElement ? t : t instanceof HTMLElement && t.matches("hlsjs-video,dash-video") ? t.querySelector("video") : null, i = t?.error || e.error;
 		if (!n || !i) return;
 		let a = y(n, i);
-		r("media", `媒体播放失败（${a.code}）`, "", void 0, a);
+		r("media", `Media playback failed (${a.code})`, "", void 0, a);
 	}, !0);
 }
 // node_modules/scheduler/cjs/scheduler.production.js
@@ -21178,7 +21178,7 @@ function f_({ prefix: e, renderValue: t, size: n, ...r }) {
 var p_ = [
 	[
 		"ash",
-		"灰雾",
+		"Ash Mist",
 		{
 			spot1: {
 				color: "#8f98a4",
@@ -21197,7 +21197,7 @@ var p_ = [
 	],
 	[
 		"amber",
-		"钨丝暖阁",
+		"Warm Amber",
 		{
 			spot1: {
 				color: "#e08a2f",
@@ -21216,7 +21216,7 @@ var p_ = [
 	],
 	[
 		"plum",
-		"夜樱",
+		"Night Blossom",
 		{
 			spot1: {
 				color: "#b455a0",
@@ -21235,7 +21235,7 @@ var p_ = [
 	],
 	[
 		"pine",
-		"深林",
+		"Deep Forest",
 		{
 			spot1: {
 				color: "#3f9e57",
@@ -21254,7 +21254,7 @@ var p_ = [
 	],
 	[
 		"iris",
-		"琉璃霞",
+		"Iridescent Sky",
 		{
 			spot1: {
 				color: "#1e50a2",
@@ -21273,7 +21273,7 @@ var p_ = [
 	],
 	[
 		"opal",
-		"蛋白石",
+		"Opal",
 		{
 			spot1: {
 				color: "#9be0e8",
@@ -21292,7 +21292,7 @@ var p_ = [
 	],
 	[
 		"lagoon",
-		"潟湖",
+		"Lagoon",
 		{
 			spot1: {
 				color: "#5ce3e6",
@@ -21311,7 +21311,7 @@ var p_ = [
 	],
 	[
 		"jade",
-		"翡翠",
+		"Jade",
 		{
 			spot1: {
 				color: "#8fe3b0",
@@ -21330,7 +21330,7 @@ var p_ = [
 	],
 	[
 		"flare",
-		"耀斑",
+		"Solar Flare",
 		{
 			spot1: {
 				color: "#ffc24b",
@@ -21349,7 +21349,7 @@ var p_ = [
 	],
 	[
 		"orchid",
-		"兰紫",
+		"Orchid",
 		{
 			spot1: {
 				color: "#e794c9",
@@ -21368,7 +21368,7 @@ var p_ = [
 	],
 	[
 		"peach",
-		"桃晕",
+		"Peach Glow",
 		{
 			spot1: {
 				color: "#ffc9a3",
@@ -21387,7 +21387,7 @@ var p_ = [
 	],
 	[
 		"tide",
-		"电蓝",
+		"Electric Tide",
 		{
 			spot1: {
 				color: "#6fd8f2",
@@ -21406,7 +21406,7 @@ var p_ = [
 	],
 	[
 		"sunset",
-		"落日",
+		"Sunset",
 		{
 			spot1: {
 				color: "#ffae3f",
@@ -21425,7 +21425,7 @@ var p_ = [
 	],
 	[
 		"mint",
-		"薄荷冰",
+		"Icy Mint",
 		{
 			spot1: {
 				color: "#a8f0dc",
@@ -21444,7 +21444,7 @@ var p_ = [
 	],
 	[
 		"bloom",
-		"夜昙",
+		"Night Bloom",
 		{
 			spot1: {
 				color: "#4c3894",
@@ -21463,7 +21463,7 @@ var p_ = [
 	],
 	[
 		"rosegold",
-		"玫瑰金",
+		"Rose Gold",
 		{
 			spot1: {
 				color: "#fbc9ac",
@@ -21482,7 +21482,7 @@ var p_ = [
 	],
 	[
 		"native",
-		"玻璃原色",
+		"Native Glass",
 		{
 			spot1: {
 				color: "#6686b8",
@@ -21502,18 +21502,18 @@ var p_ = [
 ];
 [...p_.map(([e, t]) => [e, t])];
 var m_ = (e) => structuredClone((p_.find(([t]) => t === e) || p_[0])[2]), h_ = [
-	["red", "红"],
-	["orange", "橙"],
-	["amber", "琥珀"],
-	["lime", "柠绿"],
-	["emerald", "翠绿"],
-	["teal", "青绿"],
-	["sky", "天蓝"],
-	["blue", "蓝"],
-	["indigo", "靛蓝"],
-	["violet", "紫罗兰"],
-	["fuchsia", "品红"],
-	["rose", "玫红"]
+	["red", "Red"],
+	["orange", "Orange"],
+	["amber", "Amber"],
+	["lime", "Lime"],
+	["emerald", "Emerald"],
+	["teal", "Teal"],
+	["sky", "Sky Blue"],
+	["blue", "Blue"],
+	["indigo", "Indigo"],
+	["violet", "Violet"],
+	["fuchsia", "Fuchsia"],
+	["rose", "Rose"]
 ];
 ({ ...m_("ash") });
 // src/react/components/library-tint.ts
@@ -22675,4 +22675,4 @@ E();
 var X_ = document.getElementById("peach-page"), Z_ = X_ ? Y_[X_.dataset.page ?? ""] : void 0;
 X_ && Z_ && (0, M.createRoot)(X_).render(/* @__PURE__ */ (0, z.jsx)(Z_, { data: { ...X_.dataset } }));
 
-//# debugId=64e69298-bfe4-4658-9cfc-dd57d7998551
+//# debugId=ce5aaf43-d3ee-49f4-a509-88882da06b3e

@@ -16,7 +16,7 @@ export const PHOTO_SIZES: readonly [big: Choice, small: Choice] = [
   ['big', 'Large thumbnails', 'maximize'], ['small', 'Small thumbnails', 'layout-grid'],
 ];
 export const PHOTO_LAYOUTS: readonly (readonly [value: string, label: string, icon: string])[] = [
-  ['fixed', '固定比例', 'layout-grid'], ['masonry', '瀑布流', 'columns-2'],
+  ['fixed', 'Fixed ratio', 'layout-grid'], ['masonry', 'Masonry', 'columns-2'],
 ];
 /* 大图卡片固定为 3:4；传统正封完整居中，比例留白使用同图模糊补底，整幅大封按主体取景。 */
 export const COVER_FRONT_RATIO = 0.75;

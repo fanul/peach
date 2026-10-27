@@ -60,7 +60,7 @@ export function followAuthorEntity(sources: readonly FollowSource[]): string {
 export function authorAvatarHtml(sources: readonly FollowSource[], name: string): string {
   const { src, fallback } = authorAvatar(sources);
   const initial = authorInitial(name);
-  if (!src) return `<span class="favatar none" title="没有可用头像">${esc(initial)}</span>`;
+  if (!src) return `<span class="favatar none" title="No profile image available">${esc(initial)}</span>`;
   const fallbacks = fallback ? ` data-fallbacks="${esc(fallback)}"` : '';
   return `<img class="favatar" src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer" `
     + `data-drop="initial"${fallbacks} data-initial="${esc(initial)}" data-drop-class="favatar none">`;
@@ -111,7 +111,7 @@ export function followBadges(group: FollowGroup, shown: FollowItem = group.prima
     .map((member) => [member.provider, member.provider_label || member.provider] as const));
   if (!sites.size) return '';
   const marks = [...sites].map(([provider, label]) => sourceIcon(provider, label) || `<span>${esc(label)}</span>`).join('');
-  return `<span data-follow-seealso="" title="另见 ${esc([...sites.values()].join('、'))}"><span data-follow-seealso-label="">另见</span> ${marks}</span>`;
+  return `<span data-follow-seealso="" title="See also ${esc([...sites.values()].join(', '))}"><span data-follow-seealso-label="">See also</span> ${marks}</span>`;
 }
 
 /** 「媒体未取得」那一句，没有就是空串。 */

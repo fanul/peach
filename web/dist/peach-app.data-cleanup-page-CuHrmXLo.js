@@ -1,7 +1,7 @@
 (function() {
 	try {
 		var e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, t = new e.Error().stack;
-		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "c2946980-f57c-4ba7-ac20-f0c478d961df", e._sentryDebugIdIdentifier = "sentry-dbid-c2946980-f57c-4ba7-ac20-f0c478d961df");
+		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "497538d4-8c8a-419b-9e35-9d1fa192170c", e._sentryDebugIdIdentifier = "sentry-dbid-497538d4-8c8a-419b-9e35-9d1fa192170c");
 	} catch {}
 })();
 import { Button as e, Chip as t, DIRECTORY_TEMPLATE_ERROR as n, DUPLICATES_KEY as r, Fieldset as i, FieldsetTitle as a, IDLE_REPAIR as o, IconButton as s, Input as c, JUNK_KEY as l, LINKS_KEY as u, LINK_CHECK_KEY as d, LINK_KINDS as f, LINK_PRUNE_KEY as p, LOC as m, LibraryProcessingCard as h, MEDIA_REPAIR_KEY as g, MEDIA_REPAIR_URL as _, MEDIA_SOURCES_KEY as v, MEDIA_SOURCE_ICONS as y, Note as b, ORGANIZE_KEY as x, ORPHAN_RECORDS_KEY as S, Progress as C, QUALITY_GOALS_KEY as w, REPAIR_CARD_TEXT as T, REPAIR_LIBRARIES_KEY as E, RESOURCE_APPLY_KEY as D, RESOURCE_SCAN_KEY as O, RESULT_PANEL as ee, RESULT_SECTION as k, REVIEW_COUNTS_KEY as A, SOURCE_LABELS as j, Select as te, SelectItem as ne, SourceMark as M, StatusLabel as N, TRASH_KEY as re, TaskProgress as P, Wt as F, __toESM as ie, apiSend as ae, applyConfirmText as I, applyLeftovers as L, applyPlanText as R, applyText as oe, attachOrphan as se, baseName as z, busyProps as B, candidateText as ce, checkLine as le, confirmModal as V, entityFaceImg as ue, entityPath as de, errorMessage as H, esc as fe, fetchDuplicates as pe, fetchJunkSummary as me, fetchLinkCheck as U, fetchLinkPrune as he, fetchLinkStats as W, fetchMediaRepair as ge, fetchMediaSources as _e, fetchOrganize as ve, fetchOrganizeExample as ye, fetchOrphanRecords as be, fetchQualityGoals as xe, fetchRepairLibraries as Se, fetchResourceApply as Ce, fetchResourceScan as we, fetchReviewCounts as Te, fetchTrashSummary as Ee, firstGrapheme as De, fmtSize as Oe, hasChanges as ke, hasResourceRoots as Ae, junkBreakdown as je, missingToolText as Me, organizeOutcome as Ne, pickOrganizeFolder as Pe, planSummary as Fe, previewOrganize as Ie, pruneText as Le, purgeCount as Re, purgeOrphan as ze, queryClient as G, recordsText as Be, rememberTemplates as Ve, require_jsx_runtime as He, require_react as Ue, reviewSummary as We, scanLine as Ge, sourceMeta as Ke, spriteGlyph as K, startLinkCheck as qe, startLinkPrune as Je, startOrganize as Ye, startResourceApply as Xe, startResourceScan as Ze, statusLine as Qe, useAction as $e, useBackgroundJob as q, useMutation as et, useQuery as J, withOrganizeJob as tt } from "./peach-app.js";
@@ -24,29 +24,29 @@ function ft({ toast: t = () => {} }) {
 			restart: !0
 		}),
 		onFinish: (e) => {
-			e.status === "complete" && !e.failed && !e.missing_tool && t(e.repaired ? `已修复 ${e.repaired.toLocaleString()} 部视频` : "已检查媒体库，没有需要修复的视频");
+			e.status === "complete" && !e.failed && !e.missing_tool && t(e.repaired ? `Repaired ${e.repaired.toLocaleString()} videos` : "Library checked; no videos need repair");
 		}
 	}), r = J({
 		queryKey: E,
 		queryFn: ({ signal: e }) => Se(e)
 	}), [s, c] = (0, Z.useState)(""), l = $e(), u = n.job ?? o, d = r.data ?? [], f = u.status === "running", p = d.find((e) => e.id === (f ? u.library : s)) ?? d.find((e) => e.id === u.library) ?? d[0], m = () => {
 		p && V({
-			title: `修复媒体库「${p.name}」`,
-			body: "缺时间戳表的片子另存一份修好的头，原文件不动；缺索引的片子重建后替换原文件，坏原件改名成同目录的隐藏文件（.文件名.peach-original）留着。" + (p.metered ? "这个库在计费来源上，每修一部都要把片子完整拉一遍。" : ""),
-			confirmLabel: "修复媒体库",
+			title: `Repair library “${p.name}”`,
+			body: "For videos with missing timestamp tables, a repaired header is saved separately and the original file is left unchanged. For videos with missing indexes, the index is rebuilt and the original file is replaced; the damaged original is retained as a hidden file in the same folder (.filename.peach-original)." + (p.metered ? " This library uses a metered source, so each repair downloads the entire video." : ""),
+			confirmLabel: "Repair library",
 			onConfirm: async () => {
 				await n.start.mutateAsync(p.id);
 			}
 		});
-	}, h = () => void l.run("stop", (e) => ae(_, { stop: !0 }, "POST", e), dt), v = n.outcome, y = Qe(f ? u : v ?? o), x = l.error || v?.error || (n.query.error ? "读不到媒体修复的状态" : "");
+	}, h = () => void l.run("stop", (e) => ae(_, { stop: !0 }, "POST", e), dt), v = n.outcome, y = Qe(f ? u : v ?? o), x = l.error || v?.error || (n.query.error ? "Unable to read media repair status" : "");
 	return /* @__PURE__ */ (0, Q.jsxs)("div", {
 		className: "flex flex-col gap-4",
 		children: [/* @__PURE__ */ (0, Q.jsx)(i, {
 			layout: "split",
-			label: "媒体修复",
+			label: "Media repair",
 			footer: /* @__PURE__ */ (0, Q.jsxs)(Q.Fragment, { children: [/* @__PURE__ */ (0, Q.jsx)(te, {
-				"aria-label": "媒体库",
-				prefix: "媒体库",
+				"aria-label": "Library",
+				prefix: "Library",
 				className: "w-48",
 				selectedKey: p?.id ?? null,
 				isDisabled: f || !d.length,
@@ -61,22 +61,22 @@ function ft({ toast: t = () => {} }) {
 			}), f ? /* @__PURE__ */ (0, Q.jsx)(e, {
 				onClick: h,
 				...B(l.busy === "stop"),
-				children: "停止"
+				children: "Stop"
 			}) : /* @__PURE__ */ (0, Q.jsx)(e, {
 				onClick: m,
 				disabled: !p,
-				children: "开始修复"
+				children: "Start repair"
 			})] }),
 			children: /* @__PURE__ */ (0, Q.jsxs)("div", {
 				className: "flex flex-col gap-2",
 				children: [
-					/* @__PURE__ */ (0, Q.jsx)(a, { children: "媒体修复" }),
+					/* @__PURE__ */ (0, Q.jsx)(a, { children: "Media repair" }),
 					/* @__PURE__ */ (0, Q.jsx)("p", {
 						className: "text-body-2-regular text-text-secondary",
 						children: T
 					}),
 					f && u.total ? /* @__PURE__ */ (0, Q.jsx)(C, {
-						label: "修复进度",
+						label: "Repair progress",
 						value: u.checked,
 						max: u.total
 					}) : null,
@@ -92,12 +92,12 @@ function ft({ toast: t = () => {} }) {
 			className: "flex flex-col gap-4 empty:hidden",
 			children: [v?.status === "complete" && v.missing_tool ? /* @__PURE__ */ (0, Q.jsx)(b, {
 				tone: "warning",
-				title: "缺少 untrunc",
+				title: "untrunc is missing",
 				action: /* @__PURE__ */ (0, Q.jsx)(e, {
 					variant: "ghost",
 					size: "small",
 					onClick: n.dismiss,
-					children: "关闭提示"
+					children: "Dismiss"
 				}),
 				children: Me(v)
 			}) : null, x ? /* @__PURE__ */ (0, Q.jsx)(b, {
@@ -1404,4 +1404,4 @@ function Yt({ toast: e, failure: t, open: n }) {
 }
 export { Yt as DataCleanupPage };
 
-//# debugId=c2946980-f57c-4ba7-ac20-f0c478d961df
+//# debugId=497538d4-8c8a-419b-9e35-9d1fa192170c

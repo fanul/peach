@@ -131,8 +131,8 @@ function TrashLede({ host: at, lede }: { host: ManageHeaderHost; lede: Lede }) {
           <>
             <LedeText text={lede.text} />
             {lede.total ? (
-              <button type="button" data-empty-trash="" data-danger="" title="永久删除回收站内容"
-                onClick={() => at.emptyTrash()}>清空回收站</button>
+              <button type="button" data-empty-trash="" data-danger="" title="Permanently delete Recycle Bin contents"
+                onClick={() => at.emptyTrash()}>Empty Recycle Bin</button>
             ) : null}
           </>
         )}

@@ -1,7 +1,7 @@
 (function() {
 	try {
 		var e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, t = new e.Error().stack;
-		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "8851365f-9242-4248-98fc-d69980aff6e0", e._sentryDebugIdIdentifier = "sentry-dbid-8851365f-9242-4248-98fc-d69980aff6e0");
+		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "d1e6810d-2ac9-4035-b67b-e2c0c72050a4", e._sentryDebugIdIdentifier = "sentry-dbid-d1e6810d-2ac9-4035-b67b-e2c0c72050a4");
 	} catch {}
 })();
 import { MotionConfigContext as e, WithPromise as t, __commonJSMin as n, __exportAll as r, __toESM as i, asNumber as a, calcGeneratorVelocity as o, cancelFrame as s, cardClass as c, clsx as l, collectMotionValues as u, cx as d, f1 as f, frame as p, interpolate as m, isMotionValue as h, max as g, min as _, motion as v, motionValue as y, require_jsx_runtime as b, require_react as x, require_react_dom as S, require_with_selector as C, resolveStartTime as w, spring as T, time as E, useConstant as D, useIsomorphicLayoutEffect as O, useReducedMotion as k } from "./peach-app.js";
@@ -20102,7 +20102,7 @@ function _H(e) {
 		let r = e / t;
 		return `${r.toLocaleString(void 0, { maximumFractionDigits: +(Math.abs(r) < 100) })}${n}`;
 	};
-	return t >= 1e8 ? n(1e8, "亿") : t >= 1e5 ? n(1e4, "万") : e.toLocaleString();
+	return t >= 1e9 ? n(1e9, "B") : t >= 1e6 ? n(1e6, "M") : t >= 1e3 ? n(1e3, "K") : e.toLocaleString();
 }
 var vH = (e) => ({
 	position: e,
@@ -20175,13 +20175,13 @@ function yH({ title: e, unit: t, series: n, rows: r, color: i, empty: a, layout:
 }
 // src/react/charts/heat.ts
 var bH = [
-	"周一",
-	"周二",
-	"周三",
-	"周四",
-	"周五",
-	"周六",
-	"周日"
+	"Mon",
+	"Tue",
+	"Wed",
+	"Thu",
+	"Fri",
+	"Sat",
+	"Sun"
 ], xH = (e, t) => e ? Math.max(.12, e / t) : 0;
 function SH(e) {
 	let t = Array.from({ length: 7 }, () => Array(24).fill(0));
@@ -20293,7 +20293,7 @@ function kH({ title: e, words: t, cells: n, total: r, columns: i, rows: a, axis:
 							return /* @__PURE__ */ (0, $.jsx)("rect", {
 								tabIndex: 0,
 								role: "img",
-								"aria-label": `${e.label}，${e.count} ${t.cellUnit}`,
+								"aria-label": `${e.label}, ${e.count} ${t.cellUnit}`,
 								x: r,
 								y: i,
 								width: wH,
@@ -20350,7 +20350,7 @@ function jH({ activity: e, title: t, dailyTitle: n, words: r, tone: i, empty: a 
 			columns: 24,
 			rows: 7,
 			axis: AH,
-			footer: /* @__PURE__ */ (0, $.jsxs)($.Fragment, { children: [/* @__PURE__ */ (0, $.jsx)("span", { children: "星期 × 小时" }), /* @__PURE__ */ (0, $.jsx)("span", { children: e?.timezone || "UTC+08:00" })] })
+			footer: /* @__PURE__ */ (0, $.jsxs)($.Fragment, { children: [/* @__PURE__ */ (0, $.jsx)("span", { children: "Weekday × hour" }), /* @__PURE__ */ (0, $.jsx)("span", { children: e?.timezone || "UTC+08:00" })] })
 		}), /* @__PURE__ */ (0, $.jsx)(kH, {
 			title: n,
 			words: r,
@@ -20414,4 +20414,4 @@ function MH({ children: e, className: t = "", previewCount: n = 10 }) {
 }
 export { vM as ActivePoints, jH as ActivityHeat, pj as AnimatedItems, gH as BAR_DOMAIN, yH as BarCard, XV as CHART_CARD, sH as CHART_COLORS, lk as CartesianLabelListContextProvider, aH as CategoryTick, mD as Cell, _V as ChartBackground, KB as ChartContainer, ZV as ChartEmpty, oH as ChartHead, cV as ChartLegend, iV as ChartLegendContent, hH as ChartTip, rV as ChartTooltip, tV as ChartTooltipContent, Y as DefaultZIndexes, Kj as Dots, DV as EvilBarChart, MH as ExpandableRanking, hk as LabelListFromLabelProp, F as Layer, qB as LoadingIndicator, yA as PolarAngleAxis, LB as PolarChart, HO as PolarLabelContextProvider, tk as PolarLabelFromLabelProp, dk as PolarLabelListContextProvider, Ek as Polygon, Cj as RegisterGraphicalItemId, Rm as Sector, Pj as SetPolarGraphicalItem, WA as SetPolarLegendPayload, HA as SetTooltipEntrySettings, RA as Shape, DO as Text, mE as ZIndexLayer, wr as adaptEventsOfChild, Kk as addRadiusAxis, AE as arrayTooltipSearcher, vH as barLabel, iH as categoryAxisWidth, BB as cn, NM as combineAllBarPositions, FM as combineBarPosition, EM as combineBarSizeList, ng as combineDisplayedStackedData, yS as combineStackGroups, PM as combineStackedData, H as createSelector, IB as defaultPolarChartProps, Nh as defaultPolarRadiusAxisProps, EA as findAllByType, rH as fitLabel, Fh as getAxisTypeBasedOnLayout, ll as getBandSizeOfAxis, rl as getBaseValueOfBar, nl as getCateCoordinateOfBar, Zk as getClassNameFromUnknown, ZB as getColorsCount, el as getNormalizedStackId, dl as getTooltipNameProp, K as getValueByDataKey, IM as getZIndexFromUnknown, Gr as identity, L as interpolate, qr as isArrayLike, Jc as isCategoricalAxis, R as isNullish, rg as isStacked, Yi as iteratee, ij as matchAnimationItems, QA as matchAppend, ZA as matchByIndex, mt as mathSign, Tt as noop, gm as polarToCartesian, qk as removeRadiusAxis, Ar as resolveDefaultProps, uT as selectActiveTooltipIndex, Uh as selectAngleAxis, Ch as selectBarCategoryGap, Sh as selectBarGap, Wm as selectChartDataAndAlwaysIgnoreIndexes, Um as selectChartDataWithIndexes, q as selectChartLayout, zk as selectPolarAxisScale, Vk as selectPolarAxisTicks, Uk as selectPolarGraphicalItemAxisTicks, Ak as selectPolarItemsSettings, $h as selectPolarViewBox, Wh as selectRadiusAxis, Eh as selectReverseStackOrder, wh as selectRootBarSize, xh as selectRootMaxBarSize, Th as selectStackOffsetType, gS as selectTooltipAxis, kk as selectUnfilteredPolarItems, uH as sliceConfig, lH as sliceKey, Ue as svgPropertiesAndEvents, Ve as svgPropertiesNoEvents, He as svgPropertiesNoEventsFromUnknown, cH as tone, Zc as truncateByDomain, fj as useAnimationCallbacks, aj as useAnimationStartSnapshot, B as useAppDispatch, V as useAppSelector, Fl as useIsPanorama, VA as useMouseClickItemDispatch, zA as useMouseEnterItemDispatch, BA as useMouseLeaveItemDispatch, Eu as usePolarChartLayout };
 
-//# debugId=8851365f-9242-4248-98fc-d69980aff6e0
+//# debugId=d1e6810d-2ac9-4035-b67b-e2c0c72050a4

@@ -41,6 +41,23 @@ const STATE_COLORS: Record<string, 'lime' | 'rose' | 'yellow' | 'blue' | 'neutra
   ingested: 'lime', failed: 'rose', cancelled: 'neutral', stalled: 'yellow',
   remote_running: 'blue', remote_done: 'lime', landed: 'lime', submitted: 'neutral',
 };
+const STATE_LABELS: Record<string, string> = {
+  candidate: 'Available resource', selected: 'Selected', submitted: 'Submitted',
+  remote_running: 'Downloading to cloud storage', remote_done: 'Cloud download complete',
+  landed: 'File available', ingested: 'Added to library', failed: 'Failed',
+  cancelled: 'Cancelled', stalled: 'Taking too long',
+};
+const POSTPROCESS_LABELS: Record<string, string> = {
+  not_requested: 'Organization not started', pending: 'Waiting to organize', queued: 'Organization queued',
+  running: 'Organizing', complete: 'Organization complete', failed: 'Organization failed',
+};
+const FAILURE_LABELS: Record<string, string> = {
+  config: 'Configuration or sign-in error', quota: 'Download quota exhausted',
+  rejected: 'Cloud provider rejected this resource', invalid_link: 'Invalid link',
+  no_source: 'No download source or progress update', duplicate: 'Download task already exists',
+  not_landed: 'Downloaded file not found in the target folder', mismatch: 'Download does not match the target work',
+  network: 'Network temporarily unavailable',
+};
 
 const taskName = (task: DownloadTask) => {
   const code = task.display_code || task.code || '';
@@ -51,7 +68,7 @@ const taskName = (task: DownloadTask) => {
 };
 
 export const failureText = (task: DownloadTask) =>
-  task.failure_label ? [task.failure_label, task.failure_detail].filter(Boolean).join(': ') : '';
+  task.failure_label ? [task.failure && FAILURE_LABELS[task.failure] || task.failure_label, task.failure_detail].filter(Boolean).join(': ') : '';
 
 const postprocessDetail = (task: DownloadTask) => (task.postprocess_detail || '')
   .replace('正片已绑定', 'The work for the main video has been confirmed')
@@ -144,10 +161,10 @@ function TaskCard({ task, writable }: { task: DownloadTask; writable: boolean })
               className="block truncate rounded-sm outline-none hover:underline focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-border-focus-ring">{taskName(task)}</a> : taskName(task)}
           </strong>
           <div className="flex shrink-0 items-center gap-2">
-            <Chip color={STATE_COLORS[task.state] ?? 'neutral'}>{task.state_label}</Chip>
+            <Chip color={STATE_COLORS[task.state] ?? 'neutral'}>{STATE_LABELS[task.state] || task.state_label}</Chip>
             {task.state === 'ingested'
             ? <Chip color={task.postprocess_state === 'complete' ? 'lime'
-              : task.postprocess_state === 'failed' ? 'rose' : task.postprocess_state === 'running' ? 'blue' : 'neutral'}>{task.postprocess_label}</Chip>
+              : task.postprocess_state === 'failed' ? 'rose' : task.postprocess_state === 'running' ? 'blue' : 'neutral'}>{POSTPROCESS_LABELS[task.postprocess_state] || task.postprocess_label}</Chip>
             : null}
           </div>
         </div>

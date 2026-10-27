@@ -6,7 +6,7 @@ export function requestErrorMessage(cause:any,status=0):string{
   if(/Failed to fetch|fetch failed|NetworkError|Load failed|network request failed|ERR_CONNECTION/i.test(text))return 'Unable to connect to Peach. Check your network connection and make sure the tray service is running.';
   /* 正文里的 timeout 字样只在没有状态码时才算超时：500 的堆栈里常带着某个库的 timeout 参数名。 */
   if(cause?.name==='TimeoutError'||(!code&&/timed? ?out|timeout/i.test(text)))return 'The service took too long to respond. Check your connection and try again.';
-  if(/[㐀-鿿]/.test(text)&&!/^请求失败[（(]/.test(text))return text;
+  if(/[㐀-鿿]/.test(text))return 'The operation could not be completed. Try again; if the problem persists, check the tray logs.';
   if(messages[code])return messages[code];
   return 'The operation could not be completed. Try again; if the problem persists, check the tray logs.';
 }

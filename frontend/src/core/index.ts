@@ -149,7 +149,7 @@ const officialLinkText=(link:{url?:string;label?:string},kind:string,names:reado
       const folded=foldName(name);
       return Boolean(folded)&&(folded.includes(shown)||shown.includes(folded));
     }));
-  return own?'官方网站':text;
+  return own?'Official website':text;
 };
 /* 什么才算一个真Duration——只有这一处说了算。
 
@@ -164,7 +164,7 @@ const realDuration=(value:unknown)=>{const n=Number(value);return Number.isFinit
 /** 秒数格式化成 `h:mm:ss`／`m:ss`，48 小时起写成 `N 天 N 小时`；`0`、负数与非有限值都是 `—`
  *  （probe 的硬失败哨兵）。 */
 const fmtDur:(seconds:number|null|undefined)=>string=(s:any)=>{s=realDuration(s);if(!s)return'—';s=Math.round(s);
-  if(s>=48*3600){const d=Math.floor(s/86400),hours=Math.floor((s%86400)/3600);return hours?`${d} 天 ${hours} 小时`:`${d} 天`}
+  if(s>=48*3600){const d=Math.floor(s/86400),hours=Math.floor((s%86400)/3600);return hours?`${d} days ${hours} hours`:`${d} days`}
   const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),x=s%60;
   return h?`${h}:${String(m).padStart(2,'0')}:${String(x).padStart(2,'0')}`:`${m}:${String(x).padStart(2,'0')}`};
 /** 秒数格式化成播放器时钟 `h:mm:ss`／`m:ss`；非数值当 0。 */
@@ -174,9 +174,9 @@ const fmtClock:(seconds:unknown)=>string=(s:any)=>{s=Math.max(0,Math.floor(Numbe
    非零的最少写 1 KB，免得 1 字节读成「0”。缺值、NaN 与负数是「大小未知”；0 是真的 0——
    可回收空间、已下载量这类读数会是 0，单 files的 0 字节由调用方判成未知。 */
 const fmtSize:(bytes:number|null|undefined)=>string=(value:any)=>{
-  if(value===null||value===undefined||value==='')return '大小未知';
+  if(value===null||value===undefined||value==='')return 'Unknown size';
   const b=Number(value);
-  if(!Number.isFinite(b)||b<0)return '大小未知';
+  if(!Number.isFinite(b)||b<0)return 'Unknown size';
   if(b===0)return '0 B';
   if(b<1048576)return `${Math.max(1,Math.round(b/1024))} KB`;
   return b>=1125899906842624?(b/1125899906842624).toFixed(2)+' PB':b>=1099511627776?(b/1099511627776).toFixed(2)+' TB':b>=1073741824?(b/1073741824).toFixed(1)+' GB':Math.floor(b/1048576)+' MB'};

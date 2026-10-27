@@ -43,7 +43,7 @@ import {
 } from './stats';
 
 /** 空馆藏与没有存储来源时「添加媒体」去的那一栏设置。 */
-const MEDIA_SETTINGS = settingsPath('媒体库与入库');
+const MEDIA_SETTINGS = settingsPath('Library and imports');
 
 /** 收起时露这么多条排行。三十条一次铺开会把下面两个面板整个顶到屏外。 */
 const RANKING_PREVIEW = 10;

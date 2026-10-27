@@ -1,7 +1,7 @@
 (function() {
 	try {
 		var e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, t = new e.Error().stack;
-		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "b1fb9e99-043e-4593-97b7-801cd951a6fd", e._sentryDebugIdIdentifier = "sentry-dbid-b1fb9e99-043e-4593-97b7-801cd951a6fd");
+		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "432aab2c-a13e-47cc-b060-13441518829f", e._sentryDebugIdIdentifier = "sentry-dbid-432aab2c-a13e-47cc-b060-13441518829f");
 	} catch {}
 })();
 import { ApiError as e, Button as t, ButtonLink as n, Chip as r, DIAGNOSTICS_KEY as i, Disclosure as a, EmptyState as o, Fact as s, FactList as c, Fieldset as l, FieldsetTitle as u, Input as d, LOC as f, LinkButton as p, LoadingDots as m, Note as h, Progress as g, Section as _, SettingsCard as v, SettingsSectionLabel as y, Stack as b, __toESM as x, apiGet as S, apiSend as C, busyProps as w, configurationSection as ee, cx as T, diagnosticHeaders as E, diagnosticsSkeleton as D, errorMessage as O, fetchDiagnostics as k, fmtDur as A, fmtSize as j, queryClient as te, require_jsx_runtime as ne, require_react as re, settingsPath as ie, tl as M, useAction as N, useQuery as P } from "./peach-app.js";
@@ -9,14 +9,14 @@ import { ErrorExcerpt as F } from "./peach-app.error-excerpt-Cu3bobTS.js";
 import { DataTable as I } from "./peach-app.data-table-C0dVfAum.js";
 import { SiteMark as L } from "./peach-app.site-mark-D_VlIyJz.js";
 // src/react/diagnostics/health-list.tsx
-var R = /* @__PURE__ */ x(re(), 1), z = ne(), B = (e) => e.title || e.name || e.code || `作品 #${e.id}`, V = (e) => [[
-	"作品",
-	"番号",
-	"文件名",
-	"媒体库",
-	"路径",
-	"时长（秒）",
-	"大小（字节）"
+var R = /* @__PURE__ */ x(re(), 1), z = ne(), B = (e) => e.title || e.name || e.code || `Item #${e.id}`, V = (e) => [[
+	"Item",
+	"Code",
+	"File name",
+	"Library",
+	"Path",
+	"Duration (seconds)",
+	"Size (bytes)"
 ], ...e.map((e) => [
 	B(e),
 	e.code ?? "",
@@ -27,10 +27,10 @@ var R = /* @__PURE__ */ x(re(), 1), z = ne(), B = (e) => e.title || e.name || e.
 	e.size ?? ""
 ])].map((e) => e.map((e) => String(e ?? "").replace(/[\t\r\n]+/g, " ")).join("	")).join("\n");
 function H({ group: e, openItem: n, receipt: r }) {
-	let i = N(), [s, c] = (0, R.useState)([]), l = (e) => void i.run("copy", () => navigator.clipboard.writeText(V(e)), () => r("已复制清单")), u = [
+	let i = N(), [s, c] = (0, R.useState)([]), l = (e) => void i.run("copy", () => navigator.clipboard.writeText(V(e)), () => r("List copied")), u = [
 		{
 			id: "title",
-			label: "作品",
+			label: "Item",
 			value: B,
 			render: (e) => /* @__PURE__ */ (0, z.jsxs)("span", {
 				className: "flex min-w-0 flex-col gap-1",
@@ -49,24 +49,24 @@ function H({ group: e, openItem: n, receipt: r }) {
 		},
 		{
 			id: "code",
-			label: "番号",
+			label: "Code",
 			width: 144,
 			value: (e) => e.code || "",
 			render: (e) => /* @__PURE__ */ (0, z.jsx)("span", {
 				className: "whitespace-nowrap",
-				children: e.code || "未识别"
+				children: e.code || "Unrecognized"
 			})
 		},
 		{
 			id: "location",
-			label: "媒体库",
+			label: "Library",
 			width: 128,
 			value: (e) => f[e.location] || e.location,
-			render: (e) => f[e.location] || e.location || "未取得"
+			render: (e) => f[e.location] || e.location || "Unavailable"
 		},
 		{
 			id: "path",
-			label: "文件路径",
+			label: "File path",
 			width: 320,
 			min: 180,
 			value: (e) => e.path,
@@ -74,47 +74,47 @@ function H({ group: e, openItem: n, receipt: r }) {
 				"data-middle-truncate": !0,
 				title: e.path,
 				className: "block min-w-0 w-full text-body-2-regular text-text-secondary",
-				children: e.path || "未取得"
+				children: e.path || "Unavailable"
 			})
 		},
 		{
 			id: "duration",
-			label: "时长",
+			label: "Duration",
 			width: 112,
 			value: (e) => e.duration ?? 0,
-			render: (e) => e.duration && e.duration > 0 ? A(e.duration) : "未取得"
+			render: (e) => e.duration && e.duration > 0 ? A(e.duration) : "Unavailable"
 		},
 		{
 			id: "size",
-			label: "大小",
+			label: "Size",
 			width: 112,
 			value: (e) => e.size ?? 0,
-			render: (e) => e.size === null ? "未取得" : j(e.size)
+			render: (e) => e.size === null ? "Unavailable" : j(e.size)
 		}
 	];
 	return /* @__PURE__ */ (0, z.jsx)(a, {
-		summary: `${e.label} · ${e.count === null ? "未取得" : `${e.count.toLocaleString()} 项`}`,
+		summary: `${e.label} · ${e.count === null ? "Unavailable" : `${e.count.toLocaleString()} items`}`,
 		children: e.count === null ? /* @__PURE__ */ (0, z.jsx)(h, {
 			tone: "neutral",
-			children: "清单未取得，请重新检查。"
+			children: "The list is unavailable. Run the checks again."
 		}) : e.items.length ? /* @__PURE__ */ (0, z.jsxs)(b, { children: [
 			/* @__PURE__ */ (0, z.jsxs)("div", {
 				className: "flex flex-wrap items-center justify-between gap-2",
 				children: [e.truncated ? /* @__PURE__ */ (0, z.jsxs)("span", {
 					className: "text-body-2-regular text-text-secondary",
 					children: [
-						"已载入 ",
+						"Loaded ",
 						e.items.length.toLocaleString(),
 						" / ",
 						e.count.toLocaleString(),
-						" 项"
+						" items"
 					]
 				}) : null, /* @__PURE__ */ (0, z.jsx)(t, {
 					size: "small",
 					variant: "secondary",
 					...w(i.busy === "copy"),
 					onClick: () => l(e.items),
-					children: "复制当前清单"
+					children: "Copy current list"
 				})]
 			}),
 			i.error ? /* @__PURE__ */ (0, z.jsx)(h, {
@@ -123,8 +123,8 @@ function H({ group: e, openItem: n, receipt: r }) {
 			}) : null,
 			/* @__PURE__ */ (0, z.jsx)(I, {
 				label: e.label,
-				title: "作品清单",
-				unit: "部作品",
+				title: "Item list",
+				unit: "items",
 				panel: !1,
 				items: e.items,
 				columns: u,
@@ -137,14 +137,14 @@ function H({ group: e, openItem: n, receipt: r }) {
 					variant: "secondary",
 					...w(i.busy === "copy"),
 					onClick: () => l(e),
-					children: "复制所选"
+					children: "Copy selected"
 				})
 			})
 		] }) : /* @__PURE__ */ (0, z.jsx)(o, {
 			icon: M,
-			title: "清单为空",
+			title: "List is empty",
 			size: "compact",
-			children: "没有需要处理的作品。"
+			children: "There are no items that need attention."
 		})
 	});
 }
@@ -155,7 +155,7 @@ function G({ kind: r, codes: i = "" }) {
 		queryKey: W,
 		queryFn: ({ signal: e }) => S(U, e),
 		refetchInterval: (e) => ["running", "cancelling"].includes(e.state.data?.status || "") ? 1e3 : !1
-	}), s = o.data, c = s?.kind === r, l = s?.status === "running" || s?.status === "cancelling", u = r === "support" ? "下载诊断报告" : "导出刮削记录", d = (e) => {
+	}), s = o.data, c = s?.kind === r, l = s?.status === "running" || s?.status === "cancelling", u = r === "support" ? "Download diagnostic report" : "Export scraping records", d = (e) => {
 		te.setQueryData(W, e);
 	}, f = () => void a.run("start", async (t) => {
 		let n = await fetch(U, {
@@ -171,8 +171,8 @@ function G({ kind: r, codes: i = "" }) {
 				codes: i
 			})
 		}), a = await n.json().catch(() => null);
-		if (!n.ok) throw new e(a?.detail || a?.error || "诊断导出未启动", n.status, a);
-		if (!a || !a.job_id) throw Error("导出任务状态未取得");
+		if (!n.ok) throw new e(a?.detail || a?.error || "Diagnostic export did not start", n.status, a);
+		if (!a || !a.job_id) throw Error("Export job status is unavailable");
 		return a;
 	}, d), p = () => void a.run("cancel", (e) => C(`${U}/${s.job_id}/cancel`, {}, "POST", e), d);
 	return /* @__PURE__ */ (0, z.jsxs)("div", {
@@ -195,12 +195,12 @@ function G({ kind: r, codes: i = "" }) {
 						disabled: s.status === "cancelling",
 						...w(a.busy === "cancel"),
 						onClick: p,
-						children: "取消导出"
+						children: "Cancel export"
 					}) : null,
 					c && s.status === "complete" && s.download_url ? /* @__PURE__ */ (0, z.jsx)(n, {
 						variant: "secondary",
 						href: s.download_url,
-						children: "下载已生成的文件"
+						children: "Download generated file"
 					}) : null
 				]
 			}),
@@ -215,26 +215,26 @@ function G({ kind: r, codes: i = "" }) {
 						s.done || 0,
 						" / ",
 						s.total,
-						" 项"
+						" items"
 					]
 				}), /* @__PURE__ */ (0, z.jsx)(g, {
-					label: "导出进度",
+					label: "Export progress",
 					value: s.done || 0,
 					max: s.total
 				})]
-			}) : /* @__PURE__ */ (0, z.jsx)(m, { label: `${s.stage || "准备导出"}${s.rows ? ` · ${s.rows} 条候选` : ""}${s.files ? ` · ${s.files} 个文件` : ""}` }) : null,
+			}) : /* @__PURE__ */ (0, z.jsx)(m, { label: `${s.stage || "Preparing export"}${s.rows ? ` · ${s.rows} candidates` : ""}${s.files ? ` · ${s.files} files` : ""}` }) : null,
 			c && s.status === "complete" ? /* @__PURE__ */ (0, z.jsxs)("p", {
 				role: "status",
 				className: "text-body-2-regular text-text-secondary",
 				children: [
-					"导出已完成 · ",
+					"Export complete · ",
 					((s.bytes || 0) / 1024 / 1024).toFixed(2),
 					" MiB"
 				]
 			}) : null,
 			c && s.status === "cancelled" ? /* @__PURE__ */ (0, z.jsx)(h, {
 				tone: "neutral",
-				children: "导出已取消"
+				children: "Export cancelled"
 			}) : null,
 			o.isError ? /* @__PURE__ */ (0, z.jsx)(h, {
 				tone: "error",
@@ -245,9 +245,9 @@ function G({ kind: r, codes: i = "" }) {
 					onClick: () => {
 						o.refetch();
 					},
-					children: "重新读取"
+					children: "Reload"
 				}),
-				children: "导出进度未取得"
+				children: "Export progress is unavailable"
 			}) : null,
 			a.error || c && s.status === "failed" ? /* @__PURE__ */ (0, z.jsx)(h, {
 				tone: "error",
@@ -267,26 +267,26 @@ function K() {
 		}),
 		children: /* @__PURE__ */ (0, z.jsxs)("div", {
 			className: "flex min-w-0 flex-col gap-4",
-			"aria-label": "导出刮削记录",
+			"aria-label": "Export scraping records",
 			children: [
 				/* @__PURE__ */ (0, z.jsx)(u, {
 					id: "scraping-export-title",
-					children: "刮削记录"
+					children: "Scraping records"
 				}),
 				/* @__PURE__ */ (0, z.jsx)("p", {
 					className: "text-body-2-regular text-text-secondary",
-					children: "导出作品资料、来源取值及演员、厂牌和系列归属，供排查刮削错误。"
+					children: "Export item metadata, source values, and performer, studio, and series assignments to troubleshoot scraping errors."
 				}),
 				/* @__PURE__ */ (0, z.jsx)(d, {
-					label: "问题番号（可选）",
+					label: "Problem codes (optional)",
 					name: "scraping-codes",
 					value: e,
 					onChange: t,
 					autoComplete: "off",
 					spellCheck: "false",
 					maxLength: 1300,
-					placeholder: "例如 ABF-087、SYKH-145…",
-					hint: "多个番号用逗号分隔，最多 20 个；留空导出近期作品。"
+					placeholder: "For example, ABF-087, SYKH-145…",
+					hint: "Separate multiple codes with commas, up to 20. Leave blank to export recent items."
 				})
 			]
 		})
@@ -301,7 +301,18 @@ var q = {
 	disabled: "Not configured",
 	stale: "Needs review",
 	unchecked: "No record yet"
-}, J = { "/tasks": "View tasks" }, Y = [
+}, J = { "/tasks": "View tasks" }, Y = {
+	media_mounts: "Media mounts",
+	data_root: "Data directory",
+	database: "Database",
+	schema: "Database migrations",
+	ffmpeg: "FFmpeg / OpenSSL",
+	configured: "Configuration",
+	security: "Access security",
+	port: "Service port",
+	version: "Version",
+	tasks: "Background tasks"
+}, ae = [
 	["Media library and mounts", ["media_mounts", "data_root"]],
 	["Database and migrations", ["database", "schema"]],
 	["Tools", ["ffmpeg"]],
@@ -325,7 +336,7 @@ function Q() {
 	return /* @__PURE__ */ (0, z.jsx)(G, { kind: "support" });
 }
 function $({ name: e, check: t, compact: r = !1 }) {
-	let i = t.target === "/settings/library" && (e === "security" || e === "port") ? ie("网络与访问") : t.target, a = r ? "h4" : "h3";
+	let i = t.target === "/settings/library" && (e === "security" || e === "port") ? ie("Network and access") : t.target, a = r ? "h4" : "h3";
 	return /* @__PURE__ */ (0, z.jsxs)("div", {
 		"data-diagnostic-check": e,
 		className: T("flex flex-col gap-4 border-b border-separator-border pr-3 last:border-b-0 sm:flex-row sm:items-center sm:justify-between", r ? "py-3" : "py-5"),
@@ -336,7 +347,7 @@ function $({ name: e, check: t, compact: r = !1 }) {
 					className: "flex flex-wrap items-center gap-3",
 					children: [/* @__PURE__ */ (0, z.jsx)(a, {
 						className: T("text-text-primary", r ? "text-body-2-medium" : "text-body-medium"),
-						children: t.label
+						children: Y[e] || t.label
 					}), /* @__PURE__ */ (0, z.jsx)(Z, { status: t.status })]
 				}),
 				/* @__PURE__ */ (0, z.jsx)("p", {
@@ -360,7 +371,7 @@ function $({ name: e, check: t, compact: r = !1 }) {
 		}) : null]
 	});
 }
-function ae(e) {
+function oe(e) {
 	let r = P({
 		queryKey: i,
 		queryFn: ({ signal: e }) => k(e),
@@ -440,7 +451,7 @@ function ae(e) {
 				children: /* @__PURE__ */ (0, z.jsx)(a, {
 					summary: `Other checks · ${m.length}`,
 					contentClassName: "gap-5",
-					children: Y.map(([e, t]) => {
+					children: ae.map(([e, t]) => {
 						let n = m.filter(([e]) => t.some((t) => t === e));
 						return n.length ? /* @__PURE__ */ (0, z.jsxs)("section", {
 							"aria-label": e,
@@ -508,6 +519,6 @@ function ae(e) {
 		]
 	});
 }
-export { ae as DiagnosticsPage };
+export { oe as DiagnosticsPage };
 
-//# debugId=b1fb9e99-043e-4593-97b7-801cd951a6fd
+//# debugId=432aab2c-a13e-47cc-b060-13441518829f
