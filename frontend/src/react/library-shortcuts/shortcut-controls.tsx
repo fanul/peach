@@ -52,9 +52,9 @@ function FavoriteChoice({ item }: { item: Favorite }) {
 export function LibraryShortcuts({ currentHref, kind }: { currentHref?: () => string; kind?: string }) {
   const [open, setOpen] = useState(false);
   return <>
-    <span data-shortcuts-entry=""><FilterIconButton data-shortcuts-trigger="" label="我的收藏" icon={Star}
+    <span data-shortcuts-entry=""><FilterIconButton data-shortcuts-trigger="" label="My collection" icon={Star}
       aria-haspopup="dialog" aria-expanded={open} onPress={() => setOpen(true)} /></span>
-    <ModalFrame isOpen={open} onOpenChange={setOpen} width="collections" label="我的收藏">
+    <ModalFrame isOpen={open} onOpenChange={setOpen} width="collections" label="My collection">
       {open ? <ShortcutContents currentHref={currentHref} kind={kind} close={() => setOpen(false)} /> : null}
     </ModalFrame>
   </>;
@@ -119,12 +119,12 @@ function ShortcutContents({ currentHref, kind, close }: { currentHref?: () => st
   return <div data-shortcuts-panel="">
     <div ref={head} data-shortcuts-head="">
       <h2 className="text-title-2-semibold text-text-primary">{label}</h2>
-      <SettingsDialogClose label="关闭我的收藏" onPress={close} />
+      <SettingsDialogClose label="Close My collection" onPress={close} />
     </div>
       <aside data-shortcuts-sidebar="" data-settings-nav="" data-glass-pane={narrow ? undefined : ''}>
       <div ref={navigation} data-shortcuts-categories="" data-glass-pane={narrow ? '' : undefined} role="tablist" aria-label="收藏类型" onKeyDown={selectWithKeys} onPointerLeave={glide.leave}>
         <span ref={pane} data-view-glide="" data-shortcuts-glide="" aria-hidden="true" hidden />
-        <p data-shortcuts-caption="" role="presentation">我的收藏</p>
+        <p data-shortcuts-caption="" role="presentation">My collection</p>
         {SCOPES.map(([value, label]) => {
           const Glyph = GLYPHS[value as keyof typeof GLYPHS] || Star;
           const count = value === 'filters' ? data?.filters.length || 0 : (data?.favorites || []).filter(row => value === 'all' || row.kind === value).length;

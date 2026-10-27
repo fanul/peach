@@ -8,12 +8,12 @@ import { allowedSetting, appSettingsStore, type AppSettings } from './settings';
 
 /** `[值, 显示名, 字形]`：版式开关在设置面板与筛选条下排各有一组，读的都是这一张表。 */
 export const JAV_LAYOUTS: readonly (readonly [value: string, label: string, icon: string])[] = [
-  ['big', '大图', 'maximize'], ['small', '小图', 'layout-grid'],
+  ['big', 'Large thumbnails', 'maximize'], ['small', 'Small thumbnails', 'layout-grid'],
 ];
 /* 图片墙是等宽网格，改的是列数。默认小图——一套图几十上百张，先看得见全貌，挑中哪一张再点开看大的。 */
 type Choice = readonly [value: string, label: string, icon: string];
 export const PHOTO_SIZES: readonly [big: Choice, small: Choice] = [
-  ['big', '大图', 'maximize'], ['small', '小图', 'layout-grid'],
+  ['big', 'Large thumbnails', 'maximize'], ['small', 'Small thumbnails', 'layout-grid'],
 ];
 export const PHOTO_LAYOUTS: readonly (readonly [value: string, label: string, icon: string])[] = [
   ['fixed', '固定比例', 'layout-grid'], ['masonry', '瀑布流', 'columns-2'],

@@ -1,7 +1,7 @@
 (function() {
 	try {
 		var e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, t = new e.Error().stack;
-		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "105a2664-32a5-4404-9526-c8ccd0618057", e._sentryDebugIdIdentifier = "sentry-dbid-105a2664-32a5-4404-9526-c8ccd0618057");
+		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "4c0c76a6-0ec2-4819-aa59-1a9e68546b81", e._sentryDebugIdIdentifier = "sentry-dbid-4c0c76a6-0ec2-4819-aa59-1a9e68546b81");
 	} catch {}
 })();
 import { ApiError as e, Button as t, ButtonLink as n, Chip as r, DIAGNOSTICS_KEY as i, Disclosure as a, EmptyState as o, Fact as s, FactList as c, Fieldset as l, FieldsetTitle as u, Input as d, LOC as f, LinkButton as p, LoadingDots as m, Note as h, Progress as g, Section as _, SettingsCard as v, SettingsSectionLabel as y, Stack as b, __toESM as x, apiGet as S, apiSend as C, busyProps as w, configurationSection as ee, cx as T, diagnosticHeaders as E, diagnosticsSkeleton as D, errorMessage as O, fetchDiagnostics as k, fmtDur as A, fmtSize as j, queryClient as te, require_jsx_runtime as ne, require_react as re, settingsPath as ie, tl as M, useAction as N, useQuery as P } from "./peach-app.js";
@@ -294,31 +294,31 @@ function K() {
 }
 // src/react/diagnostics/diagnostics-page.tsx
 var q = {
-	ok: "正常",
-	warning: "需检查",
-	failed: "需处理",
-	unknown: "未取得",
-	disabled: "未配置",
-	stale: "待复查",
-	unchecked: "尚无记录"
-}, J = { "/tasks": "查看任务" }, Y = [
-	["媒体库与挂载", ["media_mounts", "data_root"]],
-	["数据库与迁移", ["database", "schema"]],
-	["工具", ["ffmpeg"]],
-	["配置与访问", [
+	ok: "Healthy",
+	warning: "Check needed",
+	failed: "Action needed",
+	unknown: "Unavailable",
+	disabled: "Not configured",
+	stale: "Needs review",
+	unchecked: "No record yet"
+}, J = { "/tasks": "View tasks" }, Y = [
+	["Media library and mounts", ["media_mounts", "data_root"]],
+	["Database and migrations", ["database", "schema"]],
+	["Tools", ["ffmpeg"]],
+	["Configuration and access", [
 		"configured",
 		"security",
 		"port",
 		"version"
 	]],
-	["后台任务", ["tasks"]]
+	["Background tasks", ["tasks"]]
 ], X = (e) => new Date(e).toLocaleString();
 function Z({ status: e }) {
 	return /* @__PURE__ */ (0, z.jsx)(r, {
 		variant: "caption",
 		"data-diagnostic-status": e,
 		color: e === "failed" ? "rose" : e === "ok" ? "lime" : e === "warning" || e === "stale" ? "yellow" : "neutral",
-		children: q[e] ?? "未取得"
+		children: q[e] ?? "Unavailable"
 	});
 }
 function Q() {
@@ -346,7 +346,7 @@ function $({ name: e, check: t, compact: r = !1 }) {
 				}),
 				t.action ? /* @__PURE__ */ (0, z.jsxs)("p", {
 					className: "text-body-2-regular text-text-secondary",
-					children: ["处理建议：", t.action]
+					children: ["Suggested action: ", t.action]
 				}) : null
 			]
 		}), i ? /* @__PURE__ */ (0, z.jsx)("div", {
@@ -355,7 +355,7 @@ function $({ name: e, check: t, compact: r = !1 }) {
 				size: "small",
 				variant: "secondary",
 				href: i,
-				children: i.startsWith("/settings/") ? `打开${ee(i)}` : J[i] ?? "打开相关页面"
+				children: i.startsWith("/settings/") ? `Open ${ee(i)}` : J[i] ?? "Open related page"
 			})
 		}) : null]
 	});
@@ -372,7 +372,7 @@ function ae(e) {
 	}, () => u(""), (e) => u(O(e))), f = r.data;
 	if (!f && r.isPending) return /* @__PURE__ */ (0, z.jsx)("div", {
 		role: "status",
-		"aria-label": "正在读取系统诊断",
+		"aria-label": "Loading system diagnostics",
 		dangerouslySetInnerHTML: { __html: D() }
 	});
 	if (!f) return /* @__PURE__ */ (0, z.jsxs)("div", {
@@ -381,14 +381,14 @@ function ae(e) {
 			/* @__PURE__ */ (0, z.jsx)(Q, {}),
 			/* @__PURE__ */ (0, z.jsx)(h, {
 				tone: "error",
-				title: "诊断读取失败",
+				title: "Failed to load diagnostics",
 				action: /* @__PURE__ */ (0, z.jsx)(t, {
 					variant: "secondary",
 					onClick: d,
 					...w(o.busy === "refresh"),
-					children: "重新检查"
+					children: "Run checks again"
 				}),
-				children: r.error ? O(r.error) : "诊断报告未取得。"
+				children: r.error ? O(r.error) : "Diagnostic report unavailable."
 			}),
 			/* @__PURE__ */ (0, z.jsx)(K, {})
 		]
@@ -411,7 +411,7 @@ function ae(e) {
 					variant: "secondary",
 					onClick: d,
 					...w(o.busy === "refresh"),
-					children: "重新检查"
+					children: "Run checks again"
 				})]
 			}),
 			l ? /* @__PURE__ */ (0, z.jsx)(h, {
@@ -419,26 +419,26 @@ function ae(e) {
 				children: l
 			}) : null,
 			p.length ? /* @__PURE__ */ (0, z.jsx)(_, {
-				title: `需要关注 · ${p.length} 项`,
+				title: `Needs attention · ${p.length}`,
 				children: p.map(([e, t]) => /* @__PURE__ */ (0, z.jsx)($, {
 					name: e,
 					check: t
 				}, e))
 			}) : null,
 			/* @__PURE__ */ (0, z.jsx)(_, {
-				title: "库健康",
+				title: "Library health",
 				children: /* @__PURE__ */ (0, z.jsxs)(b, { children: [f.library.issue_at ? /* @__PURE__ */ (0, z.jsxs)("p", {
 					className: "text-body-2-regular text-text-secondary",
-					children: ["处理记录 · ", X(f.library.issue_at)]
+					children: ["Last addressed · ", X(f.library.issue_at)]
 				}) : null, Object.entries(f.library.groups).map(([t, n]) => /* @__PURE__ */ (0, z.jsx)(H, {
 					group: n,
 					...e
 				}, t))] })
 			}),
 			m.length ? /* @__PURE__ */ (0, z.jsx)("section", {
-				"aria-label": "系统检查",
+				"aria-label": "System checks",
 				children: /* @__PURE__ */ (0, z.jsx)(a, {
-					summary: `其他检查 · ${m.length} 项`,
+					summary: `Other checks · ${m.length}`,
 					contentClassName: "gap-5",
 					children: Y.map(([e, t]) => {
 						let n = m.filter(([e]) => t.some((t) => t === e));
@@ -448,9 +448,9 @@ function ae(e) {
 							className: "flex min-w-0 flex-col gap-2",
 							children: [/* @__PURE__ */ (0, z.jsxs)("h3", {
 								className: "flex items-center gap-2 px-3 text-body-medium text-text-primary",
-								children: [e, /* @__PURE__ */ (0, z.jsxs)("span", {
+								children: [e, /* @__PURE__ */ (0, z.jsx)("span", {
 									className: "text-caption-1-regular text-text-secondary",
-									children: [n.length, " 项"]
+									children: n.length
 								})]
 							}), /* @__PURE__ */ (0, z.jsx)(v, { children: n.map(([e, t]) => /* @__PURE__ */ (0, z.jsx)($, {
 								name: e,
@@ -463,10 +463,10 @@ function ae(e) {
 			}) : null,
 			/* @__PURE__ */ (0, z.jsx)(K, {}),
 			/* @__PURE__ */ (0, z.jsxs)("section", {
-				"aria-label": "来源会话",
+				"aria-label": "Source sessions",
 				className: "flex min-w-0 flex-col gap-3",
 				children: [
-					/* @__PURE__ */ (0, z.jsx)(y, { children: "来源会话" }),
+					/* @__PURE__ */ (0, z.jsx)(y, { children: "Source sessions" }),
 					f.sources.map((e) => /* @__PURE__ */ (0, z.jsx)("article", {
 						"data-diagnostic-source": e.source,
 						children: /* @__PURE__ */ (0, z.jsx)(v, { children: /* @__PURE__ */ (0, z.jsxs)(b, { children: [
@@ -483,16 +483,16 @@ function ae(e) {
 							}),
 							/* @__PURE__ */ (0, z.jsxs)(c, { children: [
 								/* @__PURE__ */ (0, z.jsx)(s, {
-									term: "上次解析成功",
-									children: e.last_success_at ? X(e.last_success_at) : "尚无成功记录"
+									term: "Last successful parse",
+									children: e.last_success_at ? X(e.last_success_at) : "No successful runs yet"
 								}),
 								e.last_check_at ? /* @__PURE__ */ (0, z.jsxs)(s, {
-									term: "上次检查",
-									children: [X(e.last_check_at), e.elapsed_s !== void 0 && e.elapsed_s !== null ? ` · ${e.elapsed_s.toFixed(2)} 秒` : ""]
+									term: "Last checked",
+									children: [X(e.last_check_at), e.elapsed_s !== void 0 && e.elapsed_s !== null ? ` · ${e.elapsed_s.toFixed(2)} seconds` : ""]
 								}) : null,
 								/* @__PURE__ */ (0, z.jsx)(s, {
-									term: "暂停访问至",
-									children: e.cooldown_until ? X(e.cooldown_until) : "未暂停"
+									term: "Access paused until",
+									children: e.cooldown_until ? X(e.cooldown_until) : "Not paused"
 								})
 							] })
 						] }) })
@@ -501,7 +501,7 @@ function ae(e) {
 						size: "small",
 						variant: "secondary",
 						href: "/sources",
-						children: "打开来源和凭证"
+						children: "Open sources and credentials"
 					}) })
 				]
 			})
@@ -510,4 +510,4 @@ function ae(e) {
 }
 export { ae as DiagnosticsPage };
 
-//# debugId=105a2664-32a5-4404-9526-c8ccd0618057
+//# debugId=4c0c76a6-0ec2-4819-aa59-1a9e68546b81

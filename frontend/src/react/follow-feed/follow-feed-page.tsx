@@ -409,7 +409,7 @@ function Glass({ facets, view, total, busy, props, route }: {
   const extras = providers.length + facets.tagRows.length > 0;
   const images = view.media === 'images';
   return (
-    <FilterGlassRows label="筛选与排序" topLabel={showMedia ? '媒体与关注筛选' : '关注筛选'}
+    <FilterGlassRows label="Filter and sort" topLabel={showMedia ? 'Media and following filters' : 'Following filters'}
       attrs={{ 'data-filter-frame': '', 'data-follow-filter-glass': '' }}
       topClassName="gap-1.5 overflow-visible" busy={busy}
       panes={<>
