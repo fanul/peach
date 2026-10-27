@@ -2,7 +2,7 @@
 (function() {
 	try {
 		var e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, t = new e.Error().stack;
-		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "05aeefeb-7b50-4de9-86ec-015af5c64215", e._sentryDebugIdIdentifier = "sentry-dbid-05aeefeb-7b50-4de9-86ec-015af5c64215");
+		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "64e69298-bfe4-4658-9cfc-dd57d7998551", e._sentryDebugIdIdentifier = "sentry-dbid-64e69298-bfe4-4658-9cfc-dd57d7998551");
 	} catch {}
 })();
 var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescriptor, r = Object.getOwnPropertyNames, i = Object.getPrototypeOf, a = Object.prototype.hasOwnProperty, o = (e, t) => () => (t || (e((t = { exports: {} }).exports, t, t.exports), e = null), t.exports), s = (e, i, o, s) => {
@@ -11204,12 +11204,12 @@ function Ht({ id: e, children: t }) {
 }
 // src/react/pages/error/error-page.tsx
 var Ut = {
-	403: "这里不能打开",
-	404: "四〇四",
-	409: "现在不能这样做"
+	403: "You can’t access this page",
+	404: "404",
+	409: "This action isn’t available right now"
 };
 function Wt(e) {
-	return Ut[e ?? ""] ?? "出了点问题";
+	return Ut[e ?? ""] ?? "Something went wrong";
 }
 function B({ data: e }) {
 	let t = Wt(e.status);
@@ -11221,7 +11221,7 @@ function B({ data: e }) {
 		children: /* @__PURE__ */ (0, z.jsx)(zt, {
 			href: "/",
 			className: "self-start",
-			children: "返回首页"
+			children: "Return home"
 		})
 	});
 }
@@ -19207,7 +19207,7 @@ function pm({ label: e, hint: t, tooltip: n, placeholder: r, leadingIcon: i, tra
 }
 pm.displayName = "Input";
 function mm({ data: e }) {
-	let [t, n] = (0, j.useState)(e.error || (e.invalid === "true" ? "访问密码不正确" : ""));
+	let [t, n] = (0, j.useState)(e.error || (e.invalid === "true" ? "Incorrect access password" : ""));
 	return /* @__PURE__ */ (0, z.jsx)(Bt, {
 		title: "Peach",
 		children: /* @__PURE__ */ (0, z.jsxs)("form", {
@@ -19218,7 +19218,7 @@ function mm({ data: e }) {
 			children: [
 				/* @__PURE__ */ (0, z.jsx)(pm, {
 					id: "login-token",
-					label: "访问密码",
+					label: "Access password",
 					name: "token",
 					type: "password",
 					maxLength: 256,
@@ -19241,12 +19241,12 @@ function mm({ data: e }) {
 					name: "days",
 					value: "30",
 					defaultSelected: !0,
-					children: "保持登录"
+					children: "Stay signed in"
 				}),
 				/* @__PURE__ */ (0, z.jsx)(Rt, {
 					type: "submit",
 					className: "w-full",
-					children: "登录"
+					children: "Sign in"
 				})
 			]
 		})
@@ -19320,22 +19320,22 @@ async function bm(e, t, n) {
 			}
 		});
 	} catch (e) {
-		throw t.signal?.aborted ? e : new ym(0, "连接不到 Peach，请确认它仍在运行后重试");
+		throw t.signal?.aborted ? e : new ym(0, "Could not connect to Peach. Make sure it is still running and try again.");
 	}
 	let i = await r.json().catch(() => null);
 	if (!r.ok) throw new ym(r.status, i?.error || n, i?.errors);
 	return i;
 }
-var xm = (e) => bm(_m, { signal: e }, "没能读取设置题目"), Sm = (e) => bm(vm, {
+var xm = (e) => bm(_m, { signal: e }, "Could not load setup options"), Sm = (e) => bm(vm, {
 	method: "POST",
 	body: JSON.stringify(e)
-}, "没能完成设置"), Cm = (e) => bm(`${vm}/restore`, {
+}, "Could not complete setup"), Cm = (e) => bm(`${vm}/restore`, {
 	method: "POST",
 	body: JSON.stringify({ data_root: e })
-}, "没能使用此数据目录"), wm = async (e) => (await bm(gm, {
+}, "Could not use this data directory"), wm = async (e) => (await bm(gm, {
 	method: "POST",
 	body: JSON.stringify({ initial: e })
-}, "没能打开文件夹对话框")).path, Tm = (e) => e instanceof Error && e.message || "请求失败，请重试", Em = 8e3, Dm = /* @__PURE__ */ new WeakMap();
+}, "Could not open the folder picker")).path, Tm = (e) => e instanceof Error && e.message || "Request failed. Please try again.", Em = 8e3, Dm = /* @__PURE__ */ new WeakMap();
 function Om(e, t, n) {
 	km(t, n, () => e.open, (t) => {
 		e.open = t;
@@ -19657,7 +19657,7 @@ function th() {
 	});
 }
 function nh({ step: e }) {
-	let t = e === 0 ? "你的私人媒体空间。" : e === 1 ? "让文件成为馆藏。" : e === 2 ? "从书桌，到手边。" : e === 3 ? "全都准备好了。" : e === "restore" ? "从熟悉的地方继续。" : "馆藏，准备开启。", n = e === 0 ? "把喜欢的内容，整理成自己的收藏。" : e === 1 ? "按媒体库归类，文件保留在原来的位置。" : e === 2 ? "电脑与手机，连接同一套 Peach。" : e === 3 ? "确认后保存，扫描按你的选择开始。" : e === "restore" ? "沿用原来的配置与记录，接着使用。" : "进入 Peach，开始探索你的收藏。";
+	let t = e === 0 ? "Your private media space." : e === 1 ? "Turn your files into a library." : e === 2 ? "From your desk to your fingertips." : e === 3 ? "Everything is ready." : e === "restore" ? "Pick up where you left off." : "Your library is ready.", n = e === 0 ? "Organize the content you love into your own collection." : e === 1 ? "Organize files into libraries while keeping them in place." : e === 2 ? "Connect your computer and phone to the same Peach." : e === 3 ? "Confirm and save, then scanning starts based on your choices." : e === "restore" ? "Continue with your existing settings and history." : "Open Peach and start exploring your collection.";
 	return /* @__PURE__ */ (0, z.jsxs)("aside", {
 		"data-setup-scene": "",
 		children: [
@@ -19699,7 +19699,7 @@ function nh({ step: e }) {
 					"data-setup-library-scene": "",
 					children: [/* @__PURE__ */ (0, z.jsx)(th, {}), /* @__PURE__ */ (0, z.jsxs)("div", {
 						"data-setup-scene-badge": "",
-						children: [/* @__PURE__ */ (0, z.jsx)(nm, {}), /* @__PURE__ */ (0, z.jsx)("span", { children: "你的媒体库" })]
+						children: [/* @__PURE__ */ (0, z.jsx)(nm, {}), /* @__PURE__ */ (0, z.jsx)("span", { children: "Your library" })]
 					})]
 				})
 			}, e),
@@ -19732,7 +19732,7 @@ function rh({ step: e, children: t }) {
 function ih({ done: e }) {
 	let t = (0, j.useRef)(null);
 	return (0, j.useEffect)(() => {
-		document.title = "Peach · 设置完成", t.current?.focus();
+		document.title = "Peach · Setup complete", t.current?.focus();
 	}, []), (0, j.useEffect)(() => {
 		let t = e.redirect;
 		if (!t) return;
@@ -19748,7 +19748,7 @@ function ih({ done: e }) {
 					"data-setup-top": "",
 					children: /* @__PURE__ */ (0, z.jsx)("span", {
 						className: "text-body-2-regular text-text-secondary",
-						children: "设置完成"
+						children: "Setup complete"
 					})
 				}),
 				/* @__PURE__ */ (0, z.jsx)("div", {
@@ -19760,16 +19760,16 @@ function ih({ done: e }) {
 							children: [/* @__PURE__ */ (0, z.jsx)("h1", {
 								id: "auth-card-title",
 								className: "text-title-1-semibold text-text-primary",
-								children: "可以开始使用了"
+								children: "You’re ready to go"
 							}), /* @__PURE__ */ (0, z.jsx)("p", {
 								className: "text-body-regular text-text-secondary",
-								children: "你的 Peach 已准备就绪。"
+								children: "Your Peach is ready."
 							})]
 						}), /* @__PURE__ */ (0, z.jsxs)("div", { children: [/* @__PURE__ */ (0, z.jsx)("p", {
 							className: "text-body-regular text-text-primary",
-							children: e.restored ? "已连接已有数据目录。" : e.skip_media ? "可在「媒体库与入库」添加媒体目录并开始扫描。" : e.scan_requested ? "首次扫描已排队，在后台整理媒体库，期间可以照常使用 Peach。" : "稍后在配置页开始扫描媒体库。"
+							children: e.restored ? "Existing data directory connected." : e.skip_media ? "Add media folders and start scanning under “Libraries & Import.”" : e.scan_requested ? "The initial scan is queued and will organize your library in the background. You can use Peach in the meantime." : "Start scanning your library later from Settings."
 						}), /* @__PURE__ */ (0, z.jsx)(Ym, {
-							summary: "运行信息",
+							summary: "Runtime information",
 							children: /* @__PURE__ */ (0, z.jsx)(qm, { children: e.facts.map((e) => /* @__PURE__ */ (0, z.jsxs)(Jm, {
 								term: e.term,
 								children: [e.value, e.download_url ? /* @__PURE__ */ (0, z.jsx)(Km, {
@@ -19787,7 +19787,7 @@ function ih({ done: e }) {
 					children: /* @__PURE__ */ (0, z.jsx)(zt, {
 						ref: t,
 						href: e.url,
-						children: e.history_guide ? "导入浏览器历史记录" : "进入 Peach"
+						children: e.history_guide ? "Import browser history" : "Open Peach"
 					})
 				})
 			]
@@ -21863,10 +21863,10 @@ function B_(e) {
 	} : {};
 }
 function V_(e) {
-	if (e.library_policy === "local") return "仅使用本地资料";
-	if (e.library_policy !== "custom") return "自动补全";
+	if (e.library_policy === "local") return "Local metadata only";
+	if (e.library_policy !== "custom") return "Automatic";
 	let t = w_.filter(([t]) => e.library_stages?.split(",").includes(t)).map(([, e]) => e);
-	return t.length ? `自定义：${t.join("、")}` : "自定义：只读取本地 NFO 和图片";
+	return t.length ? `Custom: ${t.join(", ")}` : "Custom: local NFO files and images only";
 }
 // src/react/pages/setup/setup-form.tsx
 var H_ = ["port", "mdns_name"];
@@ -21883,7 +21883,7 @@ function U_(e, t) {
 	};
 }
 function W_(e) {
-	return e.length ? `完成设置后扫描 ${e.length} 个文件夹` : "完成设置后扫描媒体目录";
+	return e.length ? `Scan ${e.length} folders after setup` : "Scan media folders after setup";
 }
 var G_ = (e) => Array.isArray(e) ? e.filter(Boolean).join(" ") : e ?? "";
 function K_({ setup: e, onDone: t, onRestore: n }) {
@@ -21895,7 +21895,7 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 	}, [r]);
 	let u = e.questions.find((e) => e.input === "folders"), d = e.questions.find((e) => e.input === "folder"), f = e.questions.filter((e) => e.input !== "folders"), p = f.find((e) => e.key === "host"), m = f.filter((e) => e.input !== "folder" && e.key !== "host"), h = e.media_sources.map(({ value: e, label: t }) => [e, t]), g = (0, j.useRef)({
 		library_id: bh(),
-		library: "我的媒体库",
+		library: "My Library",
 		library_icon: "",
 		library_color: "",
 		library_policy: "auto"
@@ -21938,7 +21938,7 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 		let a = {
 			media_dir: ne ? [] : v.rows.map((e) => ({
 				...e,
-				library: e.library?.trim() || "未命名媒体库"
+				library: e.library?.trim() || "Untitled Library"
 			})),
 			skip_media: ne,
 			access_enabled: T,
@@ -22022,7 +22022,7 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 					children: [/* @__PURE__ */ (0, z.jsx)("div", {
 						"data-setup-progress": "",
 						role: "img",
-						"aria-label": `首次设置，第 ${r + 1} 步，共 4 步`,
+						"aria-label": `Initial setup, step ${r + 1} of 4`,
 						children: [
 							0,
 							1,
@@ -22034,7 +22034,7 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 						}, e))
 					}), /* @__PURE__ */ (0, z.jsx)("span", {
 						className: "text-body-2-regular text-text-secondary",
-						children: "首次设置"
+						children: "Initial setup"
 					})]
 				}),
 				/* @__PURE__ */ (0, z.jsx)("div", {
@@ -22052,11 +22052,11 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 									ref: s,
 									tabIndex: -1,
 									className: "text-title-1-semibold text-text-primary",
-									children: r === 0 ? "欢迎使用 Peach" : r === 1 ? "你的媒体，放在哪里？" : r === 2 ? "在哪里使用 Peach？" : "准备好开始了"
+									children: r === 0 ? "Welcome to Peach" : r === 1 ? "Where is your media?" : r === 2 ? "Where will you use Peach?" : "Ready to get started"
 								}), /* @__PURE__ */ (0, z.jsx)("p", {
 									"data-copy-key": `setup.description.${r}`,
 									className: "text-body-regular text-text-secondary",
-									children: r === 0 ? "花一点时间，让 Peach 更适合你。" : r === 1 ? "连接已有文件夹，或先进入界面看看。" : r === 2 ? "选择访问范围，也可以为馆藏设置密码。" : "确认这些选择，剩下的交给 Peach。"
+									children: r === 0 ? "Take a moment to tailor Peach to your needs." : r === 1 ? "Connect existing folders, or explore the interface first." : r === 2 ? "Choose who can access Peach, and optionally protect your library with a password." : "Review your choices, then let Peach handle the rest."
 								})]
 							}, r),
 							/* @__PURE__ */ (0, z.jsx)("div", {
@@ -22068,30 +22068,30 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 											"data-setup-welcome-copy": "",
 											children: [/* @__PURE__ */ (0, z.jsx)("strong", {
 												className: "text-body-medium",
-												children: "连接你的媒体库"
+												children: "Connect your media library"
 											}), /* @__PURE__ */ (0, z.jsx)("p", {
 												className: "text-body-2-regular text-text-secondary",
-												children: "本地文件夹与已挂载的网盘，都可以整理。"
+												children: "Organize local folders and mounted network drives."
 											})]
 										})] }),
 										/* @__PURE__ */ (0, z.jsxs)("li", { children: [/* @__PURE__ */ (0, z.jsx)(om, {}), /* @__PURE__ */ (0, z.jsxs)("div", {
 											"data-setup-welcome-copy": "",
 											children: [/* @__PURE__ */ (0, z.jsx)("strong", {
 												className: "text-body-medium",
-												children: "更快找到想看的"
+												children: "Find what you want faster"
 											}), /* @__PURE__ */ (0, z.jsx)("p", {
 												className: "text-body-2-regular text-text-secondary",
-												children: "用搜索、标签和收藏浏览馆藏。"
+												children: "Browse your library with search, tags, and favorites."
 											})]
 										})] }),
 										/* @__PURE__ */ (0, z.jsxs)("li", { children: [/* @__PURE__ */ (0, z.jsx)(im, {}), /* @__PURE__ */ (0, z.jsxs)("div", {
 											"data-setup-welcome-copy": "",
 											children: [/* @__PURE__ */ (0, z.jsx)("strong", {
 												className: "text-body-medium",
-												children: "按你的习惯播放"
+												children: "Play it your way"
 											}), /* @__PURE__ */ (0, z.jsx)("p", {
 												className: "text-body-2-regular text-text-secondary",
-												children: "播放与外观偏好，可以随时在设置里调整。"
+												children: "You can change playback and appearance preferences anytime in Settings."
 											})]
 										})] })
 									]
@@ -22110,9 +22110,9 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 										/* @__PURE__ */ (0, z.jsx)(Qp, {
 											isSelected: ne,
 											onChange: re,
-											children: "稍后添加媒体库"
+											children: "Add a library later"
 										}),
-										ne ? /* @__PURE__ */ (0, z.jsx)(Wm, { children: "完成设置后，可在「媒体库与入库」添加自己的媒体目录。" }) : /* @__PURE__ */ (0, z.jsxs)(z.Fragment, { children: [
+										ne ? /* @__PURE__ */ (0, z.jsx)(Wm, { children: "After setup, add your media folders under “Libraries & Import.”" }) : /* @__PURE__ */ (0, z.jsxs)(z.Fragment, { children: [
 											de ? /* @__PURE__ */ (0, z.jsx)(Gm, { children: de }, xe) : null,
 											/* @__PURE__ */ (0, z.jsx)("div", {
 												role: "group",
@@ -22126,29 +22126,29 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 															"data-library-head": "",
 															children: [
 																/* @__PURE__ */ (0, z.jsx)(d_, {
-																	label: `${e.library || "未命名媒体库"} 图标`,
+																	label: `${e.library || "Untitled Library"} icon`,
 																	value: e.library_icon || "",
 																	kind: e.location,
 																	onChange: (t) => Ne(e, { library_icon: t })
 																}),
 																/* @__PURE__ */ (0, z.jsx)(pm, {
 																	className: "w-full",
-																	"aria-label": `${e.library || "未命名媒体库"} 名称`,
-																	placeholder: "媒体库名称",
+																	"aria-label": `${e.library || "Untitled Library"} name`,
+																	placeholder: "Library name",
 																	maxLength: 80,
 																	value: e.library || "",
 																	onChange: (t) => Ne(e, { library: t })
 																}),
 																/* @__PURE__ */ (0, z.jsx)(k_, {
 																	id: e.library_id || "",
-																	name: e.library || "未命名媒体库",
+																	name: e.library || "Untitled Library",
 																	value: e.library_color || "",
 																	onChange: (t) => Ne(e, { library_color: t })
 																}),
 																/* @__PURE__ */ (0, z.jsx)("div", {
 																	"data-setup-library-policy": "",
 																	children: /* @__PURE__ */ (0, z.jsx)(D_, {
-																		name: e.library || "未命名媒体库",
+																		name: e.library || "Untitled Library",
 																		value: e.library_policy || "auto",
 																		onChange: (t) => Ne(e, {
 																			library_policy: t,
@@ -22159,14 +22159,14 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 															]
 														}),
 														e.library_policy === "custom" ? /* @__PURE__ */ (0, z.jsx)(O_, {
-															name: e.library || "未命名媒体库",
+															name: e.library || "Untitled Library",
 															value: e.library_stages?.split(",").filter(Boolean) ?? T_,
 															onChange: (t) => Ne(e, { library_stages: t.join(",") })
 														}) : null,
 														/* @__PURE__ */ (0, z.jsxs)("div", {
 															"data-library-folders": "",
 															role: "group",
-															"aria-label": `${e.library || "未命名媒体库"} 的文件夹`,
+															"aria-label": `${e.library || "Untitled Library"} folders`,
 															children: [v.rows.map((t, n) => t.library_id === e.library_id ? /* @__PURE__ */ (0, z.jsx)(o_, {
 																label: `${u.label} ${n + 1}`,
 																path: t.path,
@@ -22191,21 +22191,21 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 																	/* @__PURE__ */ (0, z.jsx)(r_, {
 																		index: n,
 																		cost: t.cost ?? "",
-																		error: _e && !t.cost ? "请选择媒体读取策略" : void 0,
+																		error: _e && !t.cost ? "Select a media access policy" : void 0,
 																		onChange: (e) => v.edit(n, { cost: e })
 																	}),
 																	Me.length > 1 ? /* @__PURE__ */ (0, z.jsx)(t_, {
-																		label: "移到媒体库",
+																		label: "Move to library",
 																		className: "w-full @lg:w-60",
 																		children: /* @__PURE__ */ (0, z.jsx)(vh, {
 																			className: "w-full",
-																			"aria-label": `目录所属媒体库 ${n + 1}`,
+																			"aria-label": `Library for folder ${n + 1}`,
 																			selectedKey: t.library_id,
 																			renderValue: /* @__PURE__ */ (0, z.jsxs)("span", {
 																				className: "flex min-w-0 items-center gap-2",
 																				children: [/* @__PURE__ */ (0, z.jsx)(Zm, { mark: t.library_icon || l_(t.location)[0] }), /* @__PURE__ */ (0, z.jsx)("span", {
 																					className: "truncate",
-																					children: t.library || "未命名媒体库"
+																					children: t.library || "Untitled Library"
 																				})]
 																			}),
 																			onSelectionChange: (e) => {
@@ -22214,7 +22214,7 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 																			},
 																			children: [...new Map(v.rows.map((e) => [e.library_id, e])).values()].map((e) => /* @__PURE__ */ (0, z.jsx)(yh, {
 																				id: e.library_id,
-																				children: e.library || "未命名媒体库"
+																				children: e.library || "Untitled Library"
 																			}, e.library_id))
 																		})
 																	}) : null
@@ -22224,7 +22224,7 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 																children: /* @__PURE__ */ (0, z.jsx)(Rt, {
 																	variant: "secondary",
 																	"data-copy-interact": !0,
-																	"aria-label": `给 ${e.library || "未命名媒体库"} 添加文件夹`,
+																	"aria-label": `Add a folder to ${e.library || "Untitled Library"}`,
 																	onClick: () => {
 																		v.add(), v.edit(v.rows.length, {
 																			...B_(e),
@@ -22232,7 +22232,7 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 																			cost: e.cost
 																		});
 																	},
-																	children: "添加文件夹"
+																	children: "Add folder"
 																})
 															})]
 														})
@@ -22247,14 +22247,14 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 												onClick: () => {
 													v.add(), v.edit(v.rows.length, {
 														library_id: bh(),
-														library: `媒体库 ${Me.length + 1}`,
+														library: `Library ${Me.length + 1}`,
 														library_icon: "",
 														library_color: "",
 														library_policy: "auto",
 														library_stages: void 0
 													});
 												},
-												children: "添加媒体库"
+												children: "Add library"
 											}),
 											je ? /* @__PURE__ */ (0, z.jsxs)(z.Fragment, { children: [
 												/* @__PURE__ */ (0, z.jsx)(i_, {}),
@@ -22297,7 +22297,7 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 												hint: Ce(ke)
 											}), /* @__PURE__ */ (0, z.jsx)(oh, {
 												icon: Zg,
-												"aria-label": "选择数据目录",
+												"aria-label": "Choose data directory",
 												onClick: () => void Oe(),
 												...Xg(x)
 											})]
@@ -22321,11 +22321,11 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 													children: [/* @__PURE__ */ (0, z.jsx)(sm, {
 														id: "setup-password-title",
 														elementType: "span",
-														children: "访问密码"
+														children: "Access password"
 													}), /* @__PURE__ */ (0, z.jsx)("p", {
 														id: "setup-access-description",
 														className: "text-body-2-regular text-text-secondary",
-														children: "开启后，访问 Peach 需要先登录。"
+														children: "When enabled, you must sign in to access Peach."
 													})]
 												}), /* @__PURE__ */ (0, z.jsx)(lh, {
 													"aria-labelledby": "setup-password-title",
@@ -22334,15 +22334,15 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 													onChange: E
 												})]
 											}),
-											/* @__PURE__ */ (0, z.jsx)(Wm, { children: Pe ? "局域网访问推荐设置密码。未设置时，同一网络中能连接 Peach 的设备可直接进入。" : "只有这台电脑可以访问；设置密码后，打开 Peach 仍需登录。" }),
+											/* @__PURE__ */ (0, z.jsx)(Wm, { children: Pe ? "A password is recommended for LAN access. Without one, any device on the same network that can connect to Peach can open it." : "Only this computer can access Peach. If you set a password, you will still need to sign in." }),
 											T ? /* @__PURE__ */ (0, z.jsx)(A_, {
-												label: "访问密码",
+												label: "Access password",
 												password: D,
 												confirmation: k,
 												onPassword: O,
 												onConfirmation: ee,
 												passwordError: Ce(G_(le.access_password)),
-												passwordHint: "请输入 8–256 个字符。",
+												passwordHint: "Enter 8–256 characters.",
 												confirmationInvalid: !!le.access_password
 											}) : null
 										]
@@ -22352,15 +22352,15 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 										children: [
 											/* @__PURE__ */ (0, z.jsx)(Ht, {
 												id: "setup-proxy-title",
-												children: "Peach 代理"
+												children: "Peach proxy"
 											}),
-											/* @__PURE__ */ (0, z.jsx)(Wm, { children: "用于资料采集、封面和工具下载，可在配置页修改。" }),
+											/* @__PURE__ */ (0, z.jsx)(Wm, { children: "Used for metadata retrieval, cover art, and tool downloads. You can change this in Settings." }),
 											/* @__PURE__ */ (0, z.jsxs)("div", {
 												className: "flex flex-col items-start gap-1.5",
 												children: [/* @__PURE__ */ (0, z.jsx)(sm, {
 													elementType: "span",
 													id: "setup-proxy-mode-label",
-													children: "连接方式"
+													children: "Connection method"
 												}), /* @__PURE__ */ (0, z.jsx)(M_, {
 													mode: ae,
 													onChange: oe,
@@ -22376,18 +22376,18 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 											}) : le.peach_proxy ? /* @__PURE__ */ (0, z.jsx)(Gm, { children: G_(le.peach_proxy) }, xe) : null,
 											e.docker && ae === "proxy" && P_(se) ? /* @__PURE__ */ (0, z.jsx)(hm, {
 												tone: "warning",
-												title: "请填写容器可访问的代理地址",
-												children: "回环地址指向容器自身；宿主机代理需使用容器可访问的宿主机地址。"
+												title: "Enter a proxy address accessible from the container",
+												children: "A loopback address points to the container itself. For a host proxy, use a host address accessible from the container."
 											}) : null,
 											e.peach_proxy?.needs_selection ? /* @__PURE__ */ (0, z.jsx)(hm, {
 												tone: "warning",
-												title: "需要选择连接方式",
-												children: "已有来源的代理地址不同，请选择公共连接方式。"
+												title: "Choose a connection method",
+												children: "Existing sources use different proxy addresses. Choose a shared connection method."
 											}) : null
 										]
 									}),
 									/* @__PURE__ */ (0, z.jsxs)(Vt, { children: [/* @__PURE__ */ (0, z.jsx)(Ym, {
-										summary: "高级设置",
+										summary: "Advanced settings",
 										defaultOpen: P > 0,
 										children: /* @__PURE__ */ (0, z.jsx)("div", {
 											className: "flex flex-col gap-4",
@@ -22395,7 +22395,7 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 										})
 									}, P), /* @__PURE__ */ (0, z.jsx)(Wm, { children: /* @__PURE__ */ (0, z.jsxs)("span", {
 										className: "break-all",
-										children: ["访问地址：", Fe]
+										children: ["Access URL: ", Fe]
 									}) })] })
 								]
 							}),
@@ -22407,60 +22407,60 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 										labelledBy: "setup-options-title",
 										children: [/* @__PURE__ */ (0, z.jsx)(Ht, {
 											id: "setup-options-title",
-											children: "首次扫描"
-										}), ne ? /* @__PURE__ */ (0, z.jsx)(Wm, { children: "添加媒体目录后，再选择处理方式并开始扫描。" }) : /* @__PURE__ */ (0, z.jsxs)(z.Fragment, { children: [/* @__PURE__ */ (0, z.jsxs)("div", {
+											children: "Initial scan"
+										}), ne ? /* @__PURE__ */ (0, z.jsx)(Wm, { children: "After adding media folders, choose how to process them and start scanning." }) : /* @__PURE__ */ (0, z.jsxs)(z.Fragment, { children: [/* @__PURE__ */ (0, z.jsxs)("div", {
 											className: "flex flex-col gap-1.5",
 											children: [/* @__PURE__ */ (0, z.jsx)(Qp, {
 												isSelected: A,
 												onChange: te,
 												children: W_(Ae)
-											}), /* @__PURE__ */ (0, z.jsx)(Wm, { children: A ? "扫描会在后台开始，期间可以进入 Peach。" : "先保存处理方式，稍后在「媒体库与入库」开始扫描。" })]
-										}), v.rows.some((e) => e.cost === "metered") ? /* @__PURE__ */ (0, z.jsx)(Wm, { children: "开启代理保护的目录不会自动读取视频信息或生成预览；播放时会读取视频。" }) : null] })]
+											}), /* @__PURE__ */ (0, z.jsx)(Wm, { children: A ? "Scanning starts in the background, and you can use Peach in the meantime." : "Save the processing method now, then start scanning later under “Libraries & Import.”" })]
+										}), v.rows.some((e) => e.cost === "metered") ? /* @__PURE__ */ (0, z.jsx)(Wm, { children: "Proxy-protected folders will not automatically read video metadata or generate previews. Videos are read during playback." }) : null] })]
 									}),
 									pe ? /* @__PURE__ */ (0, z.jsx)(Gm, { children: pe }) : null,
 									M ? /* @__PURE__ */ (0, z.jsxs)(Vt, { children: [
-										/* @__PURE__ */ (0, z.jsx)(Ht, { children: "版本统计与错误诊断" }),
+										/* @__PURE__ */ (0, z.jsx)(Ht, { children: "Version statistics and error diagnostics" }),
 										/* @__PURE__ */ (0, z.jsx)(z_, {
 											value: M,
 											onChange: ie
 										}),
-										/* @__PURE__ */ (0, z.jsx)(Wm, { children: "馆藏与口味明细上传默认关闭，可在「应用与维护」查看并选择。" })
+										/* @__PURE__ */ (0, z.jsx)(Wm, { children: "Uploading library and preference details is off by default. Review and enable it under “App & Maintenance.”" })
 									] }) : null,
 									/* @__PURE__ */ (0, z.jsxs)(Vt, {
 										labelledBy: "setup-summary-title",
 										children: [/* @__PURE__ */ (0, z.jsx)(Ht, {
 											id: "setup-summary-title",
-											children: "确认设置"
+											children: "Review setup"
 										}), /* @__PURE__ */ (0, z.jsxs)(qm, { children: [
 											/* @__PURE__ */ (0, z.jsx)(Jm, {
-												term: "媒体目录",
-												children: ne ? "稍后添加" : Ae.length ? `${Ae.length} 个文件夹 · ${Me.length} 个媒体库` : "尚未填写"
+												term: "Media folders",
+												children: ne ? "Add later" : Ae.length ? `${Ae.length} folders · ${Me.length} libraries` : "Not provided"
 											}),
 											/* @__PURE__ */ (0, z.jsx)(Jm, {
-												term: "数据目录",
+												term: "Data directory",
 												children: /* @__PURE__ */ (0, z.jsx)("span", {
 													className: "break-all",
-													children: d ? y[d.key] || "尚未填写" : "未取得"
+													children: d ? y[d.key] || "Not provided" : "Unavailable"
 												})
 											}),
 											/* @__PURE__ */ (0, z.jsxs)(Jm, {
-												term: "访问范围",
+												term: "Access scope",
 												children: [
-													Pe ? "同一局域网的设备" : "只有这台电脑",
+													Pe ? "Devices on the same LAN" : "This computer only",
 													" · ",
-													T ? "使用访问密码" : "未设置访问密码"
+													T ? "Password enabled" : "No password"
 												]
 											}),
 											/* @__PURE__ */ (0, z.jsx)(Jm, {
-												term: "首次扫描",
-												children: !ne && A ? "完成设置后开始" : "稍后手动开始"
+												term: "Initial scan",
+												children: !ne && A ? "Start after setup" : "Start manually later"
 											}),
 											M ? /* @__PURE__ */ (0, z.jsx)(Jm, {
-												term: "诊断反馈",
-												children: M.usage || M.errors ? "已开启，可在上方调整" : "已关闭"
+												term: "Diagnostics",
+												children: M.usage || M.errors ? "Enabled; adjust above" : "Disabled"
 											}) : null,
 											ne ? null : Me.map((e) => /* @__PURE__ */ (0, z.jsx)(Jm, {
-												term: e.library || "未命名媒体库",
+												term: e.library || "Untitled Library",
 												children: V_(e)
 											}, e.library_id))
 										] })]
@@ -22479,15 +22479,15 @@ function K_({ setup: e, onDone: t, onRestore: n }) {
 							he || l(r - 1);
 						},
 						"aria-disabled": he || void 0,
-						children: "返回"
+						children: "Back"
 					}) : /* @__PURE__ */ (0, z.jsx)(Rt, {
 						variant: "ghost",
 						onClick: n,
-						children: "使用已有数据"
+						children: "Use existing data"
 					}), /* @__PURE__ */ (0, z.jsx)(Rt, {
 						type: "submit",
 						...Xg(he),
-						children: r === 0 ? "开始设置" : r === 3 ? "完成设置" : "继续"
+						children: r === 0 ? "Start setup" : r === 3 ? "Complete setup" : "Continue"
 					})]
 				}, r)
 			]
@@ -22523,7 +22523,7 @@ function q_({ onDone: e, onBack: t }) {
 					"data-setup-top": "",
 					children: /* @__PURE__ */ (0, z.jsx)("span", {
 						className: "text-body-2-regular text-text-secondary",
-						children: "连接已有数据"
+						children: "Connect existing data"
 					})
 				}),
 				/* @__PURE__ */ (0, z.jsx)("div", {
@@ -22537,13 +22537,13 @@ function q_({ onDone: e, onBack: t }) {
 								ref: c,
 								tabIndex: -1,
 								className: "text-title-1-semibold text-text-primary",
-								children: "使用已有数据"
+								children: "Use existing data"
 							}), /* @__PURE__ */ (0, z.jsx)("p", {
 								className: "text-body-regular text-text-secondary",
-								children: "连接 Peach 数据目录，继续使用原来的配置与馆藏。"
+								children: "Connect a Peach data directory to continue using your existing settings and library."
 							})]
 						}), /* @__PURE__ */ (0, z.jsx)("div", { children: /* @__PURE__ */ (0, z.jsx)(pm, {
-							label: "已有数据目录",
+							label: "Existing data directory",
 							value: n,
 							onChange: r,
 							isRequired: !0,
@@ -22554,7 +22554,7 @@ function q_({ onDone: e, onBack: t }) {
 							hint: i ? /* @__PURE__ */ (0, z.jsx)("span", {
 								role: "alert",
 								children: i
-							}) : "选择包含 config.toml 和 database 文件夹的数据目录。"
+							}) : "Select the data directory containing config.toml and the database folder."
 						}) })]
 					})
 				}),
@@ -22567,11 +22567,11 @@ function q_({ onDone: e, onBack: t }) {
 							o || t();
 						},
 						"aria-disabled": o || void 0,
-						children: "返回首次设置"
+						children: "Back to initial setup"
 					}), /* @__PURE__ */ (0, z.jsx)(Rt, {
 						type: "submit",
 						...Xg(o),
-						children: o ? "正在连接数据目录…" : "使用此目录"
+						children: o ? "Connecting data directory…" : "Use this directory"
 					})]
 				})
 			]
@@ -22615,7 +22615,7 @@ function J_() {
 				"data-setup-top": "",
 				children: /* @__PURE__ */ (0, z.jsx)("span", {
 					className: "text-body-2-regular text-text-secondary",
-					children: "首次设置"
+					children: "Initial setup"
 				})
 			}), /* @__PURE__ */ (0, z.jsx)("div", {
 				"data-setup-step-scroll": "",
@@ -22627,17 +22627,17 @@ function J_() {
 							children: [/* @__PURE__ */ (0, z.jsx)("h1", {
 								id: "auth-card-title",
 								className: "text-title-1-semibold text-text-primary",
-								children: "欢迎使用 Peach"
+								children: "Welcome to Peach"
 							}), /* @__PURE__ */ (0, z.jsx)("p", {
 								className: "text-body-regular text-text-secondary",
-								children: "花一点时间，让 Peach 更适合你。"
+								children: "Take a moment to tailor Peach to your needs."
 							})]
 						}),
 						e.kind === "loading" ? /* @__PURE__ */ (0, z.jsxs)("div", {
 							"data-setup-loading": "",
 							"data-skeleton": "",
 							role: "status",
-							"aria-label": "正在读取设置",
+							"aria-label": "Loading setup",
 							children: [
 								/* @__PURE__ */ (0, z.jsx)("span", {}),
 								/* @__PURE__ */ (0, z.jsx)("span", {}),
@@ -22646,7 +22646,7 @@ function J_() {
 						}) : null,
 						e.kind === "denied" ? /* @__PURE__ */ (0, z.jsx)(hm, {
 							tone: "error",
-							children: "请在运行 Peach 的这台电脑上打开设置。"
+							children: "Open setup on the computer running Peach."
 						}) : null,
 						e.kind === "failed" ? /* @__PURE__ */ (0, z.jsx)(hm, {
 							tone: "error",
@@ -22655,7 +22655,7 @@ function J_() {
 								onClick: () => {
 									t({ kind: "loading" }), r((e) => e + 1);
 								},
-								children: "立即重试"
+								children: "Try again now"
 							}),
 							children: e.message
 						}) : null
@@ -22675,4 +22675,4 @@ E();
 var X_ = document.getElementById("peach-page"), Z_ = X_ ? Y_[X_.dataset.page ?? ""] : void 0;
 X_ && Z_ && (0, M.createRoot)(X_).render(/* @__PURE__ */ (0, z.jsx)(Z_, { data: { ...X_.dataset } }));
 
-//# debugId=05aeefeb-7b50-4de9-86ec-015af5c64215
+//# debugId=64e69298-bfe4-4658-9cfc-dd57d7998551
