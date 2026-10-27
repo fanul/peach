@@ -32,7 +32,7 @@ function FolderBrowseControl() {
   if (!isCatalogPath(address.pathname) && !/^\/(performers|creators|studios|series|agencies|tags)\/[^/]+$/.test(address.pathname)) return null;
   const params = new URLSearchParams(address.search);
   const active = params.get('browse') === 'folders' || !!params.get('folder');
-  return <IconButton size="small" data-folder-mode-toggle="" aria-label="文件夹模式" title="文件夹模式" aria-pressed={active}
+  return <IconButton size="small" data-folder-mode-toggle="" aria-label="Folder mode" title="Folder mode" aria-pressed={active}
     icon={RiFolder3Line}
     onClick={() => actions?.navigate(folderHref(address,
       active ? { browse: null, folder: null, folder_recursive: null } : { browse: 'folders' }))} />;
