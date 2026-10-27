@@ -151,7 +151,7 @@ function wideSleeve(img: HTMLImageElement): boolean {
     && ratio >= WIDE_SLEEVE_RATIO_MIN && ratio < WIDE_SLEEVE_RATIO_MAX;
 }
 
-/* 卡片先取封面的派生档（`/cover?thumb=2` 或 `thumb=1`，见 `cardCoverUrl`）：高清原件一张
+/* Cards先取封面的派生档（`/cover?thumb=2` 或 `thumb=1`，见 `cardCoverUrl`）：高清原件一张
    解码 38 MB，一页几十张挤爆解码缓存，来回滚动时滚走的被清掉、滚回来现解，那一段是空白。
    取景落定之后量这张图在屏幕上铺开多大：一个源像素要占不止一个设备像素，就是这一档不够
    清楚，往上换一档——800 那档换 1600 那档，1600 那档换原件。换上的那张加载完会再量一次。
@@ -170,11 +170,11 @@ export function upgradeCover(img: HTMLImageElement): void {
     : img.src.replace(/[?&]thumb=1(?=&|$)/, '');
 }
 
-/* 容器比例只有 `.pic` 的 `--card-ratio` 知道：竖屏开关、JAV 大图和普通卡片各写一个
+/* 容器比例只有 `.pic` 的 `--card-ratio` 知道：竖屏开关、JAV 大图和普通Cards各写一个
    值，在这里按 layout 重算迟早会和它分叉。自定义属性会继承，直接从图片上读；
    `aspect-ratio` 允许 `16/9` 这种写法，所以两种形式都得认。
-   卡片框自己的行内样式写着这个值时直接读行内：框与图之间那一层不另设比例，读到的就是计算值，
-   而 `getComputedStyle` 赶上刚插进来的一批卡片会先把整棵样式树重算一遍。框上没写的（比例
+   Cards框自己的行内样式写着这个值时直接读行内：框与图之间那一层不另设比例，读到的就是计算值，
+   而 `getComputedStyle` 赶上刚插进来的一批Cards会先把整棵样式树重算一遍。框上没写的（比例
    写在更外层的网格上）才读计算样式。 */
 export function coverRatio(img: HTMLImageElement): number {
   const inline = img.closest<HTMLElement>('.pic,[data-media-pic]')?.style.getPropertyValue('--card-ratio').trim();
@@ -190,17 +190,17 @@ export function coverFace(img: HTMLImageElement, axis: 'cx' | 'cy'): number | nu
 
 /* 封面与头像的加载态，和换头像那一格同一形态：图还在路上时框上铺一层微光，到手后
    微光淡出并糊掉（`09-skeleton.css` 的 `.imgwait`）。图是模板字符串拼进来的，逐张挂
-   监听做不到，所以在插进页面时看一眼：已经 `complete` 的（缓存里直接解码的那种）
-   什么都不标，页面每次重绘都不会闪一下微光。标上之后 `load` 一定会来——图已经挂在
+   监听做不到，所以在插进page时看一眼：已经 `complete` 的（缓存里直接解码的那种）
+   什么都不标，page每次重绘都不会闪一下微光。标上之后 `load` 一定会来——图已经挂在
    文档上，捕获阶段的监听收得到；取不到图的 `error` 同样收尾，不让微光盖住首字母。
    收尾后类名一并摘掉：没到门槛就到手的直接摘，淡出过的等淡出完再摘，封面上平时不留
-   那层 `::after`。React 索引页的头像框（`[data-person-ring]`）与资料卡的大位、同台艺人
-   （`[data-entity-portrait]`、`[data-hero-ring]`）里那张图同样由这一层拼，插进页面时照样
+   那层 `::after`。React 索引页的头像框（`[data-person-ring]`）与profile卡的大位、同台Performers
+   （`[data-entity-portrait]`、`[data-hero-ring]`）里那张图同样由这一层拼，插进page时照样
    被这里看见。 */
 const PENDING_IMAGES = '.pic>img.poster,[data-media-art]>img,.ring>img,[data-tier-ring]>img,[data-person-ring]>img,[data-entity-portrait]>img,[data-hero-ring]>img';
 const pendingSince = new WeakMap<Element, number>();
 
-/** 插进页面时还没到手的图，在框上标 `imgwait`。 */
+/** 插进page时还没到手的图，在框上标 `imgwait`。 */
 export function watchPendingImages(node: Element): void {
   const found = node.matches(PENDING_IMAGES) ? [node] : node.querySelectorAll(PENDING_IMAGES);
   for (const img of found) {
@@ -228,7 +228,7 @@ export function settleImage(img: HTMLImageElement): void {
   timer = setTimeout(drop, 1000);
 }
 
-/* 缓存图插进页面的第一帧就画出来了，`load` 却排在下一个任务里：不在这里先取景，那一帧
+/* 缓存图插进page的第一帧就画出来了，`load` 却排在下一个任务里：不在这里先取景，那一帧
    要么藏着（`09-skeleton.css`），要么是几何居中。观察回调是微任务，赶在绘制之前。
    不限于 `PENDING_IMAGES` 那几种框：带脸框的头像散在各页，哪里的都一样要先取景。 */
 export function frameCachedImages(node: Element): void {
@@ -244,8 +244,8 @@ export function frameCachedImages(node: Element): void {
 
 /* 图比框还小时不再拉伸：原尺寸居中摆，空出来的一圈拿同一张图放大模糊补底。
 
-   厂牌标识实测从 42 px 到 1378 px 都有。`/logo?variant=large` 已经先挑过这个厂牌
-   最清晰的一份，剩下的是本来就没有大图的厂牌——把 112 px 的那张拉满 180 px 的格子
+   Studios标识实测从 42 px 到 1378 px 都有。`/logo?variant=large` 已经先挑过这个Studios
+   最清晰的一份，剩下的是本来就没有大图的Studios——把 112 px 的那张拉满 180 px 的格子
    只是把糊放大给人看，而摆在原尺寸上，它至少是清楚的。
 
    度量只能在 `load` 之后做：图没加载完时 `naturalWidth` 读到的是 0。换过回落图后
@@ -266,7 +266,7 @@ export function fitNativeImage(img: HTMLImageElement): void {
     box.style.setProperty('--markbg', 'none');
     return;
   }
-  // 版式切换会改变框的大小，每次按屏幕像素密度重新判断。
+  // 版式切换会改变框的大小，每次按屏幕像素密度Reassess。
   const { small, width, height } = nativeImageFit(img.naturalWidth, img.naturalHeight, box.clientWidth, box.clientHeight, devicePixels());
   box.dataset.nativeSmall = String(small);
   box.style.setProperty('--markw', small ? width + 'px' : '100%');

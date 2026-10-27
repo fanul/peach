@@ -60,7 +60,7 @@ export function formModal({title,description='',body='',confirmLabel,cancelLabel
       settled={confirmed:true,result:await onConfirm()};
       dialog.close();
     }catch(error:any){
-      failure.innerHTML=noteHtml(error.message||'操作未完成',{variant:'error'});
+      failure.innerHTML=noteHtml(error.message||'The operation was not completed',{variant:'error'});
       setActionBusy(accept,false);
     }finally{busy=false}
   };
@@ -151,7 +151,7 @@ export function confirmModal({title,body,items=[],confirmLabel,cancelLabel='取�
         settled={confirmed:true,result:await onConfirm()};
         dialog.close();
       }catch(error:any){
-        failure.innerHTML=noteHtml(error.message||'操作未完成',{variant:'error'});
+        failure.innerHTML=noteHtml(error.message||'The operation was not completed',{variant:'error'});
         setActionBusy(accept,false);
       }finally{busy=false}
     };

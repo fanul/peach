@@ -24,39 +24,39 @@ export function MediaProcessingSettings({ receipt }: { receipt(message: string):
   const error = action.error || (policy.error ? errorMessage(policy.error) : '');
   const blocked = !policy.data || policy.isFetching || !!action.busy;
   return (
-    <Section title="视频预览">
+    <Section title="Video Previews">
       <Rows>
-        <SettingsRow label="生成视频预览" description="为本地视频生成九宫格与时间轴预览；关闭后仍按入库规则探测时长与分辨率。">
-          <Switch aria-label="生成视频预览" isSelected={!!policy.data && !policy.data.metadata_only} isDisabled={blocked}
+        <SettingsRow label="Generate Video Previews" description="Generate contact sheets and timeline previews for local videos. When off, duration and resolution are still detected according to import rules.">
+          <Switch aria-label="Generate Video Previews" isSelected={!!policy.data && !policy.data.metadata_only} isDisabled={blocked}
             onChange={(value) => void action.run('save', (signal) =>
               apiSend<MediaProcessingPolicy>(MEDIA_PROCESSING_URL, { metadata_only: !value }, 'POST', signal), (saved) => {
                 queryClient.setQueryData(MEDIA_PROCESSING_KEY, saved);
                 void queryClient.invalidateQueries({ queryKey: THUMBNAIL_JOBS_KEY });
                 void queryClient.invalidateQueries({ queryKey: LIBRARY_PROCESSING_KEY });
-                receipt(saved.metadata_only ? '已关闭视频预览生成' : '已开启视频预览生成');
+                receipt(saved.metadata_only ? 'Video preview generation disabled' : 'Video preview generation enabled');
               })} />
         </SettingsRow>
       </Rows>
       <VideoThumbnailControls disabled={!policy.data || policy.data.metadata_only || !!action.busy} />
       <Rows>
-        <SettingsRow label="抽帧解码方式" description="用于生成封面、九宫格和时间轴。">
+        <SettingsRow label="Frame Extraction Decoder" description="Used to generate covers, contact sheets, and timeline previews.">
           <div id="previewAccelerationSetting">
-            <Select aria-label="抽帧解码方式" selectedKey={policy.data?.preview_acceleration || 'auto'} isDisabled={blocked}
+            <Select aria-label="Frame Extraction Decoder" selectedKey={policy.data?.preview_acceleration || 'auto'} isDisabled={blocked}
               onSelectionChange={(mode) => {
                 if (mode === null) return;
                 void action.run('preview_acceleration', (signal) => apiSend<MediaProcessingPolicy>(MEDIA_PROCESSING_URL,
                   { preview_acceleration: String(mode) }, 'POST', signal), (saved) => {
                   queryClient.setQueryData(MEDIA_PROCESSING_KEY, saved);
-                  receipt('已保存抽帧解码方式');
+                  receipt('Frame extraction decoder saved');
                 });
               }}>
-              <SelectItem id="auto">自动（硬件优先）</SelectItem>
-              <SelectItem id="software">软件解码</SelectItem>
+              <SelectItem id="auto">Automatic (Prefer Hardware)</SelectItem>
+              <SelectItem id="software">Software Decoding</SelectItem>
             </Select>
           </div>
         </SettingsRow>
       </Rows>
-      {action.busy ? <Stack divided><Help role="status">正在保存…</Help></Stack> : null}
+      {action.busy ? <Stack divided><Help role="status">Saving…</Help></Stack> : null}
       {error ? <Stack divided><ErrorText>{error}</ErrorText></Stack> : null}
     </Section>
   );
@@ -67,27 +67,27 @@ export function PlaybackTranscodeSettings({ receipt }: { receipt(message: string
   const action = useAction();
   const error = action.error || (policy.error ? errorMessage(policy.error) : '');
   return (
-    <Section title="视频播放">
+    <Section title="Video Playback">
       <Rows>
-        <SettingsRow label="转码方式" description="用于播放时的视频转码。">
+        <SettingsRow label="Transcoding Method" description="Used to transcode video during playback.">
           <div id="playbackAccelerationSetting">
-            <Select aria-label="转码方式" selectedKey={policy.data?.playback_acceleration || 'auto'}
+            <Select aria-label="Transcoding Method" selectedKey={policy.data?.playback_acceleration || 'auto'}
               isDisabled={!policy.data || policy.isFetching || !!action.busy}
               onSelectionChange={(mode) => {
                 if (mode === null) return;
                 void action.run('playback_acceleration', (signal) => apiSend<MediaProcessingPolicy>(MEDIA_PROCESSING_URL,
                   { playback_acceleration: String(mode) }, 'POST', signal), (saved) => {
                   queryClient.setQueryData(MEDIA_PROCESSING_KEY, saved);
-                  receipt('已保存转码方式');
+                  receipt('Transcoding method saved');
                 });
               }}>
-              <SelectItem id="auto">自动（硬件优先）</SelectItem>
-              <SelectItem id="software">软件编解码</SelectItem>
+              <SelectItem id="auto">Automatic (Prefer Hardware)</SelectItem>
+              <SelectItem id="software">Software Codecs</SelectItem>
             </Select>
           </div>
         </SettingsRow>
       </Rows>
-      {action.busy ? <Stack divided><Help role="status">正在保存…</Help></Stack> : null}
+      {action.busy ? <Stack divided><Help role="status">Saving…</Help></Stack> : null}
       {error ? <Stack divided><ErrorText>{error}</ErrorText></Stack> : null}
     </Section>
   );

@@ -72,7 +72,7 @@ const focusOf = (value: unknown): FaceFocus | null =>
 /** 「女优」只用于番号发行物。素人、创作者自制和网红内容里的出镜者是艺人，套上 JAV 的行业
  *  称谓既不准确也会和创作者身份混淆。判据由后端 `is_jav` 给。 */
 export function performerLabel(item: { is_jav?: boolean } | null | undefined): string {
-  return item && item.is_jav ? '女优' : '艺人';
+  return item && item.is_jav ? 'Actresses' : 'Performers';
 }
 
 /* 实体那张脸：规范实体图优先，取不到退到代表作头像，两样都取不到就一个 `<img>`
@@ -279,8 +279,8 @@ export function javArtwork(item: CoverItem, layout: 'big' | 'small', eager: bool
   };
 }
 
-/** 一张作品卡的封面。番号作品走上面那条；关注来源的条目用来源自己的缩略图；其余取本地
- *  预览格。`size` 是这一屏的大图／小图，只施加给番号作品。 */
+/** 一张作品卡的封面。番号作品走上面那条；Following来源的item用来源自己的缩略图；其余取Local
+ *  Preview格。`size` 是这一屏的大图／小图，只施加给番号作品。 */
 export function cardArtwork(item: CoverItem & { follow_thumb_url?: string | null }, size: 'big' | 'small',
   eager: boolean, javImage: unknown): Artwork {
   if (item.is_jav) return javArtwork(item, size, eager, javImage);
@@ -293,7 +293,7 @@ export function cardArtwork(item: CoverItem & { follow_thumb_url?: string | null
   return mixFace(item, size, eager, javImage);
 }
 
-/** Mix 的一张画面，播放队列每一行的小图也是它：番号作品走封套链，其余取本地预览格，同一条
+/** Mix 的一张画面，播放队列每一行的小图也是它：番号作品走封套链，其余取LocalPreview格，同一条
  *  在两处长得一样。`size` 只施加给番号作品。 */
 export function mixFace(item: CoverItem, size: 'big' | 'small', eager: boolean, javImage: unknown): Artwork {
   if (item.is_jav) return javArtwork(item, size, eager, javImage);
@@ -301,22 +301,22 @@ export function mixFace(item: CoverItem, size: 'big' | 'small', eager: boolean, 
   return frameArtwork(item, eager);
 }
 
-/** 视频自己的画面：本地预览格切出的帧图。没有帧图就是空，卡片写「无预览」。
- *  竖屏格（竖屏带与筛竖屏的网格）只展示竖屏比例的视频，番号作品在那里也只用它，不借番号官方
- *  封面：封面是整部作品的宣传图，多是横图，和这一卷竖屏视频不是同一个画面。 */
+/** Videos自己的画面：LocalPreview格切出的帧图。没有帧图就是空，Cards写「No preview”。
+ *  竖屏格（竖屏带与筛竖屏的网格）只展示竖屏比例的Videos，番号作品在那里也只用它，不借番号官方
+ *  封面：封面是整部作品的宣传图，多是横图，和这一卷竖屏Videos不是同一个画面。 */
 export function frameArtwork(item: CoverItem, eager: boolean): Artwork {
   if (!item.has_thumb && !item.has_local_poster) return NO_ARTWORK;
   return { kind: 'thumb', html: `<img class="poster" src="/poster?id=${item.id}&c=4" width="640" height="360" alt="" loading="${eager ? 'eager' : 'lazy'}" decoding="async">` };
 }
 
-/** 播放队列一行的小图：Mix 画面按小图取，没有可用的图就写「无预览」占住那一格。 */
+/** 播放队列一行的小图：Mix 画面按小图取，没有可用的图就写「No preview”占住那一格。 */
 export function queueThumbHtml(item: CoverItem, javImage: unknown): string {
-  return mixFace(item, 'small', false, javImage).html || '<span class="nopic">无预览</span>';
+  return mixFace(item, 'small', false, javImage).html || '<span class="nopic">No preview</span>';
 }
 
-/* 详情开场给播放器的海报位：video.js 的脚本还在下载、流源还没接上时，画面先给本地
-   封面，不留一块黑。选哪张与卡片同一份判据，番号作品跟随「JAV 默认封面」设置——
-   官方封套或预览图；其它媒体退到本地预览格。返回空串表示这条没有可用的本地图，
+/* 详情开场给播放器的海报位：video.js 的脚本还在下载、流源还没接上时，画面先给Local
+   封面，不留一块黑。选哪张与Cards同一份判据，番号作品跟随「JAV 默认封面”设置——
+   官方封套或Preview图；其它媒体退到LocalPreview格。Back to 空串表示这条没有可用的Local图，
    播放器照旧从黑场开始。 */
 export function detailPosterUrl(item: CoverItem, javImage: unknown): string {
   const thumb = item.has_thumb || item.has_local_poster ? `/poster?id=${item.id}&c=4` : '';
@@ -325,7 +325,7 @@ export function detailPosterUrl(item: CoverItem, javImage: unknown): string {
     ? coverUrl(item) : thumb;
 }
 
-/** 卡片署名要的字段。 */
+/** Cards署名要的字段。 */
 export interface IdentityItem {
   is_jav?: boolean;
   creator?: string;
@@ -339,14 +339,14 @@ export interface IdentityItem {
   tags?: string[];
 }
 
-/* 卡片署名落到哪一个身份上。作品卡、版次队列和「接着看」必须用同一份推导——各算各的
+/* Cards署名落到哪一个身份上。作品卡、版次队列和「接着看”必须用同一份推导——各算各的
    迟早会在同名 creator/performer 那 35 组上分叉，同一条作品在两处指向两个实体。
 
-   番号旧投影常把女优罗马字同时塞进 `asset.creator`。规范 performer 实体已经本地化时，
-   不能再让旧扁平字段抢走卡片署名和链接；非番号创作者作品仍优先 creator。
+   番号旧投影常把女优罗马字同时塞进 `asset.creator`。规范 performer 实体已经Local化时，
+   不能再让旧扁平字段抢走Cards署名和链接；非番号创作者作品仍优先 creator。
 
    共演作品用头像提示多人，但文字只保留第一位，再给总人数。两个长名字加元数据
-   会在普通卡片里折成三行；「第一位 + 等 N 人」仍能说明身份与规模。 */
+   会在普通Cards里折成三行；「第一位 + 等 N 人”仍能说明身份与规模。 */
 export function cardIdentity(item: IdentityItem): {
   kind: '' | 'creator' | 'performer'; name: string; coStarred: boolean; performers: string[];
   refs: (FaceRef | null)[]; total: number;

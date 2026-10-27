@@ -148,7 +148,7 @@ export function loadingDotsHtml(label='正在处理', {className=''}={}):string{
  * 时出现。
  */
 export function boardTabsHtml(items:{value:unknown;label:unknown;count?:unknown;symbol?:string}[],
-  {active='',attr='data-tab',label='页面视图',className='',panel=''}:{
+  {active='',attr='data-tab',label='pageView',className='',panel=''}:{
     active?: unknown; attr?: string; label?: string; className?: string; panel?: string;
   }={}):string{
   const tabs=items.map(({value,label:text,count,symbol})=>{

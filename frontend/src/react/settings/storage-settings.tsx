@@ -27,9 +27,9 @@ const targetReason = (cause: unknown) =>
   || errorMessage(cause);
 
 function diskLine(storage: StorageState) {
-  if (storage.free_bytes === null || storage.total_bytes === null) return '未取得';
-  const line = `${fmtSize(storage.free_bytes)} 可用，共 ${fmtSize(storage.total_bytes)}`;
-  return storage.system_drive ? `${line}（系统盘）` : line;
+  if (storage.free_bytes === null || storage.total_bytes === null) return 'Unavailable';
+  const line = `${fmtSize(storage.free_bytes)} available of ${fmtSize(storage.total_bytes)}`;
+  return storage.system_drive ? `${line} (system drive)` : line;
 }
 
 export function StorageSettings({ initial, receipt }: { initial: StorageState; receipt(message: string): void }) {
@@ -55,16 +55,16 @@ export function StorageSettings({ initial, receipt }: { initial: StorageState; r
     if (running) { reported.current = true; return; }
     if (!reported.current) return;
     reported.current = false;
-    if (!storage.job.error) receipt(storage.job.message || '已统计占用空间');
+    if (!storage.job.error) receipt(storage.job.message || 'Storage usage calculated');
   }, [running]);
 
   const measure = () => void action.run('measure', (signal) =>
     apiSend<StorageState>(`${STORAGE_URL}/measure`, {}, 'POST', signal), setStorage);
 
   const clean = (category: StorageCategory) => void confirmModal({
-    title: `清理${category.label}`,
-    body: `将删除 ${fmtSize(category.reclaimable)} 的${category.label}，${category.description}。`,
-    confirmLabel: `清理${category.label}`,
+    title: `Clean ${category.label}`,
+    body: `This will delete ${fmtSize(category.reclaimable)} of ${category.label} — ${category.description}.`,
+    confirmLabel: `Clean ${category.label}`,
     danger: category.key === 'backups',
     onConfirm: async () => setStorage(await apiSend<StorageState>(`${STORAGE_URL}/clean`, { category: category.key })),
   });
@@ -74,9 +74,9 @@ export function StorageSettings({ initial, receipt }: { initial: StorageState; r
     if (!picked) return;
     const size = storage.usage ? fmtSize(storage.usage.total_bytes) : '';
     await confirmModal({
-      title: '迁移数据目录',
-      body: `将 ${size} 数据从 ${storage.data_root} 移到 ${picked}。迁移期间 Peach 会退出，完成后自动重新打开；原位置的数据在新位置核对无误后删除。`,
-      confirmLabel: '迁移数据目录',
+      title: 'Move Data Folder',
+      body: `Move ${size} of data from ${storage.data_root} to ${picked}. Peach will exit during the move and reopen automatically when complete. Data in the original location will be deleted after the new copy is verified.`,
+      confirmLabel: 'Move Data Folder',
       onConfirm: async () => {
         try {
           setAccepted((await apiSend<{ message: string }>(`${STORAGE_URL}/relocate`, { target: picked })).message);
@@ -92,17 +92,17 @@ export function StorageSettings({ initial, receipt }: { initial: StorageState; r
   const recent = last && (last.state === 'error' || (last.notes?.length ?? 0) > 0
     || Date.now() - last.finished_at * 1000 < RESULT_MS);
   const status = accepted
-    || (storage.job.state === 'measuring' ? '正在统计占用空间…'
-      : storage.job.state === 'cleaning' ? '正在清理…'
-        : usage ? `共 ${fmtSize(usage.total_bytes)}，${usage.total_files.toLocaleString()} 个文件` : '');
+    || (storage.job.state === 'measuring' ? 'Calculating storage usage…'
+      : storage.job.state === 'cleaning' ? 'Cleaning…'
+        : usage ? `Total: ${fmtSize(usage.total_bytes)} — ${usage.total_files.toLocaleString()} files` : '');
   const locked = running || Boolean(accepted);
   return (
-    <Section id="storageSettings" title="存储空间">
+    <Section id="storageSettings" title="Storage">
       <FactList>
-        <Fact term="数据目录">
+        <Fact term="Data Folder">
           <PathLine path={storage.data_root} className="text-body-regular text-text-primary" onRevealed={receipt} />
         </Fact>
-        <Fact term="所在磁盘">{diskLine(storage)}</Fact>
+        <Fact term="Drive">{diskLine(storage)}</Fact>
       </FactList>
       {usage ? (
         <Rows>
@@ -116,7 +116,7 @@ export function StorageSettings({ initial, receipt }: { initial: StorageState; r
                   return (
                     <Button variant="secondary" disabled={locked && !cleaning} {...busyProps(cleaning)}
                       onClick={() => clean(category)}>
-                      清理 {fmtSize(category.reclaimable)}
+                      Clean  {fmtSize(category.reclaimable)}
                     </Button>
                   );
                 })() : null}
@@ -125,7 +125,7 @@ export function StorageSettings({ initial, receipt }: { initial: StorageState; r
           ))}
         </Rows>
       ) : (
-        <Stack divided><Help>统计后显示各类数据的占用，并可清理缓存与旧备份。</Help></Stack>
+        <Stack divided><Help>Calculate usage by category, then clean caches and old backups.</Help></Stack>
       )}
       {!storage.relocation.available || storage.job.error || action.error || recent ? (
         <Stack divided>
@@ -134,15 +134,15 @@ export function StorageSettings({ initial, receipt }: { initial: StorageState; r
           {action.error ? <ErrorText>{action.error}</ErrorText> : null}
           {recent && last ? (last.state === 'error'
             ? <ErrorText>{last.message}</ErrorText>
-            : <Help>{[last.message, ...(last.notes ?? [])].join('；')}</Help>) : null}
+            : <Help>{[last.message, ...(last.notes ?? [])].join('; ')}</Help>) : null}
         </Stack>
       ) : null}
       <Footer status={status ? <p role={accepted ? 'status' : undefined}>{status}</p> : null}>
         <Button variant="secondary" disabled={locked || !storage.relocation.available || !usage}
-          onClick={relocate} {...busyProps(action.busy === 'relocate')}>更改位置</Button>
+          onClick={relocate} {...busyProps(action.busy === 'relocate')}>Change Location</Button>
         <Button disabled={Boolean(accepted) || storage.job.state === 'cleaning'} onClick={measure}
           {...busyProps(action.busy === 'measure' || storage.job.state === 'measuring')}>
-          {usage ? '重新统计' : '统计占用'}
+          {usage ? 'Recalculate' : 'Calculate Usage'}
         </Button>
       </Footer>
     </Section>

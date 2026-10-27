@@ -15,12 +15,12 @@ export const feedState = { FEED_SKELETON_CARDS: undefined, feedNewSkeletonHtml: 
 export function feedNewCoverHtml(item){
   if(item.has_cover)return coverImage(item,'big');
   if(!item.cover_url||!item.code)return item.cover_fetching
-    ?`<span class="nopic" data-feed-cover-state="fetching">${loadingDotsHtml('抓取中')}</span>`
-    :'<span class="nopic" data-feed-cover-state="missing">无封面</span>';
+    ?`<span class="nopic" data-feed-cover-state="fetching">${loadingDotsHtml('Fetching')}</span>`
+    :'<span class="nopic" data-feed-cover-state="missing">No cover</span>';
   // 官方图经 Peach 代理取，断网或上游失败时换成「封面未取得」占位。
   return coverImage(item,'big').replace(/ src="[^"]*"/,
     ` src="${esc(remoteCoverUrl(item))}" data-panel-prior="1"`)
-    .replace('data-drop="self"', 'data-drop="initial" data-initial="封面未取得" data-drop-class="nopic"');
+    .replace('data-drop="self"', 'data-drop="initial" data-initial="Cover unavailable" data-drop-class="nopic"');
 }
 
 export function feedNewCardHtml(item){
@@ -30,20 +30,20 @@ export function feedNewCardHtml(item){
     .join('');
   const cover=feedNewCoverHtml(item);
   // 番号与标题排在同一个两行的标题块里，和资产卡一样：番号加粗打头，标题接在后面截断。
-  const name=item.code||String(item.title||'').trim()||'未命名新作';
+  const name=item.code||String(item.title||'').trim()||'Untitled release';
   const heading=item.code
     ?javTitleHtml({is_jav:true,code:item.code,name:item.code,display_title:item.title||''})
     :esc(name);
   const open=item.code
-    ?`<a class="feednewopen" href="/works/${encodeURIComponent(item.code)}" aria-label="打开 ${esc(name)} 的作品详情"></a>`:'';
+    ?`<a class="feednewopen" href="/works/${encodeURIComponent(item.code)}" aria-label="Open details for ${esc(name)}"></a>`:'';
   return `<article class="card feednewcard${item.read?' isread':''}" data-feed-id="${item.id}">
     ${open}<div class="pic" style="--card-ratio:${COVER_FRONT_RATIO}">${cover}
       <div class="hovertools feednewtools">
-        <button type="button" data-feed-action="${item.wanted?'unwant':'want'}" aria-pressed="${!!item.wanted}" title="${item.wanted?'取消想要':'想要'}" aria-label="想要 ${esc(name)}">${icon('star')}</button>
-        <button type="button" data-feed-action="ignore" title="不想看" aria-label="不想看 ${esc(name)}">${icon('x')}</button>
-        <button type="button" data-feed-action="read" title="标为已看过" aria-label="标为已看过 ${esc(name)}">${icon('check')}</button></div></div>
+        <button type="button" data-feed-action="${item.wanted?'unwant':'want'}" aria-pressed="${!!item.wanted}" title="${item.wanted?'Remove from wanted':'Want'}" aria-label="Want ${esc(name)}">${icon('star')}</button>
+        <button type="button" data-feed-action="ignore" title="Not interested" aria-label="Not interested in ${esc(name)}">${icon('x')}</button>
+        <button type="button" data-feed-action="read" title="Mark as seen" aria-label="Mark ${esc(name)} as seen">${icon('check')}</button></div></div>
     <div class="meta">${feedIdentity(item)}<div class="mtext"><span class="t">${heading}</span>
-      <div class="s mono">${label||(item.title?'':'资料还没取到')}</div></div></div></article>`;
+      <div class="s mono">${label||(item.title?'':'Metadata not available yet')}</div></div></div></article>`;
 }
 
 export function installEntityShapeBootstrap(){
@@ -71,7 +71,7 @@ export async function loadEntityShapes(){
   return feedState.entityShapes;
 }
 
-/* 首页有没有「未入库的新作」记在本机：首屏骨架就按上次的结论铺这一行，不等形状接口回来再插进来，
+/* Home有没有「未入库的新作”记在本机：首屏骨架就按上次的结论铺这一行，不等形状接口回来再插进来，
    把下面的目录往下推一跳。接口或那一行画完后改记新的结论。 */
 const HOME_FEED_KEY='peach.home-feed.v1';
 export function rememberHomeFeed(has){
@@ -93,8 +93,8 @@ export function prepareHomeFeed(host){
 
 export function feedNetworkNote(unreachable,items){
   if(!(unreachable>0)||!items.some(item=>!item.has_cover))return '';
-  return noteHtml(`${unreachable} 部新作的封面连不上 DMM 图片主机，中国移动宽带常见。把 DMM / FANZA 的连接方式设成 Peach 代理，下一轮会自动重取。`,
-    {variant:'warning',className:'feednetwork',actionLabel:'配置连接方式',actionHref:'/sources'});
+  return noteHtml(`Peach could not reach the DMM image host to fetch covers for ${unreachable} new releases. This is common on China Mobile broadband. Set DMM / FANZA connections to use the Peach proxy; the next cycle will retry automatically.`,
+    {variant:'warning',className:'feednetwork',actionLabel:'Configure connection',actionHref:'/sources'});
 }
 
 export function feedRowHtml(data){
@@ -130,7 +130,7 @@ export function clearHomeFeed(){
 
 export function refreshFeedRows(){
   feedState.feedRevision+=1;
-  // 首页那一行只在目录页画着，人不在那儿时 `updateManagedRoute` 是空操作，不会在别的页面上冒出来。
+  // Home那一行只在目录页画着，人不在那儿时 `updateManagedRoute` 是空操作，不会在别的page上冒出来。
   updateManagedRoute($('#feedNew'),{revision:feedState.feedRevision});
   pushEntityPage({feedRevision: feedState.feedRevision});
 }
@@ -140,9 +140,9 @@ export function syncFeedAutoScroll(){
     preferencesState.appSettings.feedAutoScroll?wireAutoScroll(row):stopAutoScroll(row));
 }
 
-/* 开关挪到下一帧写：它一翻，资料卡换栏、页面变高，而整页那条覆盖滚动条正观察着 `<body>`。在尺寸观察
+/* 开关挪到下一帧写：它一翻，profile卡换栏、page变高，而整页那条覆盖滚动条正观察着 `<body>`。在尺寸观察
    回调里当场写，`<body>` 这一层浅的变化本轮送不出去，浏览器就报一次 ResizeObserver 循环错误，
-   每开一次资料页都进错误上报。 */
+   每开一次profile页都进错误上报。 */
 let heroWideFrame=0;
 export function syncHeroWide([entry]){
   const wide=entry.contentRect.width>=feedState.HERO_WIDE_PX;

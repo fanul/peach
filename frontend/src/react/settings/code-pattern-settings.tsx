@@ -34,21 +34,21 @@ export function CodePatternSettings({ receipt }: { receipt(message: string): voi
       (saved) => {
         queryClient.setQueryData(SETTINGS_KEY, saved);
         setDraft(null);
-        receipt('已保存配置');
+        receipt('Settings saved');
       });
   };
 
   return (
-    <Section title="番号识别规则" onSubmit={submit}>
+    <Section title="Catalog Code Recognition Rules" onSubmit={submit}>
       <Stack>
-        <Help>内置规则认不出番号时，按这里的规则从文件名里取。每行一条正则表达式，番号写在 (?&lt;code&gt;…) 里，没有命名组就取第一个括号。规则在下一次处理时对还没有番号的视频生效。</Help>
-        <Textarea id="codePatternSetting" aria-label="番号识别规则" rows={3} autoResize maxRows={12}
+        <Help>When built-in rules cannot identify a catalog code, use these rules to extract it from the filename. Enter one regular expression per line. Put the code in (?&lt;code&gt;…); without a named group, the first capture group is used. Rules apply to uncoded videos the next time they are processed.</Help>
+        <Textarea id="codePatternSetting" aria-label="Catalog Code Recognition Rules" rows={3} autoResize maxRows={12}
           spellCheck="false" autoComplete="off" placeholder={PLACEHOLDER} value={value}
           isDisabled={!settings.data} isInvalid={!!failure} hint={failure || undefined}
           onChange={setDraft} />
       </Stack>
       <Footer>
-        <Button type="submit" {...busyProps(action.busy === 'save')}>保存配置</Button>
+        <Button type="submit" {...busyProps(action.busy === 'save')}>Save settings</Button>
       </Footer>
     </Section>
   );

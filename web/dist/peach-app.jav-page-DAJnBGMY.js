@@ -1,7 +1,7 @@
 (function() {
 	try {
 		var e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, t = new e.Error().stack;
-		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "19c6ccb2-be17-4407-ad88-720f888dc352", e._sentryDebugIdIdentifier = "sentry-dbid-19c6ccb2-be17-4407-ad88-720f888dc352");
+		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "5a09bc19-ba56-44ec-9298-18cd7a726be0", e._sentryDebugIdIdentifier = "sentry-dbid-5a09bc19-ba56-44ec-9298-18cd7a726be0");
 	} catch {}
 })();
 import { $fe21c36db05242bb$export$d7b12c4107be0d61 as e, ArtSlot as t, Button as n, ButtonLink as r, Chip as i, CloudDownloadDialog as a, DISCOVERY_SORTS as o, DOWNLOADS_KEY as s, DOWNLOADS_URL as c, E3 as l, EmptyFocusButton as u, EmptyState as d, FilterGlassRows as f, FilterIconButton as p, FilterPill as m, GlassPill as h, Help as g, Input as _, JAV_LAYOUTS as v, JAV_RECOMMENDATION_GRID as ee, JavHeader as y, LibraryShortcuts as te, M6 as b, Note as x, PHASES as S, Pagination as C, SEGMENT as w, SEGMENTED_TRACK as T, SegmentedRadioGroup as E, Segments as ne, SortKeys as re, SourceAvatar as ie, TaskProgress as ae, WANTS_KEY as oe, WantMagnets as D, Wt as se, __toESM as ce, addWant as le, apiGet as O, appSettingsStore as ue, avatarInner as k, busyProps as A, cachedMagnetStates as j, cardClass as M, cardRatio as de, coverUrl as fe, discoveryArtwork as pe, discoveryKey as me, discoveryScore as he, entityPath as ge, errorMessage as N, fetchDiscoveries as _e, fetchWants as ve, gridLayout as ye, invalidateWants as P, javContentSkeleton as F, javLayout as be, javTagSkeleton as xe, pageWindow as I, peachHistory$1 as L, qE as R, recommendationScore as Se, relayoutCovers as Ce, removeWants as z, require_jsx_runtime as B, require_react as V, resetWants as H, searchNote as U, shellNavigate as W, spriteGlyph as G, storeJavLayout as we, textLang as Te, useAction as K, useQuery as q, wantName as J, wireHorizontalScroller as Ee } from "./peach-app.js";
@@ -36,13 +36,13 @@ function De({ item: e }) {
 }
 // src/react/wants/want-list.tsx
 var Q = {
-	code: "手动添加",
-	feed: "订阅新作",
-	follow: "关注"
+	code: "Added manually",
+	feed: "Subscribe to new releases",
+	follow: "Following"
 }, Oe = [
-	["all", "全部"],
-	["available", "有磁链"],
-	["missing", "没磁链"]
+	["all", "All"],
+	["available", "With magnet link"],
+	["missing", "Without magnet link"]
 ], ke = (e) => [
 	e.release_date,
 	e.studio,
@@ -54,7 +54,7 @@ function Ae({ want: e }) {
 		className: "relative inline-grid w-card-cover shrink-0 aspect-card-cover place-items-center overflow-hidden rounded-2lg bg-background-tertiary-default max-sm:w-24",
 		children: [/* @__PURE__ */ (0, Z.jsx)("span", {
 			className: "text-caption-1-regular text-text-secondary",
-			children: "无封面"
+			children: "No cover"
 		}), e.cover ? /* @__PURE__ */ (0, Z.jsx)("img", {
 			src: e.cover,
 			alt: "",
@@ -99,7 +99,7 @@ function je({ want: e, readOnly: t, busy: i, onReset: a, onRemove: o, onCloudDow
 					}) : null,
 					e.scrape_error ? /* @__PURE__ */ (0, Z.jsx)(Y, {
 						text: e.scrape_error,
-						prefix: "资料未取得：",
+						prefix: "Could not load details: ",
 						tone: "muted"
 					}) : null,
 					/* @__PURE__ */ (0, Z.jsxs)("div", {
@@ -113,7 +113,7 @@ function je({ want: e, readOnly: t, busy: i, onReset: a, onRemove: o, onCloudDow
 								href: p,
 								target: "_blank",
 								rel: "noopener noreferrer",
-								children: "来源页"
+								children: "Source page"
 							}) : null,
 							/* @__PURE__ */ (0, Z.jsx)(n, {
 								variant: "secondary",
@@ -122,7 +122,7 @@ function je({ want: e, readOnly: t, busy: i, onReset: a, onRemove: o, onCloudDow
 								disabled: t,
 								...A(i === `remove:${e.id}`),
 								onClick: o,
-								children: "移除"
+								children: "Remove"
 							}),
 							e.phase === "given_up" ? /* @__PURE__ */ (0, Z.jsx)(n, {
 								variant: "secondary",
@@ -130,13 +130,13 @@ function je({ want: e, readOnly: t, busy: i, onReset: a, onRemove: o, onCloudDow
 								disabled: t,
 								...A(i === `reset:${e.id}`),
 								onClick: a,
-								children: "重新查找"
+								children: "Search again"
 							}) : null,
 							e.phase === "searching" || e.phase === "given_up" ? /* @__PURE__ */ (0, Z.jsx)(n, {
 								variant: "secondary",
 								size: "small",
 								onClick: s,
-								children: "查找资源"
+								children: "Find resources"
 							}) : null
 						]
 					})
@@ -169,7 +169,7 @@ function Me({ phase: t, label: r, rows: i, row: a }) {
 					})]
 				}), t === "searching" ? /* @__PURE__ */ (0, Z.jsx)(E, {
 					name: "want-magnet-filter",
-					"aria-label": "待找磁链筛选",
+					"aria-label": "Wanted-item magnet filter",
 					orientation: "horizontal",
 					value: c,
 					className: T,
@@ -190,13 +190,13 @@ function Me({ phase: t, label: r, rows: i, row: a }) {
 			m.length ? null : /* @__PURE__ */ (0, Z.jsx)(d, {
 				size: "compact",
 				icon: R,
-				title: "暂无符合条件的作品",
+				title: "No matching works",
 				actions: /* @__PURE__ */ (0, Z.jsx)(n, {
 					size: "small",
 					onClick: () => {
 						l("all"), s(1);
 					},
-					children: "查看全部"
+					children: "View all"
 				}),
 				children: null
 			}),
@@ -209,9 +209,9 @@ function Me({ phase: t, label: r, rows: i, row: a }) {
 				className: "flex flex-wrap items-center justify-between gap-3",
 				children: [/* @__PURE__ */ (0, Z.jsx)("span", {
 					className: "text-body-2-regular tabular-nums text-text-secondary",
-					children: `${(h.start + 1).toLocaleString()}–${h.end.toLocaleString()} / ${h.total.toLocaleString()} 条`
+					children: `${(h.start + 1).toLocaleString()}–${h.end.toLocaleString()} / ${h.total.toLocaleString()} results`
 				}), /* @__PURE__ */ (0, Z.jsx)(C, {
-					label: `${r}分页`,
+					label: `${r} pagination`,
 					page: h.page,
 					pages: h.pages,
 					onPage: s
@@ -229,17 +229,17 @@ function Ne({ readOnly: e, toast: t, query: r = "", clearQuery: i }) {
 	}), v = () => {
 		let n = o.trim();
 		n && !e && m.run("add", (e) => le({ code: n }, e), (e) => {
-			t(e.created ? `已加入想要：${J(e.want)}` : `${J(e.want)} 已经在想要里`), l(""), P();
+			t(e.created ? `Added to wanted: ${J(e.want)}` : `${J(e.want)} is already wanted`), l(""), P();
 		});
 	}, ee = (e) => {
 		e.key === "Enter" && !e.nativeEvent.isComposing && (e.preventDefault(), v());
 	}, y = (e) => {
 		m.run(`remove:${e.id}`, (t) => z([e.id], t), () => {
-			t(`已移除：${J(e)}`), P();
+			t(`Removed: ${J(e)}`), P();
 		});
 	}, te = (e) => {
 		m.run(`reset:${e.id}`, (t) => H([e.id], t), () => {
-			t(`${J(e)} 回到待找`), P();
+			t(`${J(e)} moved back to searching`), P();
 		});
 	}, b = h.data, C = (b?.items || []).filter((e) => !r || [
 		e.code,
@@ -262,15 +262,15 @@ function Ne({ readOnly: e, toast: t, query: r = "", clearQuery: i }) {
 				children: [
 					/* @__PURE__ */ (0, Z.jsx)("h3", {
 						className: "text-title-2-medium text-text-primary",
-						children: "按番号添加"
+						children: "Add by code"
 					}),
 					/* @__PURE__ */ (0, Z.jsxs)("div", {
 						className: "flex flex-wrap items-end gap-2",
 						children: [/* @__PURE__ */ (0, Z.jsx)("div", {
 							className: "min-w-64 grow max-sm:min-w-0",
 							children: /* @__PURE__ */ (0, Z.jsx)(_, {
-								"aria-label": "番号",
-								placeholder: "输入番号，例如 SSIS-950",
+								"aria-label": "Code",
+								placeholder: "Enter a code, e.g. SSIS-950",
 								value: o,
 								isDisabled: e,
 								onChange: l,
@@ -281,59 +281,59 @@ function Ne({ readOnly: e, toast: t, query: r = "", clearQuery: i }) {
 							disabled: e || !o.trim(),
 							...A(m.busy === "add"),
 							onClick: v,
-							children: "添加"
+							children: "Add"
 						})]
 					}),
 					m.error ? /* @__PURE__ */ (0, Z.jsx)(x, {
 						tone: "error",
-						title: "这一次没有完成",
+						title: "Action not completed",
 						children: m.error
 					}) : null
 				]
 			}),
 			h.error ? /* @__PURE__ */ (0, Z.jsx)(x, {
 				tone: "error",
-				title: "想要清单读取失败",
+				title: "Could not load wanted list",
 				children: N(h.error)
 			}) : null,
 			h.isPending ? /* @__PURE__ */ (0, Z.jsx)("div", {
 				role: "status",
-				"aria-label": "正在读取想要",
+				"aria-label": "Loading wanted list",
 				dangerouslySetInnerHTML: { __html: F("wants") }
 			}) : null,
 			b?.scraping ? /* @__PURE__ */ (0, Z.jsx)(g, {
 				role: "status",
-				children: "正在给刚加入的番号取资料与封面。"
+				children: "Fetching details and cover art for newly added codes."
 			}) : null,
 			w.error ? /* @__PURE__ */ (0, Z.jsx)(x, {
 				tone: "error",
-				title: "下载配置未取得",
+				title: "Could not load download settings",
 				children: N(w.error)
 			}) : null,
 			w.data && !T.length ? /* @__PURE__ */ (0, Z.jsxs)(x, {
 				tone: "neutral",
-				children: ["尚未配置下载渠道。", /* @__PURE__ */ (0, Z.jsx)("a", {
-					href: "/settings/library?section=%E4%B8%8B%E8%BD%BD%E6%B8%A0%E9%81%93",
-					children: "下载渠道设置"
+				children: ["No download provider is configured. ", /* @__PURE__ */ (0, Z.jsx)("a", {
+					href: "/settings/library?section=Download%20sources",
+					children: "Download provider settings"
 				})]
 			}) : null,
 			w.data && !w.data.available ? /* @__PURE__ */ (0, Z.jsx)(x, {
 				tone: "neutral",
-				children: "云下载只在允许修改数据库的设备上可用。"
+				children: "Cloud downloads are available only on devices allowed to modify the database."
 			}) : null,
 			b && !C.length ? /* @__PURE__ */ (0, Z.jsx)(d, {
 				size: "compact",
 				icon: R,
-				title: r ? "没有符合条件的作品" : "还没有想要的作品",
+				title: r ? "No matching works" : "No wanted works yet",
 				actions: r && i ? /* @__PURE__ */ (0, Z.jsx)(n, {
 					size: "small",
 					onClick: i,
-					children: "清除搜索"
+					children: "Clear search"
 				}) : !r && !e ? /* @__PURE__ */ (0, Z.jsx)(u, {
-					target: "input[aria-label=\"番号\"]",
-					children: "添加作品"
+					target: "input[aria-label=\"Code\"]",
+					children: "Add work"
 				}) : void 0,
-				children: r ? "试试其他番号、女优或标题。" : "输入番号，添加想看的作品。"
+				children: r ? "Try another code, performer, or title." : "Enter a code to add a work you want to watch."
 			}) : null,
 			S.map(([n, r]) => {
 				let i = C.filter((e) => e.phase === n);
@@ -816,4 +816,4 @@ function Re({ readOnly: e, receipt: a, resource: s, query: c, navigate: u, clear
 }
 export { Le as JavPage };
 
-//# debugId=19c6ccb2-be17-4407-ad88-720f888dc352
+//# debugId=5a09bc19-ba56-44ec-9298-18cd7a726be0

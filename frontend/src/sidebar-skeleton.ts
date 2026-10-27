@@ -6,7 +6,7 @@
 const escape = (value: string) => value.replace(/[&<>"']/g, (char) =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]!);
 
-/** `order` 是 `appSettings.sidebarOrder`，`catalog` 是 `[键, 名称, 字形]` 的全部入口，`pressed` 是壳的 `navOn`。 */
+/** `order` 是 `appSettings.sidebarOrder`，`catalog` 是 `[键, Name, 字形]` 的全部入口，`pressed` 是壳的 `navOn`。 */
 export function sidebarSkeletonHtml(
   order: readonly string[], catalog: readonly (readonly [string, string, string])[], pressed: (key: string) => boolean,
 ): string {

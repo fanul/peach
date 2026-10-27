@@ -2,7 +2,7 @@
 (function() {
 	try {
 		var e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, t = new e.Error().stack;
-		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "caf9e3b1-715b-485d-95c8-a2b25f39bfe5", e._sentryDebugIdIdentifier = "sentry-dbid-caf9e3b1-715b-485d-95c8-a2b25f39bfe5");
+		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "05aeefeb-7b50-4de9-86ec-015af5c64215", e._sentryDebugIdIdentifier = "sentry-dbid-05aeefeb-7b50-4de9-86ec-015af5c64215");
 	} catch {}
 })();
 var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescriptor, r = Object.getOwnPropertyNames, i = Object.getPrototypeOf, a = Object.prototype.hasOwnProperty, o = (e, t) => () => (t || (e((t = { exports: {} }).exports, t, t.exports), e = null), t.exports), s = (e, i, o, s) => {
@@ -20904,11 +20904,11 @@ function r_({ index: e, cost: t, error: n, onChange: r }) {
 			/* @__PURE__ */ (0, z.jsx)(sm, {
 				elementType: "span",
 				"aria-hidden": !0,
-				children: "读取策略"
+				children: "Access Policy"
 			}),
 			/* @__PURE__ */ (0, z.jsxs)(vh, {
-				"aria-label": `媒体读取策略 ${e + 1}`,
-				placeholder: "选择读取策略",
+				"aria-label": `Media access policy ${e + 1}`,
+				placeholder: "Choose an access policy",
 				isRequired: !0,
 				validationBehavior: "aria",
 				isInvalid: !!n,
@@ -20918,10 +20918,10 @@ function r_({ index: e, cost: t, error: n, onChange: r }) {
 				},
 				children: [/* @__PURE__ */ (0, z.jsx)(yh, {
 					id: "free",
-					children: "正常读取"
+					children: "Standard"
 				}), /* @__PURE__ */ (0, z.jsx)(yh, {
 					id: "metered",
-					children: "代理保护"
+					children: "Proxy Protected"
 				})]
 			}),
 			n ? /* @__PURE__ */ (0, z.jsx)(Gm, { children: n }) : null
@@ -20929,7 +20929,7 @@ function r_({ index: e, cost: t, error: n, onChange: r }) {
 	});
 }
 function i_() {
-	return /* @__PURE__ */ (0, z.jsx)(Wm, { children: "读取策略选「代理保护」时，会限制自动读取视频。" });
+	return /* @__PURE__ */ (0, z.jsx)(Wm, { children: "The Proxy Protected policy limits automatic video reads." });
 }
 function a_({ initial: e, blank: t, pickFolder: n, describe: r, focusAfterPick: i = !1 }) {
 	let [a, o] = (0, j.useState)(e), [s, c] = (0, j.useState)([]), [l, u] = (0, j.useState)(null), [d, f] = (0, j.useState)(null), p = (0, j.useRef)(!1), m = (0, j.useRef)([]);
@@ -20990,7 +20990,7 @@ function o_({ label: e, path: t, onPath: n, error: r, inputRef: i, picking: a, o
 				/* @__PURE__ */ (0, z.jsx)(pm, {
 					className: "min-w-0 flex-1",
 					"aria-label": e,
-					placeholder: "媒体目录路径",
+					placeholder: "Media folder path",
 					value: t,
 					onChange: n,
 					ref: (e) => {
@@ -21007,7 +21007,7 @@ function o_({ label: e, path: t, onPath: n, error: r, inputRef: i, picking: a, o
 				}) : null,
 				/* @__PURE__ */ (0, z.jsx)(oh, {
 					icon: Zg,
-					"aria-label": "选择文件夹",
+					"aria-label": "Choose Folder",
 					onClick: o,
 					...Xg(a)
 				}),
@@ -21015,7 +21015,7 @@ function o_({ label: e, path: t, onPath: n, error: r, inputRef: i, picking: a, o
 					variant: "danger",
 					iconOnly: !0,
 					leadingIcon: em,
-					"aria-label": "移除这个文件夹",
+					"aria-label": "Remove this folder",
 					onClick: s
 				}) : null
 			]
@@ -21027,11 +21027,11 @@ function o_({ label: e, path: t, onPath: n, error: r, inputRef: i, picking: a, o
 }
 function s_({ index: e, value: t, onChange: n, options: r = Qg }) {
 	return /* @__PURE__ */ (0, z.jsx)(t_, {
-		label: "来源",
+		label: "Source",
 		className: "w-full @lg:w-60",
 		children: /* @__PURE__ */ (0, z.jsx)(vh, {
 			className: "w-full",
-			"aria-label": `媒体来源 ${e + 1}`,
+			"aria-label": `Media source ${e + 1}`,
 			selectedKey: t,
 			onSelectionChange: (e) => {
 				e !== null && n(String(e));
@@ -21046,52 +21046,52 @@ function s_({ index: e, value: t, onChange: n, options: r = Qg }) {
 }
 // src/react/settings/library-icon-picker.tsx
 var c_ = [
-	["", "自动识别"],
-	["hard-drive", "磁盘"],
-	["database", "资料库"],
-	["heart", "心动"],
-	["heart-hand", "亲密"],
-	["flame", "热情"],
-	["cherry", "樱桃"],
-	["lollipop", "甜心"],
-	["candy", "糖果"],
-	["banana", "香蕉"],
-	["droplets", "湿润"],
-	["venus", "女性"],
-	["mars", "男性"],
-	["venus-and-mars", "情侣"],
-	["gem", "精选"],
-	["crown", "女王"],
-	["ribbon", "丝带"],
-	["shirt", "制服"],
-	["graduation-cap", "学生"],
-	["stethoscope", "护士"],
-	["glasses", "眼镜"],
-	["footprints", "足迹"],
-	["hand", "手部"],
-	["flower", "花朵"],
-	["venetian-mask", "角色扮演"],
-	["rabbit", "兔女郎"],
-	["paw-print", "兽耳"],
-	["dumbbell", "健身"],
-	["bed-double", "卧室"],
-	["bath", "浴室"],
-	["key-round", "私密"],
-	["wine", "微醺"],
-	["cigarette", "烟"],
-	["moon", "夜色"],
-	["sparkles", "幻想"],
-	["camera", "写真"],
-	["video", "影片"],
-	["film", "电影"],
-	["image", "图集"],
-	["gamepad-2", "游戏"],
-	["star", "收藏"],
-	["tags", "主题"]
+	["", "Auto"],
+	["hard-drive", "Drive"],
+	["database", "Archive"],
+	["heart", "Favorite"],
+	["heart-hand", "Intimate"],
+	["flame", "Passion"],
+	["cherry", "Cherry"],
+	["lollipop", "Sweetheart"],
+	["candy", "Candy"],
+	["banana", "Banana"],
+	["droplets", "Drops"],
+	["venus", "Women"],
+	["mars", "Men"],
+	["venus-and-mars", "Couples"],
+	["gem", "Featured"],
+	["crown", "Queen"],
+	["ribbon", "Ribbon"],
+	["shirt", "Uniform"],
+	["graduation-cap", "Student"],
+	["stethoscope", "Nurse"],
+	["glasses", "Glasses"],
+	["footprints", "Footprints"],
+	["hand", "Hands"],
+	["flower", "Flower"],
+	["venetian-mask", "Cosplay"],
+	["rabbit", "Bunny"],
+	["paw-print", "Animal Ears"],
+	["dumbbell", "Fitness"],
+	["bed-double", "Bedroom"],
+	["bath", "Bathroom"],
+	["key-round", "Private"],
+	["wine", "Tipsy"],
+	["cigarette", "Smoking"],
+	["moon", "Night"],
+	["sparkles", "Fantasy"],
+	["camera", "Photo Book"],
+	["video", "Video"],
+	["film", "Movie"],
+	["image", "Gallery"],
+	["gamepad-2", "Games"],
+	["star", "Favorites"],
+	["tags", "Theme"]
 ];
 function l_(e) {
 	let t = e === "local" ? "" : Rm[e];
-	return t ? [t, "自动识别"] : ["hard-drive", "默认"];
+	return t ? [t, "Auto"] : ["hard-drive", "Default"];
 }
 var u_ = "auto";
 function d_({ value: e, label: t, kind: n = "local", onChange: r }) {
@@ -21119,16 +21119,16 @@ function d_({ value: e, label: t, kind: n = "local", onChange: r }) {
 		offset: 4,
 		className: uh,
 		children: /* @__PURE__ */ (0, z.jsxs)(fp, {
-			"aria-label": `${t}可选图标`,
+			"aria-label": `${t}Available Icons`,
 			className: "flex w-72 flex-col gap-3 outline-none",
 			children: [
 				/* @__PURE__ */ (0, z.jsx)(Qo, {
 					slot: "title",
 					className: "px-1 text-body-medium text-text-primary",
-					children: "选择媒体库图标"
+					children: "Choose Library Icon"
 				}),
 				/* @__PURE__ */ (0, z.jsx)(Cp, {
-					"aria-label": "可选图标",
+					"aria-label": "Available Icons",
 					value: s || u_,
 					onChange: (e) => c(e === u_ ? "" : e),
 					className: "inline-grid grid-cols-7 gap-1",
@@ -21144,13 +21144,13 @@ function d_({ value: e, label: t, kind: n = "local", onChange: r }) {
 					children: [/* @__PURE__ */ (0, z.jsx)(Rt, {
 						variant: "secondary",
 						onClick: () => o(!1),
-						children: "取消"
+						children: "Cancel"
 					}), /* @__PURE__ */ (0, z.jsx)(Rt, {
 						disabled: s === e,
 						onClick: () => {
 							r(s), o(!1);
 						},
-						children: "应用"
+						children: "Apply"
 					})]
 				})
 			]
@@ -21558,11 +21558,11 @@ function C_(e) {
 }
 // src/react/settings/library-policy-settings.tsx
 var w_ = [
-	["probe", "读取视频信息"],
-	["metadata", "联网补资料"],
-	["cover", "联网补封面"],
-	["people", "联网补人物图片"],
-	["preview", "生成九宫格预览"]
+	["probe", "Read Video Details"],
+	["metadata", "Fetch metadata online"],
+	["cover", "Fetch covers online"],
+	["people", "Fetch performer images online"],
+	["preview", "Generate Contact Sheet"]
 ], T_ = [
 	"probe",
 	"metadata",
@@ -21572,26 +21572,26 @@ var w_ = [
 ], E_ = [
 	[
 		"auto",
-		"自动补全",
-		"缺什么联网补什么"
+		"Auto Complete",
+		"Fetch missing data online"
 	],
 	[
 		"local",
-		"仅使用本地资料",
-		"不联网，只用本地 NFO 和图片"
+		"Local Data Only",
+		"Use only local NFO files and images; do not connect online"
 	],
 	[
 		"custom",
-		"自定义",
-		"逐项选择要做的步骤"
+		"Custom",
+		"Choose each processing step"
 	]
 ];
 function D_({ name: e, value: t, onChange: n }) {
 	return /* @__PURE__ */ (0, z.jsx)(f_, {
 		className: "w-full",
-		"aria-label": `${e} 处理方式`,
+		"aria-label": `${e} processing mode`,
 		selectedKey: t,
-		prefix: "处理方式",
+		prefix: "Processing Mode",
 		renderValue: /* @__PURE__ */ (0, z.jsx)("span", {
 			className: "truncate",
 			children: E_.find(([e]) => e === t)?.[1]
@@ -21613,11 +21613,11 @@ function D_({ name: e, value: t, onChange: n }) {
 function O_({ name: e, value: t, onChange: n }) {
 	return /* @__PURE__ */ (0, z.jsx)(Ym, {
 		defaultOpen: !0,
-		summary: `${e} 的处理步骤（${t.length}/${w_.length}）`,
+		summary: `${e} processing steps (${t.length}/${w_.length})`,
 		children: /* @__PURE__ */ (0, z.jsx)("div", {
 			className: "flex flex-wrap gap-x-6 gap-y-2",
 			role: "group",
-			"aria-label": `${e} 处理步骤`,
+			"aria-label": `${e} processing steps`,
 			children: w_.map(([e, r]) => /* @__PURE__ */ (0, z.jsx)(Qp, {
 				isSelected: t.includes(e),
 				onChange: (r) => n(r ? [...t, e] : t.filter((t) => t !== e)),
@@ -21627,7 +21627,7 @@ function O_({ name: e, value: t, onChange: n }) {
 	});
 }
 function k_({ id: e, name: t, value: n, onChange: r }) {
-	let i = (0, j.useRef)(null), [a, o] = (0, j.useState)(!1), s = h_.find(([e]) => e === n)?.[1] || "无颜色", c = (t) => {
+	let i = (0, j.useRef)(null), [a, o] = (0, j.useState)(!1), s = h_.find(([e]) => e === n)?.[1] || "No Color", c = (t) => {
 		r(t), x_(e, t), o(!1);
 	};
 	return /* @__PURE__ */ (0, z.jsxs)(z.Fragment, { children: [/* @__PURE__ */ (0, z.jsxs)("button", {
@@ -21638,14 +21638,14 @@ function k_({ id: e, name: t, value: n, onChange: r }) {
 		"data-library-color-trigger": "",
 		"aria-haspopup": "dialog",
 		"aria-expanded": a,
-		"aria-label": `${t || "未命名媒体库"} 来源色：${s}`,
+		"aria-label": `${t || "Untitled Library"} source color: ${s}`,
 		title: s,
 		onClick: () => o(!0),
 		children: [
 			/* @__PURE__ */ (0, z.jsx)("span", {
 				"aria-hidden": !0,
 				className: "text-text-tertiary",
-				children: "来源色"
+				children: "Source Color"
 			}),
 			n ? /* @__PURE__ */ (0, z.jsx)("span", {
 				"data-glow-ball": "",
@@ -21669,11 +21669,11 @@ function k_({ id: e, name: t, value: n, onChange: r }) {
 			containerPadding: 12,
 			className: uh,
 			children: /* @__PURE__ */ (0, z.jsxs)(fp, {
-				"aria-label": `${t || "未命名媒体库"} 来源色`,
+				"aria-label": `${t || "Untitled Library"} Source Color`,
 				className: "outline-none",
 				children: [/* @__PURE__ */ (0, z.jsx)("p", {
 					className: "px-1 pb-2 text-body-medium text-text-primary",
-					children: "选择来源色"
+					children: "Choose Source Color"
 				}), /* @__PURE__ */ (0, z.jsxs)("div", {
 					"data-accent-grid": "",
 					"data-library-colors": "",
@@ -21682,8 +21682,8 @@ function k_({ id: e, name: t, value: n, onChange: r }) {
 						type: "button",
 						"data-glow-chip": "",
 						"aria-pressed": !n,
-						title: "无颜色",
-						"aria-label": "无颜色",
+						title: "No Color",
+						"aria-label": "No Color",
 						onClick: () => c(""),
 						children: /* @__PURE__ */ (0, z.jsx)("span", {
 							"data-glow-ball": "",
@@ -21726,7 +21726,7 @@ function A_({ label: e, password: t, confirmation: n, onPassword: r, onConfirmat
 	}), /* @__PURE__ */ (0, z.jsx)(pm, {
 		id: "access-confirm",
 		type: "password",
-		label: "确认访问密码",
+		label: "Confirm Access Password",
 		autoComplete: "new-password",
 		maxLength: 256,
 		value: n,
@@ -21740,13 +21740,13 @@ function A_({ label: e, password: t, confirmation: n, onPassword: r, onConfirmat
 }
 // src/react/settings/peach-proxy-fields.tsx
 var j_ = [
-	["environment", "跟随环境"],
-	["direct", "直连"],
-	["proxy", "自定义"]
+	["environment", "Use Environment"],
+	["direct", "Direct"],
+	["proxy", "Custom"]
 ];
 function M_({ mode: e, onChange: t, labelledBy: n }) {
 	return /* @__PURE__ */ (0, z.jsx)(vh, {
-		"aria-label": n ? void 0 : "连接方式",
+		"aria-label": n ? void 0 : "Connection Method",
 		"aria-labelledby": n,
 		selectedKey: e,
 		onSelectionChange: (e) => {
@@ -21762,12 +21762,12 @@ function N_({ id: e, value: t, onChange: n, saved: r = !1, error: i }) {
 	return /* @__PURE__ */ (0, z.jsx)(pm, {
 		id: e,
 		type: "password",
-		label: "代理地址",
+		label: "Proxy URL",
 		autoComplete: "off",
 		spellCheck: "false",
 		value: t,
 		onChange: n,
-		placeholder: r ? "已保存，留空保留" : "http://127.0.0.1:7890",
+		placeholder: r ? "Saved; leave blank to keep it" : "http://127.0.0.1:7890",
 		validationBehavior: "aria",
 		isInvalid: !!i,
 		hint: i
@@ -21831,10 +21831,10 @@ function R_({ tone: e = "neutral", ...t }) {
 // src/react/settings/remote-reporting-settings.tsx
 function z_({ value: e, onChange: t, busy: n = !1 }) {
 	return /* @__PURE__ */ (0, z.jsxs)(z.Fragment, { children: [/* @__PURE__ */ (0, z.jsx)(Hm, { children: /* @__PURE__ */ (0, z.jsx)(zm, {
-		label: "发送版本统计与错误诊断（推荐）",
-		description: "上传版本、系统信息、故障类型、代码位置与发生次数。",
+		label: "Send Version Statistics and Error Diagnostics (Recommended)",
+		description: "Uploads the version, system information, error type, code location, and occurrence count.",
 		children: /* @__PURE__ */ (0, z.jsx)(lh, {
-			"aria-label": "发送版本统计与错误诊断（推荐）",
+			"aria-label": "Send Version Statistics and Error Diagnostics (Recommended)",
 			isSelected: e.usage && e.errors,
 			onChange: (n) => t({
 				...e,
@@ -21847,7 +21847,7 @@ function z_({ value: e, onChange: t, busy: n = !1 }) {
 		divided: !0,
 		children: /* @__PURE__ */ (0, z.jsx)("span", {
 			className: "self-start",
-			children: /* @__PURE__ */ (0, z.jsx)(R_, { children: "上传服务未配置" })
+			children: /* @__PURE__ */ (0, z.jsx)(R_, { children: "Upload Service Not Configured" })
 		})
 	})] });
 }
@@ -22675,4 +22675,4 @@ E();
 var X_ = document.getElementById("peach-page"), Z_ = X_ ? Y_[X_.dataset.page ?? ""] : void 0;
 X_ && Z_ && (0, M.createRoot)(X_).render(/* @__PURE__ */ (0, z.jsx)(Z_, { data: { ...X_.dataset } }));
 
-//# debugId=caf9e3b1-715b-485d-95c8-a2b25f39bfe5
+//# debugId=05aeefeb-7b50-4de9-86ec-015af5c64215

@@ -60,7 +60,7 @@ const mapLimit=async<T,R>(items:Iterable<T>,limit:number,run:(item:T,index:numbe
 };
 const STATE_ROUTES:Record<string,string>={fresh:'/unseen',later:'/watch-later',flagged:'/flagged',ads:'/junk-files'};
 const ROUTE_STATES:Record<string,string>=Object.fromEntries(Object.entries(STATE_ROUTES).map(([state,path])=>[path,state]));
-const STATE_LABELS:Record<string,string>={fresh:'没看过',later:'稍后看',flagged:'已标记',ads:'垃圾文件'};
+const STATE_LABELS:Record<string,string>={fresh:'Unwatched',later:'Watch later',flagged:'Flagged',ads:'Junk files'};
 const isCatalogPath=(path:string)=>path==='/'||path==='/wall'||Object.prototype.hasOwnProperty.call(ROUTE_STATES,path);
 const ENTITY_ROUTES:Record<string,string>={performer:'performers',studio:'studios',creator:'creators',series:'series',agency:'agencies',tag:'tags'};
 const ROUTE_ENTITIES:Record<string,string>={performers:'performer',studios:'studio',creators:'creator',series:'series',agencies:'agency',tags:'tag'};
@@ -71,7 +71,7 @@ const entityPath=(kind:string,name:string,id?:number|null)=>{
   return `/${ENTITY_ROUTES[kind]||kind}/${target||encodeURIComponent(name)}`;
 };
 const esc=(s:unknown)=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'} as Record<string,string>)[c] as string);
-/* 外链上写的是站点的短名：事务所和片商平时就被叫作 NAX、T-POWERS、DMM，而数据库里的
+/* 外链上写的是站点的短名：Agencies和片商平时就被叫作 NAX、T-POWERS、DMM，而数据库里的
    label 是采集时抄下来的全称（`New Actor eXperience`、`DMM 检索`），域名又要人先在
    `OFFICIAL.NAX-PRO.COM` 里认出哪一段是名字。两样都比短名难读，一排链接里尤其。
 
@@ -97,19 +97,19 @@ const siteName=(url:unknown)=>{
   const host=linkHost(url);
   return host&&SITE_NAMES.find(([domain])=>host===domain||host.endsWith('.'+domain))?.[1]||'';
 };
-/* 服务端处理过的链接图标：单色字形的 favicon 会被做成「品牌色底 + 白色主体」，
+/* 服务端处理过的链接图标：单色字形的 favicon 会被做成「品牌色底 + 白色主体”，
    做不了就把原图按 32 px 转出来。放服务端有三个理由：它要读别人站点的图、要缓存，
-   而且这样浏览器不再直接向对方站点发请求（也就不泄露正在看谁的资料页）。
+   而且这样浏览器不再直接向对方站点发请求（也就不泄露正在看谁的profile页）。
 
    传的是链接 id 而不是地址。跟 `/follow-stream` 同一条规矩：服务端只取数据库里已有的
    地址，绝不去取前端递过来的任意 URL——那等于开一个任意地址抓取的口子。 */
 const linkMarkUrl=(link:{link_id?:number|null})=>`/link-mark?id=${encodeURIComponent(link.link_id ?? '')}`;
-/* 采集来源和口味排行里那些站点的圆标，同一条规矩的另一个入口：递的是服务端已经
-   知道的键——采集来源键，或口味域名白名单里的那条后缀——不是地址。 */
+/* metadata sources和Taste排行里那些站点的圆标，同一条规矩的另一个入口：递的是服务端已经
+   知道的键——metadata sources键，或Taste域名白名单里的那条后缀——不是地址。 */
 const siteMarkUrl=(params:{source:string}|{domain:string})=>`/site-mark?${new URLSearchParams(params)}`;
 /* 图标库里有的常见社媒走内联品牌标记，连 favicon 都不取。
 
-   favicon 是别人服务器上的一张小位图：X 和 Instagram 直接挡掉爬取，资料页上只剩一只
+   favicon 是别人服务器上的一张小位图：X 和 Instagram 直接挡掉爬取，profile页上只剩一只
    地球；取得到的也多是 16×16，放进 32 px 的圆里必然糊。站点自己给的大图又是另一种坏
    法——Threads、TikTok 给的是 iOS 应用图标那种圆角方图，四边一圈高光照着方角画，裁成圆
    之后沿圆周露出一道白，而那圈高光是人家设计的一部分，`/link-mark` 抠不掉。内联 SVG
@@ -129,15 +129,15 @@ const brandIcon=(url:unknown)=>{
 const foldName=(s:unknown)=>String(s??'').normalize('NFKC').trim().toLocaleLowerCase();
 /* 官网链接上那行字。写站点短名（`siteName`），表里没有就用数据库 label。
 
-   厂牌页和事务所页上指回自家站的写「官方网站」：页头已经是公司名，链接再写一遍 S1、
+   Studios页和Agencies页上指回自家站的写「官方网站”：页头已经是公司名，链接再写一遍 S1、
    LIGHT 只是重复。人物页照旧写名字，那里的名字说的是她归哪一家，正是要看的信息。名字是
-   别家的（Jackson 页上链到 Prestige 的名录页）也保留，那说的是另一家。自家的判据是
-   短名或 label 与规范名、别名互相包含：`C-more` 之于 `C-more Entertainment`，短名是缩写
+   别家的（Jackson上链到 Prestige 的名录页）也保留，那说的是另一家。自家的判据是
+   短名或 label 与规范名、Alias互相包含：`C-more` 之于 `C-more Entertainment`，短名是缩写
    时看 label（`NAX` 那条的 label 是 `New Actor eXperience`）。label 只是这条链接自己的
    主机名（`www.ran-maru.com`）等于没起名，也算自家。
 
    存档快照（`web.archive.org`）一律照写 label：公司关门后官网只剩这一份，label 里写着
-   它是哪一年的存档，改写成「官方网站」就读不出点过去看到的是旧页面。 */
+   它是哪一年的存档，改写成「官方网站”就读不出点过去看到的是旧page。 */
 const ARCHIVE_HOSTS=['web.archive.org'];
 const isArchiveLink=(url:unknown)=>ARCHIVE_HOSTS.includes(linkHost(url));
 const officialLinkText=(link:{url?:string;label?:string},kind:string,names:readonly string[]=[])=>{
@@ -151,15 +151,15 @@ const officialLinkText=(link:{url?:string;label?:string},kind:string,names:reado
     }));
   return own?'官方网站':text;
 };
-/* 什么才算一个真时长——只有这一处说了算。
+/* 什么才算一个真Duration——只有这一处说了算。
 
-   数据库里 `-1` 是 probe 的「硬失败」哨兵（见 scripts/probe.py：抽帧的 duration>2 门槛
-   会让失败条目永远卡住，所以硬失败写成 -1），它不是时长。而 `!s` 这种真值判断挡不住
+   数据库里 `-1` 是 probe 的「硬失败”哨兵（见 scripts/probe.py：抽帧的 duration>2 门槛
+   会让失败item永远卡住，所以硬失败写成 -1），它不是Duration。而 `!s` 这种真值判断挡不住
    负数：`fmtDur(-1)` 会算出 `0:-1`，喂进播放器更糟——Video.js 的 duration() setter 里写着
    `parseFloat(e)<0 ? Infinity : e`，随后 `=== Infinity` 就 `addClass("vjs-live")`，
-   于是一部本地影片被标成「直播」，总时长显示 NaN。
+   于是一部Local影片被标成「直播”，总Duration显示 NaN。
 
-   所以判据是「有限且大于零」，不是「非空」。 */
+   所以判据是「有限且大于零”，不是「非空”。 */
 const realDuration=(value:unknown)=>{const n=Number(value);return Number.isFinite(n)&&n>0?n:0};
 /** 秒数格式化成 `h:mm:ss`／`m:ss`，48 小时起写成 `N 天 N 小时`；`0`、负数与非有限值都是 `—`
  *  （probe 的硬失败哨兵）。 */
@@ -170,9 +170,9 @@ const fmtDur:(seconds:number|null|undefined)=>string=(s:any)=>{s=realDuration(s)
 /** 秒数格式化成播放器时钟 `h:mm:ss`／`m:ss`；非数值当 0。 */
 const fmtClock:(seconds:unknown)=>string=(s:any)=>{s=Math.max(0,Math.floor(Number(s)||0));const h=s/3600|0,m=(s%3600)/60|0,x=s%60;
   return h?`${h}:${String(m).padStart(2,'0')}:${String(x).padStart(2,'0')}`:`${m}:${String(x).padStart(2,'0')}`};
-/* 网盘报的容量可以到 PB：PikPak 报 10 PiB，写成 TB 是「10240.00 TB」。不到 1 MB 写 KB，
-   非零的最少写 1 KB，免得 1 字节读成「0」。缺值、NaN 与负数是「大小未知」；0 是真的 0——
-   可回收空间、已下载量这类读数会是 0，单个文件的 0 字节由调用方判成未知。 */
+/* 网盘报的容量可以到 PB：PikPak 报 10 PiB，写成 TB 是「10240.00 TB”。不到 1 MB 写 KB，
+   非零的最少写 1 KB，免得 1 字节读成「0”。缺值、NaN 与负数是「大小未知”；0 是真的 0——
+   可回收空间、已下载量这类读数会是 0，单 files的 0 字节由调用方判成未知。 */
 const fmtSize:(bytes:number|null|undefined)=>string=(value:any)=>{
   if(value===null||value===undefined||value==='')return '大小未知';
   const b=Number(value);
@@ -181,14 +181,14 @@ const fmtSize:(bytes:number|null|undefined)=>string=(value:any)=>{
   if(b<1048576)return `${Math.max(1,Math.round(b/1024))} KB`;
   return b>=1125899906842624?(b/1125899906842624).toFixed(2)+' PB':b>=1099511627776?(b/1099511627776).toFixed(2)+' TB':b>=1073741824?(b/1073741824).toFixed(1)+' GB':Math.floor(b/1048576)+' MB'};
 /* 名字的第一个字素：头像垫底、首字母圆框都取它。按 UTF-16 码元取会把 emoji 劈成半个代理对，
-   画出来是「�」；肤色、ZWJ 组合与国旗也要整枚取。空名用 `fallback`。 */
+   画出来是「�”；肤色、ZWJ 组合与国旗也要整枚取。空名用 `fallback`。 */
 const graphemeSegmenter=typeof Intl!=='undefined'&&typeof Intl.Segmenter==='function'
   ? new Intl.Segmenter(undefined,{granularity:'grapheme'})
   : null;
 const graphemesOf=(value:string)=>graphemeSegmenter
   ? Array.from(graphemeSegmenter.segment(value),part=>part.segment)
   : Array.from(value);
-/** 开头 `count` 个字素（不加省略号）：厂牌没有标识时垫的两个字用它。 */
+/** 开头 `count` 个字素（不加省略号）：Studios没有标识时垫的两个字用它。 */
 const leadingGraphemes=(value:unknown,count:number)=>{
   const text=String(value??'').trim(),parts:string[]=[];
   if(!text||count<=0)return '';
@@ -197,16 +197,16 @@ const leadingGraphemes=(value:unknown,count:number)=>{
   return parts.join('');
 };
 const firstGrapheme=(value:unknown,fallback='?')=>leadingGraphemes(value,1)||fallback;
-/** 按字素截断：超过 `max` 个字素时留前 `max - 1` 个再接「…」。 */
+/** 按字素截断：超过 `max` 个字素时留前 `max - 1` 个再接「…”。 */
 const clipGraphemes=(value:unknown,max:number)=>{
   const parts=graphemesOf(String(value??''));
   return parts.length>max?`${parts.slice(0,Math.max(0,max-1)).join('')}…`:parts.join('');
 };
-/** 来源代号到界面名称：`local`→`本地`、`115`→`115`、`pikpak`→`PikPak`、`online`→`在线`。 */
-const LOC:Record<string,string>={...SOURCE_LABELS,local:'本地',online:'在线'};
-/* 种子随机：FNV-1a 把「种子 + 键」压成一个 32 位数当排序键。同一个种子下顺序稳定，
-   换种子就是另一套顺序，客户端不必存 PRNG 状态，也不必让后端多带一个参数。首页的
-   抽样和关注页岛的两排共用这一份，同一粒种子两边取到的是同一批。 */
+/** 来源代号到界面Name：`local`→`Local`、`115`→`115`、`pikpak`→`PikPak`、`online`→`Online`。 */
+const LOC:Record<string,string>={...SOURCE_LABELS,local:'Local',online:'Online'};
+/* 种子随机：FNV-1a 把「种子 + 键”压成一个 32 位数当Sort键。同一个种子下顺序稳定，
+   换种子就是另一套顺序，客户端不必存 PRNG 状态，也不必让后端多带一个参数。Home的
+   抽样和Following页岛的两排共用这一份，同一粒种子两边取到的是同一批。 */
 const seededRank=(seed:number|string,value:string)=>{
   let hash=2166136261>>>0;
   for(const char of `${seed}\u0000${value}`){hash^=char.codePointAt(0) as number;hash=Math.imul(hash,16777619)>>>0}
@@ -214,7 +214,7 @@ const seededRank=(seed:number|string,value:string)=>{
 };
 /* 掷一粒取样种子。异或结果是有符号 32 位，先转无符号再取模：种子要写进地址，后端只认非负整数。 */
 const newSeed=()=>String(((Date.now()^(Math.random()*1e9|0))>>>0)%99991);
-/* 时长四档是筛选条上的时长段，不是内容标签：目录的标签筛选里不收它们，地址上带来的也摘掉。 */
+/* Duration四档是筛选条上的Duration段，不是内容Tags：目录的Tags筛选里不收它们，地址上带来的也摘掉。 */
 const DURATION_TAGS:ReadonlySet<string>=new Set(['短片-2分内','中片-10分内','长片-30分内','超长片-30分上']);
 const cleanTagFilter=(value:unknown)=>String(value||'').split(',').filter(tag=>tag&&!DURATION_TAGS.has(tag)).join(',');
 

@@ -8,8 +8,8 @@ import { StatusLabel } from '../components/status-label';
 import { ErrorText, ExternalLink, Fact, FactList, Footer, Help, Section, Stack } from './section';
 import { useAction } from './use-action';
 
-const LABELS: Record<string, string> = { pending: '等待修复', running: '正在修复', failed: '需要重试',
-  review: '需要复核', complete: '已完成', unavailable: '当前部署未启用' };
+const LABELS: Record<string, string> = { pending: 'Pending Repair', running: 'Repairing', failed: 'Retry Required',
+  review: 'Review Required', complete: 'Complete', unavailable: 'Not Enabled for This Deployment' };
 
 export function UpgradeRepairs() {
   const { snapshot } = useClientUpdates();
@@ -26,21 +26,21 @@ export function UpgradeRepairs() {
     setSaved(next);
     document.dispatchEvent(new Event('peach:client-updates'));
   });
-  return <Section id="upgradeRepairs" title="自动修复" aside={<StatusLabel
+  return <Section id="upgradeRepairs" title="Automatic Repairs" aside={<StatusLabel
     tone={state === 'failed' ? 'error' : state === 'running' ? 'progress' : state === 'review' ? 'warning'
       : state === 'complete' ? 'success' : 'neutral'}><span key={state}
-        data-copy-key={`upgradeRepairs.${state}.status`}>{LABELS[state] || '未取得'}</span></StatusLabel>}>
-    <Stack><Help>升级后自动修正资料、更新缓存。</Help></Stack>
+        data-copy-key={`upgradeRepairs.${state}.status`}>{LABELS[state] || 'Unavailable'}</span></StatusLabel>}>
+    <Stack><Help>Automatically repairs metadata and refreshes caches after an upgrade.</Help></Stack>
     <FactList>
-      <Fact term="待完成">{pending} 项</Fact>
-      <Fact term="失败">{failed} 项</Fact>
-      <Fact term="待复核">{review} 项</Fact>
+      <Fact term="Pending">{pending} items</Fact>
+      <Fact term="Failed">{failed} items</Fact>
+      <Fact term="Pending Review">{review} items</Fact>
     </FactList>
     {data?.message || action.error ? <Stack><ErrorText>{action.error || data?.message}</ErrorText></Stack> : null}
-    {state === 'running' ? <Stack><Help>资料与预览正在后台补全，可在活动页查看进度。</Help></Stack> : null}
-    <Footer status={review ? <ExternalLink href="/api/configuration/upgrade-repairs/review">下载复核记录</ExternalLink> : undefined}>
+    {state === 'running' ? <Stack><Help>Metadata and previews are being completed in the background. View progress on the Activity page.</Help></Stack> : null}
+    <Footer status={review ? <ExternalLink href="/api/configuration/upgrade-repairs/review">Download Review Log</ExternalLink> : undefined}>
       <Button size="small" variant="secondary" disabled={!data?.available || state === 'running' || !!action.busy || (!failed && state !== 'failed')}
-        onClick={retry}>重试失败项</Button>
+        onClick={retry}>Retry Failed Items</Button>
     </Footer>
   </Section>;
 }
