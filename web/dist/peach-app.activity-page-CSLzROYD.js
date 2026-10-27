@@ -1,13 +1,13 @@
 (function() {
 	try {
 		var e = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, t = new e.Error().stack;
-		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "1a5a4cfa-6bd5-48df-8d86-0cf61bab3452", e._sentryDebugIdIdentifier = "sentry-dbid-1a5a4cfa-6bd5-48df-8d86-0cf61bab3452");
+		t && (e._sentryDebugIds = e._sentryDebugIds || {}, e._sentryDebugIds[t] = "eaa6a9d7-f7f6-42c2-b3e3-ab1fc0a01c59", e._sentryDebugIdIdentifier = "sentry-dbid-eaa6a9d7-f7f6-42c2-b3e3-ab1fc0a01c59");
 	} catch {}
 })();
 import { Button as e, Chip as t, Disclosure as n, DownloadsPanel as r, EmptyState as i, LinkButton as a, LoadingDots as o, Note as s, Progress as c, TASKS_KEY as l, TRIGGER_LABELS as u, __toESM as d, apiGet as f, apiSend as p, busyProps as m, cardClass as h, elapsedText as g, errorMessage as _, f1 as v, fetchEarlier as y, fetchTasks as b, foldRoutine as x, followupDetail as S, groupFollowups as C, hasResultProblems as w, i2 as T, isActive as E, isRoutine as D, latestOfKind as ee, mergeFinished as O, momentText as k, pollInterval as A, problemDestination as j, progressText as M, require_jsx_runtime as N, require_react as P, statusLabel as F, summaryItems as I, taskIssues as L, uo as R, useMutation as z, useQuery as B, useQueryClient as V } from "./peach-app.js";
 import { CodeBlock as H } from "./peach-app.code-block-C5xw-gzS.js";
 import { Page as U } from "./peach-app.page-QAncjzM1.js";
-import { ErrorDetails as W, ErrorExcerpt as G } from "./peach-app.error-excerpt-B8v2xEIP.js";
+import { ErrorDetails as W, ErrorExcerpt as G } from "./peach-app.error-excerpt-Cu3bobTS.js";
 // src/react/activity/background-issues.tsx
 var K = /* @__PURE__ */ d(P(), 1), q = N(), J = ["background-issues"];
 function te() {
@@ -22,7 +22,7 @@ function te() {
 		children: [/* @__PURE__ */ (0, q.jsx)("h3", {
 			id: e,
 			className: "text-title-2-medium text-text-primary",
-			children: "需要处理"
+			children: "Needs attention"
 		}), /* @__PURE__ */ (0, q.jsx)("ul", {
 			className: "flex min-w-0 flex-col gap-3",
 			children: t.map((e) => /* @__PURE__ */ (0, q.jsx)("li", { children: /* @__PURE__ */ (0, q.jsx)(ne, { issue: e }) }, e.key))
@@ -35,7 +35,7 @@ function ne({ issue: t }) {
 		onSuccess: () => {
 			n.invalidateQueries({ queryKey: J });
 		}
-	}), i = t.since ? `自 ${k(t.since)} 起` : `发现于 ${k(t.noticed_at)}`;
+	}), i = t.since ? `Since ${k(t.since)}` : `Detected ${k(t.noticed_at)}`;
 	return /* @__PURE__ */ (0, q.jsx)(s, {
 		tone: "error",
 		title: t.title,
@@ -52,10 +52,10 @@ function ne({ issue: t }) {
 				disabled: !t.retry_available,
 				...m(r.isPending),
 				onClick: () => r.mutate(),
-				children: "立即重试"
+				children: "Retry now"
 			}) : null]
 		}),
-		children: r.error ? `${i}\n没有重试：${_(r.error)}` : i
+		children: r.error ? `${i}\nRetry failed: ${_(r.error)}` : i
 	});
 }
 // src/react/activity/activity-page.tsx
@@ -71,7 +71,7 @@ function Y({ run: e }) {
 	let n = e.status === "failed" && e.task_key === "library-processing" && e.result_summary?.outcome === "partial", r = n || e.status === "succeeded" && w(e);
 	return /* @__PURE__ */ (0, q.jsx)(t, {
 		color: r ? "yellow" : re[e.status] ?? "neutral",
-		children: n ? "部分项目需处理" : r ? "发现问题" : F(e.status)
+		children: n ? "Some items need attention" : r ? "Issues found" : F(e.status)
 	});
 }
 function ie({ rows: e }) {
@@ -96,12 +96,12 @@ function ie({ rows: e }) {
 					/* @__PURE__ */ (0, q.jsx)("div", {
 						className: "w-full min-w-0",
 						children: /* @__PURE__ */ (0, q.jsx)(n, {
-							summary: "技术详情",
+							summary: "Technical details",
 							contentClassName: "pb-2.5",
 							children: /* @__PURE__ */ (0, q.jsx)(H, {
 								code: JSON.stringify(e.result_summary, null, 2),
 								language: "json",
-								label: `${e.task_label}技术详情`
+								label: `${e.task_label} technical details`
 							})
 						})
 					})
@@ -142,7 +142,7 @@ function X({ run: e, meta: t, children: r, footer: i, followups: a }) {
 			a?.length ? /* @__PURE__ */ (0, q.jsx)("div", {
 				className: "border-t border-separator-border px-5 py-2.5",
 				children: /* @__PURE__ */ (0, q.jsx)(n, {
-					summary: `任务明细 · ${a.length} 项`,
+					summary: `Task details · ${a.length} items`,
 					contentClassName: "pb-2.5",
 					defaultOpen: a.some((e) => E(e)),
 					children: /* @__PURE__ */ (0, q.jsx)(ie, { rows: a })
@@ -151,12 +151,12 @@ function X({ run: e, meta: t, children: r, footer: i, followups: a }) {
 			Object.keys(e.result_summary || {}).length ? /* @__PURE__ */ (0, q.jsx)("div", {
 				className: "border-t border-separator-border px-5 py-2.5",
 				children: /* @__PURE__ */ (0, q.jsx)(n, {
-					summary: "技术详情",
+					summary: "Technical details",
 					contentClassName: "pb-2.5",
 					children: /* @__PURE__ */ (0, q.jsx)(H, {
 						code: JSON.stringify(e.result_summary, null, 2),
 						language: "json",
-						label: `${e.task_label}技术详情`
+						label: `${e.task_label} technical details`
 					})
 				})
 			}) : null,
@@ -171,7 +171,7 @@ function X({ run: e, meta: t, children: r, footer: i, followups: a }) {
 	});
 }
 function ae({ run: e, followups: t }) {
-	let n = e.progress_total || 0, r = e.progress_current || 0, i = e.progress_label || "正在进行", a = g(e.elapsed_seconds), s = [u[e.trigger] || e.trigger, a && `已跑 ${a}`].filter(Boolean).join(" · ");
+	let n = e.progress_total || 0, r = e.progress_current || 0, i = e.progress_label || "In progress", a = g(e.elapsed_seconds), s = [u[e.trigger] || e.trigger, a && `Running for ${a}`].filter(Boolean).join(" · ");
 	return /* @__PURE__ */ (0, q.jsx)(X, {
 		run: e,
 		meta: s,
@@ -188,7 +188,7 @@ function ae({ run: e, followups: t }) {
 					i,
 					" · ",
 					M(r, n),
-					" 项"
+					" items"
 				]
 			})]
 		}) : /* @__PURE__ */ (0, q.jsx)(o, { label: i })
@@ -197,12 +197,12 @@ function ae({ run: e, followups: t }) {
 function Z({ run: e, followups: t, runs: r, latest: i }) {
 	let o = I(e.result_summary).filter((t) => t !== e.error), s = L(e), c = j(e, i), l = g(e.elapsed_seconds), d = r && r.length > 1 ? r[r.length - 1] : void 0, f = (d ? [
 		u[e.trigger] || e.trigger,
-		`近 ${r.length} 轮`,
+		`Last ${r.length} runs`,
 		`${k(d.finished_at)} – ${k(e.finished_at)}`
 	] : [
 		u[e.trigger] || e.trigger,
 		k(e.finished_at),
-		l && `用时 ${l}`
+		l && `Duration ${l}`
 	]).filter(Boolean).join(" · ");
 	return /* @__PURE__ */ (0, q.jsxs)(X, {
 		run: e,
@@ -215,10 +215,10 @@ function Z({ run: e, followups: t, runs: r, latest: i }) {
 				children: o.map((e, t) => /* @__PURE__ */ (0, q.jsx)("li", { children: e }, t))
 			}) : null,
 			s.length ? /* @__PURE__ */ (0, q.jsx)(n, {
-				summary: `问题详情 · ${s.length} 项`,
+				summary: `Issue details · ${s.length} items`,
 				contentClassName: "pt-2",
 				children: /* @__PURE__ */ (0, q.jsx)(W, {
-					label: "任务问题详情",
+					label: "Task issue details",
 					children: /* @__PURE__ */ (0, q.jsx)("ul", {
 						className: "flex min-w-0 flex-col gap-3",
 						"data-task-issues": "",
@@ -240,7 +240,7 @@ function Z({ run: e, followups: t, runs: r, latest: i }) {
 				})
 			}) : w(e) && ["follow-check", "feed-check"].includes(e.task_key) ? /* @__PURE__ */ (0, q.jsx)("p", {
 				className: "text-body-2-regular text-text-secondary",
-				children: "未取得本轮逐项详情，可到来源列表查看检查结果。"
+				children: "Itemized details are unavailable for this run. View the source list for the check results."
 			}) : null,
 			c ? /* @__PURE__ */ (0, q.jsx)(a, {
 				href: c.href,
@@ -286,7 +286,7 @@ function oe() {
 	}), g = t.error ? _(t.error) : "";
 	if (!n) return /* @__PURE__ */ (0, q.jsx)(U, { children: /* @__PURE__ */ (0, q.jsx)(s, {
 		tone: "error",
-		children: g || "读取任务中心失败"
+		children: g || "Failed to load Task Center"
 	}) });
 	let S = O(n.finished || [], o), w = [
 		...n.running || [],
@@ -305,16 +305,16 @@ function oe() {
 		}) : null,
 		n.available === !1 ? /* @__PURE__ */ (0, q.jsx)(s, {
 			tone: "warning",
-			children: n.message || "数据库尚未准备好任务记录表"
+			children: n.message || "The database task history table is not ready yet"
 		}) : null,
 		/* @__PURE__ */ (0, q.jsx)(te, {}),
 		J ? /* @__PURE__ */ (0, q.jsx)(i, {
 			icon: R,
-			title: "还没有任务记录",
-			children: "扫描、追更检查、批量操作和命令行批处理跑起来之后，这里会显示它们的进度与结果。"
+			title: "No task history yet",
+			children: "Once scans, subscription checks, bulk actions, or command-line jobs run, their progress and results will appear here."
 		}) : /* @__PURE__ */ (0, q.jsxs)(q.Fragment, { children: [
 			/* @__PURE__ */ (0, q.jsx)(Q, {
-				title: "正在进行",
+				title: "In progress",
 				children: L.length || I.length ? /* @__PURE__ */ (0, q.jsxs)($, {
 					live: !0,
 					children: [L.map((e) => /* @__PURE__ */ (0, q.jsx)(ae, {
@@ -327,11 +327,11 @@ function oe() {
 					}, e.id))]
 				}) : /* @__PURE__ */ (0, q.jsx)(s, {
 					tone: "neutral",
-					children: "没有任务在跑。"
+					children: "No tasks are running."
 				})
 			}),
 			V.length ? /* @__PURE__ */ (0, q.jsx)(Q, {
-				title: "本次未执行",
+				title: "Not run this time",
 				children: /* @__PURE__ */ (0, q.jsx)($, { children: V.map((e) => /* @__PURE__ */ (0, q.jsx)(Z, {
 					run: e,
 					latest: G.has(e.id),
@@ -339,7 +339,7 @@ function oe() {
 				}, e.id)) })
 			}) : null,
 			H.length || P ? /* @__PURE__ */ (0, q.jsxs)(Q, {
-				title: "最近完成",
+				title: "Recently completed",
 				children: [
 					H.length ? /* @__PURE__ */ (0, q.jsx)($, { children: W.map(({ run: e, runs: t }) => /* @__PURE__ */ (0, q.jsx)(Z, {
 						run: e,
@@ -358,7 +358,7 @@ function oe() {
 						className: "self-start",
 						...m(h.isPending),
 						onClick: F,
-						children: "加载更早"
+						children: "Load earlier"
 					}) : null
 				]
 			}) : null
@@ -368,4 +368,4 @@ function oe() {
 }
 export { oe as ActivityPage };
 
-//# debugId=1a5a4cfa-6bd5-48df-8d86-0cf61bab3452
+//# debugId=eaa6a9d7-f7f6-42c2-b3e3-ab1fc0a01c59

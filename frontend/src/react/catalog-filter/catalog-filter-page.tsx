@@ -231,7 +231,7 @@ function Head({ count, refreshing, layout, sorts, actions }: CatalogFilterProps)
 function Readout({ count }: { count: CatalogFilterProps['count'] }) {
   const readout = useRef<HTMLSpanElement>(null);
   const skeleton = useRef<HTMLSpanElement>(null);
-  const text = count ? `${count.total.toLocaleString()} 个符合 · 显示 ${count.shown.toLocaleString()}` : '';
+  const text = count ? `${count.total.toLocaleString()} matches · ${count.shown.toLocaleString()} shown` : '';
   useLayoutEffect(() => {
     if (count === false) return;
     if (!count) { fitSkeleton(skeleton.current); return }

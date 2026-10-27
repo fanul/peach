@@ -32,8 +32,8 @@ import {
 
 const COMPARE = spriteGlyph('git-compare');
 const AGAIN = spriteGlyph('rotate-cw');
-const DISCONNECTED = '暂时无法读取进度，正在重新连接…';
-const APPLY_LABEL = '清理失效条目';
+const DISCONNECTED = 'Unable to retrieve progress. Reconnecting…';
+const APPLY_LABEL = 'Clean up invalid entries';
 
 /* 结果读数两行各自按卡数等分：来源几个都不折出半行。窄了照顶上那排读数折两列、一列。 */
 const RESULT_ROW = 'inline-grid w-full grid-flow-col auto-cols-fr gap-4 max-plain-stat-pair:grid-flow-row'
@@ -49,28 +49,28 @@ function ScanResult({ scan, partial = false }: { scan: ResourceScanState; partia
       <div className={RESULT_ROW}>
         {(scan.sources ?? []).map((source) => (
           <article key={source.location} className={plainStatClass()}>
-            <PlainStat label={SOURCE_LABELS[source.location] || '媒体来源'}
+            <PlainStat label={SOURCE_LABELS[source.location] || 'Media source'}
               mark={<SourceMark mark={MEDIA_SOURCE_ICONS[source.location] ?? 'database'} />}
-              aside={<ConnectionStatus online={source.online}>{source.online ? '可访问' : '离线'}</ConnectionStatus>}
-              figure={source.online ? `${count(source.missing)} 项` : '—'}
-              meta={source.online ? sourceMeta(source) : `${sourceMeta(source)} · 本次已跳过`} wrapMeta />
+              aside={<ConnectionStatus online={source.online}>{source.online ? 'Online' : 'Offline'}</ConnectionStatus>}
+              figure={source.online ? `${count(source.missing)} items` : '—'}
+              meta={source.online ? sourceMeta(source) : `${sourceMeta(source)} · Skipped this time`} wrapMeta />
             {source.online && source.unreadable > 0
-              ? <span className="self-start"><StatusLabel tone="warning">{count(source.unreadable)} 个目录未读取</StatusLabel></span> : null}
+              ? <span className="self-start"><StatusLabel tone="warning">{count(source.unreadable)}  folders unreadable</StatusLabel></span> : null}
           </article>
         ))}
       </div>
       {!partial && <div className={RESULT_ROW}>
         <article className={plainStatClass()}>
-          <PlainStat label="待永久删除" figure={`${count(purgeCount(scan))} 项`} meta="文件已不在盘上，含回收站" />
+          <PlainStat label="Pending permanent deletion" figure={`${count(purgeCount(scan))} items`} meta="Files are missing, including items in trash" />
         </article>
         <article className={plainStatClass()}>
-          <PlainStat label="将标为已消失" figure={`${count(scan.vanish)} 项`} meta="带个人记录，记录留着" />
+          <PlainStat label="Will be marked missing" figure={`${count(scan.vanish)} items`} meta="Personal records will be kept" />
         </article>
         <article className={plainStatClass()}>
-          <PlainStat label="空文件夹" figure={`${count(scan.empty)} 个`} meta="保留来源根目录" />
+          <PlainStat label="Empty folders" figure={`${count(scan.empty)} folders`} meta="Source root folders are kept" />
         </article>
         <article className={plainStatClass()}>
-          <PlainStat label="可清理的缓存" figure={`${count(cache.files)} 个`}
+          <PlainStat label="Removable cache" figure={`${count(cache.files)} files`}
             meta={cache.files ? fmtSize(cache.bytes) : ''} />
         </article>
       </div>}
@@ -92,8 +92,8 @@ export function ResourceSyncCard(
       if (out.status !== 'complete') return;
       /* 没删的几样是这一轮留下的，能删的已经删了：报警告档、写完成与没处理的数目，不说失败。 */
       const { done, left } = applyLeftovers(out);
-      if (left) toast(`已完成 ${count(done)} 项，${count(left)} 项没有处理`, { warning: true });
-      else toast('已清理失效条目');
+      if (left) toast(`Completed ${count(done)} items; ${count(left)} were not processed`, { warning: true });
+      else toast('Invalid entries cleaned up');
     },
   });
   const scan = useBackgroundJob<ResourceScanState>({
@@ -108,7 +108,7 @@ export function ResourceSyncCard(
   const scanning = scan.running || scan.start.isPending;
   const cleaning = apply.running || apply.start.isPending;
   const scanned = state?.status === 'complete' || state?.status === 'failed';
-  const label = scanning ? '扫描中' : scanned ? '重新扫描' : '检查文件';
+  const label = scanning ? 'Scanning' : scanned ? 'Scan again' : 'Check files';
 
   /* 执行那一步只认这次检查的候选，逐条复核后再删；删了就没有撤销。 */
   const runApply = (payload: ResourceScanState) => void confirmModal({
@@ -123,7 +123,7 @@ export function ResourceSyncCard(
   const receipt = (out: ResourceApplyState) => {
     const partial = applyLeftovers(out).left > 0;
     return (
-      <Note tone={partial ? 'warning' : 'success'} title={partial ? '部分完成' : '清理结果'}>
+      <Note tone={partial ? 'warning' : 'success'} title={partial ? 'Partially complete' : 'Cleanup result'}>
         {applyText(out, fmtSize)}
       </Note>
     );
@@ -131,15 +131,15 @@ export function ResourceSyncCard(
   let progress = null;
   let result = null;
   if (done?.status === 'failed') {
-    result = <Note tone="error" title="资源清理未完成">{done.error || '请查看任务记录，核对已处理的文件。'}</Note>;
+    result = <Note tone="error" title="Resource cleanup incomplete">{done.error || 'Check the task log to verify which files were processed.'}</Note>;
   } else if (done) {
     result = receipt(done);
   } else if (apply.running) {
-    progress = <TaskProgress embedded label={apply.job?.message || '正在复核并清理失效条目'} />;
+    progress = <TaskProgress embedded label={apply.job?.message || 'Rechecking and cleaning up invalid entries'} />;
   } else if (scan.start.isError) {
-    result = <Note tone="error" title="扫描失败">{errorMessage(scan.start.error)}</Note>;
+    result = <Note tone="error" title="Scan failed">{errorMessage(scan.start.error)}</Note>;
   } else if (scan.query.isError && state) {
-    result = <Note tone="neutral" title="任务状态">{DISCONNECTED}</Note>;
+    result = <Note tone="neutral" title="Task status">{DISCONNECTED}</Note>;
   } else if (state?.status === 'running') {
     const line = scanLine(state);
     progress = (
@@ -149,31 +149,31 @@ export function ResourceSyncCard(
   } else if (state?.status === 'failed') {
     result = <>
       {state.sources?.length ? <ScanResult scan={state} partial /> : null}
-      <Note tone="error" title="扫描失败">{state.error || '后台扫描失败'}</Note>
+      <Note tone="error" title="Scan failed">{state.error || 'Background scan failed'}</Note>
     </>;
   } else if (state?.status === 'complete' && state.applied) {
     result = apply.job?.status === 'complete'
       ? receipt(apply.job)
-      : <Note tone="neutral" title="清理结果">这次检查的结果已经清理，重新扫描可再核对。</Note>;
+      : <Note tone="neutral" title="Cleanup result">The results of this check have already been cleaned up. Scan again to verify.</Note>;
   } else if (state?.status === 'complete') {
     const changes = hasChanges(state);
     result = (
       <>
         <ScanResult scan={state} />
         {changes
-          ? <Note tone="neutral" title="清理内容" action={
+          ? <Note tone="neutral" title="Cleanup details" action={
               <Button variant="danger" {...busyProps(cleaning)} onClick={() => runApply(state)}>
-                {cleaning ? '正在复核并清理…' : APPLY_LABEL}
+                {cleaning ? 'Rechecking and cleaning up…' : APPLY_LABEL}
               </Button>
             }>{applyPlanText(state)}</Note>
           : <p className="mr-auto text-body-regular text-notification-success-foreground">
-              已检查可访问的来源，没有待清理的记录、空文件夹或缓存。
+              All available sources were checked. There are no records, empty folders, or cache files to clean up.
             </p>}
       </>
     );
   }
   if (apply.start.isError && !done) {
-    result = <>{result}<Note tone="error" title="清理失败">{errorMessage(apply.start.error)}</Note></>;
+    result = <>{result}<Note tone="error" title="Cleanup failed">{errorMessage(apply.start.error)}</Note></>;
   }
 
   return (
@@ -182,9 +182,9 @@ export function ResourceSyncCard(
         <Button data-resource-scan leadingIcon={scanned && !scanning ? AGAIN : COMPARE} {...busyProps(scanning)}
           onClick={() => { if (!scanning) scan.start.mutate() }}>{label}</Button>
       }>
-        <FieldsetTitle id="resource-sync-title" gap="small">资源同步</FieldsetTitle>
+        <FieldsetTitle id="resource-sync-title" gap="small">Resource sync</FieldsetTitle>
         <p className="max-w-190 text-body-2-regular leading-5 text-text-secondary">
-          按馆藏记录逐条查找本地磁盘与网盘上的文件，列出文件已不存在的记录、空文件夹，以及不再被引用的缓存。
+          Check each library record against files on local and cloud storage, listing records with missing files, empty folders, and unreferenced cache files.
         </p>
         <div aria-live="polite" className="mt-4 empty:hidden">{progress}</div>
       </Fieldset>

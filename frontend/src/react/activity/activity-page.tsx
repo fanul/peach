@@ -50,7 +50,7 @@ function StatusBadge({ run }: { run: TaskRunPayload }) {
     && run.result_summary?.outcome === 'partial';
   const problems = partial || run.status === 'succeeded' && hasResultProblems(run);
   return <Chip color={problems ? 'yellow' : BADGE_COLORS[run.status] ?? 'neutral'}>
-    {partial ? '部分项目需处理' : problems ? '发现问题' : statusLabel(run.status)}
+    {partial ? 'Some items need attention' : problems ? 'Issues found' : statusLabel(run.status)}
   </Chip>;
 }
 
@@ -75,9 +75,9 @@ function FollowupList({ rows }: { rows: TaskRunPayload[] }) {
               ? <span className="min-w-0 break-words text-caption-1-regular text-text-secondary">{detail}</span>
               : null}
             <div className="w-full min-w-0">
-              <Disclosure summary="技术详情" contentClassName="pb-2.5">
+              <Disclosure summary="Technical details" contentClassName="pb-2.5">
                 <CodeBlock code={JSON.stringify(row.result_summary, null, 2)} language="json"
-                  label={`${row.task_label}技术详情`} />
+                  label={`${row.task_label} technical details`} />
               </Disclosure>
             </div>
           </li>
@@ -111,16 +111,16 @@ function RunCard(
         {children}
       </div>
       {followups?.length ? <div className="border-t border-separator-border px-5 py-2.5">
-        <Disclosure summary={`任务明细 · ${followups.length} 项`}
+        <Disclosure summary={`Task details · ${followups.length} items`}
           contentClassName="pb-2.5"
           defaultOpen={followups.some((row) => isActive(row))}>
           <FollowupList rows={followups} />
         </Disclosure>
       </div> : null}
       {Object.keys(run.result_summary || {}).length ? <div className="border-t border-separator-border px-5 py-2.5">
-        <Disclosure summary="技术详情" contentClassName="pb-2.5">
+        <Disclosure summary="Technical details" contentClassName="pb-2.5">
           <CodeBlock code={JSON.stringify(run.result_summary, null, 2)} language="json"
-            label={`${run.task_label}技术详情`} />
+            label={`${run.task_label} technical details`} />
         </Disclosure>
       </div> : null}
       {footer
@@ -135,16 +135,16 @@ function RunCard(
 function RunningRun({ run, followups }: { run: TaskRunPayload; followups?: TaskRunPayload[] }) {
   const total = run.progress_total || 0;
   const current = run.progress_current || 0;
-  const label = run.progress_label || '正在进行';
+  const label = run.progress_label || 'In progress';
   const elapsed = elapsedText(run.elapsed_seconds);
-  const meta = [TRIGGER_LABELS[run.trigger] || run.trigger, elapsed && `已跑 ${elapsed}`]
+  const meta = [TRIGGER_LABELS[run.trigger] || run.trigger, elapsed && `Running for ${elapsed}`]
     .filter(Boolean).join(' · ');
   return (
     <RunCard run={run} meta={meta} followups={followups}>
       {total > 0
         ? <div className="flex flex-col gap-1.5">
             <Progress label={label} value={Math.min(current, total)} max={total} />
-            <p className="text-caption-1-regular text-text-secondary wrap-anywhere">{label} · {progressText(current, total)} 项</p>
+            <p className="text-caption-1-regular text-text-secondary wrap-anywhere">{label} · {progressText(current, total)} items</p>
           </div>
         : <LoadingDots label={label} />}
     </RunCard>
@@ -165,17 +165,17 @@ function SettledRun(
   const elapsed = elapsedText(run.elapsed_seconds);
   const oldest = runs && runs.length > 1 ? runs[runs.length - 1] : undefined;
   const meta = (oldest
-    ? [TRIGGER_LABELS[run.trigger] || run.trigger, `近 ${runs!.length} 轮`,
+    ? [TRIGGER_LABELS[run.trigger] || run.trigger, `Last ${runs!.length} runs`,
        `${momentText(oldest.finished_at)} – ${momentText(run.finished_at)}`]
     : [TRIGGER_LABELS[run.trigger] || run.trigger, momentText(run.finished_at),
-       elapsed && `用时 ${elapsed}`]).filter(Boolean).join(' · ');
+       elapsed && `Duration ${elapsed}`]).filter(Boolean).join(' · ');
   return (
     <RunCard run={run} meta={meta} footer={run.error} followups={followups}>
       {summary.length ? <ul className="list-disc space-y-1 pl-5 text-caption-1-regular text-text-secondary wrap-anywhere">
         {summary.map((line, index) => <li key={index}>{line}</li>)}
       </ul> : null}
-      {issues.length ? <Disclosure summary={`问题详情 · ${issues.length} 项`} contentClassName="pt-2">
-        <ErrorDetails label="任务问题详情">
+      {issues.length ? <Disclosure summary={`Issue details · ${issues.length} items`} contentClassName="pt-2">
+        <ErrorDetails label="Task issue details">
         <ul className="flex min-w-0 flex-col gap-3" data-task-issues="">
           {issues.map((issue, index) => <li key={`${issue.source}-${index}`} className="flex min-w-0 flex-col gap-1 text-body-2-regular wrap-anywhere">
             <p className="text-body-regular text-text-primary">{[issue.label, issue.provider, issue.kind].filter(Boolean).join(' · ')}</p>
@@ -184,7 +184,7 @@ function SettledRun(
         </ul>
         </ErrorDetails>
       </Disclosure> : hasResultProblems(run) && ['follow-check', 'feed-check'].includes(run.task_key)
-        ? <p className="text-body-2-regular text-text-secondary">未取得本轮逐项详情，可到来源列表查看检查结果。</p> : null}
+        ? <p className="text-body-2-regular text-text-secondary">Itemized details are unavailable for this run. View the source list for the check results.</p> : null}
       {destination
         ? <LinkButton href={destination.href} size="small" trailingIcon={RiArrowRightLine}
             className="self-start">
@@ -237,7 +237,7 @@ export function ActivityPage() {
   });
   const problem = tasks.error ? errorMessage(tasks.error) : '';
   // 首屏就没拿到数据：只剩这一条，不画空的三段。
-  if (!data) return <Page><Note tone="error">{problem || '读取任务中心失败'}</Note></Page>;
+  if (!data) return <Page><Note tone="error">{problem || 'Failed to load Task Center'}</Note></Page>;
 
   const allFinished = mergeFinished(data.finished || [], earlier);
   const allRuns = [...(data.running || []), ...(data.skipped || []), ...allFinished];
@@ -270,16 +270,16 @@ export function ActivityPage() {
     <Page>
       {problem ? <Note tone="error">{problem}</Note> : null}
       {data.available === false
-        ? <Note tone="warning">{data.message || '数据库尚未准备好任务记录表'}</Note>
+        ? <Note tone="warning">{data.message || 'The database task history table is not ready yet'}</Note>
         : null}
       {/* 后台服务此刻的问题排在最前：它们不会自己跑完，要人去处理。 */}
       <BackgroundIssues />
       {quiet
-        ? <EmptyState icon={RiHistoryLine} title="还没有任务记录">
-            扫描、追更检查、批量操作和命令行批处理跑起来之后，这里会显示它们的进度与结果。
+        ? <EmptyState icon={RiHistoryLine} title="No task history yet">
+            Once scans, subscription checks, bulk actions, or command-line jobs run, their progress and results will appear here.
           </EmptyState>
         : <>
-            <Section title="正在进行">
+            <Section title="In progress">
               {running.length || working.length
                 ? <RunList live>
                     {running.map((run) => (
@@ -287,18 +287,18 @@ export function ActivityPage() {
                     {working.map((run) => (
                       <SettledRun key={run.id} run={run} latest={newest.has(run.id)} followups={byParent.get(run.id)} />))}
                   </RunList>
-                : <Note tone="neutral">没有任务在跑。</Note>}
+                : <Note tone="neutral">No tasks are running.</Note>}
             </Section>
             {/* 「刚才那一轮为什么没跑」只有这一段答得出：定时触发撞上在跑的那一轮会
                 安静跳过，不留记录的话它在界面上和从没触发过一模一样。 */}
             {skipped.length
-              ? <Section title="本次未执行">
+              ? <Section title="Not run this time">
                   <RunList>{skipped.map((run) => (
                     <SettledRun key={run.id} run={run} latest={newest.has(run.id)} followups={byParent.get(run.id)} />))}</RunList>
                 </Section>
               : null}
             {finished.length || hasEarlier
-              ? <Section title="最近完成">
+              ? <Section title="Recently completed">
                   {finished.length
                     ? <RunList>{folds.map(({ run, runs }) => (
                         <SettledRun key={run.id} run={run} runs={runs} latest={newest.has(run.id)}
@@ -308,7 +308,7 @@ export function ActivityPage() {
                   {hasEarlier
                     ? <Button variant="secondary" size="small" leadingIcon={RiArrowDownSLine}
                         className="self-start" {...busyProps(more.isPending)} onClick={loadEarlier}>
-                        加载更早
+                        Load earlier
                       </Button>
                     : null}
                 </Section>

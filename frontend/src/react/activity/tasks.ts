@@ -84,12 +84,12 @@ export async function prefetchTasks(signal: AbortSignal): Promise<void> {
 }
 
 export const TRIGGER_LABELS: Record<string, string> = {
-  manual: '手动', scheduled: '定时', startup: '启动', cli: '命令行',
+  manual: 'Manual', scheduled: 'Scheduled', startup: 'Startup', cli: 'Command line',
 };
 
 const STATUS_LABELS: Record<string, string> = {
-  pending: '排队中', running: '进行中', succeeded: '已完成',
-  failed: '失败', cancelled: '已取消', interrupted: '意外中断',
+  pending: 'Queued', running: 'In progress', succeeded: 'Completed',
+  failed: 'Failed', cancelled: 'Cancelled', interrupted: 'Interrupted unexpectedly',
 };
 
 /** 状态的中文名。表里的状态集是封闭的，认不出来只可能是表先改了，那就原样显示。 */
@@ -97,33 +97,33 @@ export const statusLabel = (status: string): string => STATUS_LABELS[status] || 
 
 /* 主摘要使用已定义的中文字段；原始状态字典由技术详情保留。 */
 const SUMMARY_LABELS: Record<string, string> = {
-  checked: '已检查', total: '总数', scanned: '已扫描', identified: '已识别',
-  candidates: '作品资料', covers: '封面', changed: '已改动', operation: '操作',
-  ok: '取得', miss: '未取得', kept: '保留', planned: '计划', done: '已处理', added: '新增',
-  written: '已保存', removed: '已移除', issue_count: '需要处理',
-  followups_duplicate: '补充任务已在排队', followups_truncated: '补充任务超出数量上限',
-  followups_depth_exceeded: '补充任务超出层级上限', name: '名称',
-  matched: '匹配项', size: '尺寸', source: '来源', cover_network: '封面图片连接失败',
-  probed: '已读取媒体信息', previews: '预览图', paused_count: '等待来源恢复',
-  auto_applied: '已自动保存', auto_rejected: '未采用', performer_avatars: '女优头像',
-  performer_profile_failed: '女优资料采集失败', performer_aliases: '女优别名',
-  performer_profile_conflicts: '女优资料待复核', conflicts: '待复核冲突',
-  gone_count: '链接已失效', unclear_count: '链接访问失败',
-  source_failed: '来源检查失败', source_warning: '来源补查失败',
-  resolve_failed: '查找失败', sources_found: '找到来源',
-  warning_count: '需要留意', profiles_checked: '已读取浏览器资料',
-  missing: '文件已丢失', purge: '可删除记录', vanish: '需保留个人记录',
-  empty: '空目录', unreadable: '无法读取', cache_files: '可清理缓存文件',
-  cache_bytes: '可清理缓存大小', bytes_reclaimed: '已释放空间',
-  cache_removed: '已清理缓存文件', cache_blocked_count: '缓存清理失败',
-  purged: '已删除记录', vanished: '已标记文件丢失', reattached: '已转移记录',
-  blocked_count: '未能删除记录', dirs_removed: '已删除空目录', dir_errors: '目录清理失败',
-  marked: '已标记失效', recovered: '复查后可访问', entities: '涉及资料',
-  found: '发现待修复文件', repaired: '已修复', failed: '失败', missing_tool: '缺少修复工具',
-  moved: '已整理文件', restored: '已还原', skipped: '已跳过', made: '已生成预览图',
-  fetched: '已取得资料', updated: '已更新', discovered: '发现作品', without_code: '未识别番号',
-  incomplete: '资料或封面未取得',
-  result: '结果',
+  checked: 'Checked', total: 'Total', scanned: 'Scanned', identified: 'Identified',
+  candidates: 'Work details', covers: 'Covers', changed: 'Changed', operation: 'Operation',
+  ok: 'Retrieved', miss: 'Unavailable', kept: 'Kept', planned: 'Planned', done: 'Processed', added: 'Added',
+  written: 'Saved', removed: 'Removed', issue_count: 'Needs attention',
+  followups_duplicate: 'Follow-up tasks already queued', followups_truncated: 'Follow-up task limit exceeded',
+  followups_depth_exceeded: 'Follow-up depth limit exceeded', name: 'Name',
+  matched: 'Matches', size: 'Size', source: 'Source', cover_network: 'Cover image connection failures',
+  probed: 'Media details read', previews: 'Previews', paused_count: 'Waiting for source recovery',
+  auto_applied: 'Saved automatically', auto_rejected: 'Not used', performer_avatars: 'Performer avatars',
+  performer_profile_failed: 'Performer profile collection failures', performer_aliases: 'Performer aliases',
+  performer_profile_conflicts: 'Performer profiles awaiting review', conflicts: 'Conflicts awaiting review',
+  gone_count: 'Expired links', unclear_count: 'Inaccessible links',
+  source_failed: 'Source check failures', source_warning: 'Additional source check failures',
+  resolve_failed: 'Lookup failures', sources_found: 'Sources found',
+  warning_count: 'Warnings', profiles_checked: 'Browser profiles read',
+  missing: 'Missing files', purge: 'Records safe to delete', vanish: 'Personal records to keep',
+  empty: 'Empty folders', unreadable: 'Unreadable', cache_files: 'Cache files safe to remove',
+  cache_bytes: 'Cache space recoverable', bytes_reclaimed: 'Space reclaimed',
+  cache_removed: 'Cache files removed', cache_blocked_count: 'Cache cleanup failures',
+  purged: 'Records deleted', vanished: 'Files marked missing', reattached: 'Records transferred',
+  blocked_count: 'Records not deleted', dirs_removed: 'Empty folders removed', dir_errors: 'Folder cleanup failures',
+  marked: 'Marked expired', recovered: 'Accessible after recheck', entities: 'Related profiles',
+  found: 'Files needing repair', repaired: 'Repaired', failed: 'Failed', missing_tool: 'Repair tool missing',
+  moved: 'Files organized', restored: 'Restored', skipped: 'Skipped', made: 'Previews generated',
+  fetched: 'Details retrieved', updated: 'Updated', discovered: 'Works found', without_code: 'Code not recognized',
+  incomplete: 'Details or cover unavailable',
+  result: 'Result',
 };
 
 const PROBLEM_COUNTS = [
@@ -159,17 +159,17 @@ export function problemDestination(run: TaskRunPayload, latest = true): { href: 
   if (!hasResultProblems(run) && run.status !== 'failed') return null;
   if (LATEST_ONLY.has(run.task_key) && !latest) return null;
   const targets: Record<string, [string, string]> = {
-    'link-check': ['/data-cleanup#link-manager', '查看有问题的链接'],
-    'link-prune': ['/data-cleanup#link-manager', '查看有问题的链接'],
+    'link-check': ['/data-cleanup#link-manager', 'View problematic links'],
+    'link-prune': ['/data-cleanup#link-manager', 'View problematic links'],
     // 「需要处理」不收这里的可重试项：问题清单有几百项，先看清单再在那张卡上重试。
-    'library-processing': ['/data-cleanup#libraryProcessing', '查看未完成项'],
-    'follow-check': ['/subscriptions', '查看关注来源'],
-    'feed-check': ['/subscriptions', '查看订阅源'],
-    'follow-resolve': ['/subscriptions?tab=add', '查看来源查找'],
-    'resource-scan': ['/data-cleanup#resource-sync', '查看资源同步'],
-    'resource-apply': ['/data-cleanup#resource-sync', '查看资源同步'],
-    'media-repair': ['/data-cleanup#mediaRepair', '查看媒体修复'],
-    'taste-refresh': ['/taste', '查看口味数据来源'],
+    'library-processing': ['/data-cleanup#libraryProcessing', 'View incomplete items'],
+    'follow-check': ['/subscriptions', 'View followed sources'],
+    'feed-check': ['/subscriptions', 'View feeds'],
+    'follow-resolve': ['/subscriptions?tab=add', 'View source lookup'],
+    'resource-scan': ['/data-cleanup#resource-sync', 'View resource sync'],
+    'resource-apply': ['/data-cleanup#resource-sync', 'View resource sync'],
+    'media-repair': ['/data-cleanup#mediaRepair', 'View media repair'],
+    'taste-refresh': ['/taste', 'View taste data sources'],
   };
   const target = targets[run.task_key];
   return target ? { href: target[0], label: target[1] } : null;
@@ -242,7 +242,7 @@ export function followupDetail(row: TaskRunPayload): string {
   const total = row.progress_total || 0;
   const { name: _name, ...result } = row.result_summary || {};
   const tail = readableErrorHeadline(row.error) || summaryText(result)
-    || (isActive(row) && total > 0 ? `${progressText(row.progress_current, total)} 项` : '');
+    || (isActive(row) && total > 0 ? `${progressText(row.progress_current, total)} items` : '');
   return [item, tail].filter(Boolean).join(' · ');
 }
 
@@ -250,12 +250,12 @@ export function followupDetail(row: TaskRunPayload): string {
 export function elapsedText(seconds: number | null | undefined): string {
   if (typeof seconds !== 'number' || !Number.isFinite(seconds) || seconds < 0) return '';
   const whole = Math.floor(seconds);
-  if (whole < 60) return `${whole} 秒`;
+  if (whole < 60) return `${whole} sec`;
   const minutes = Math.floor(whole / 60);
-  if (minutes < 60) return `${minutes} 分 ${whole % 60} 秒`;
+  if (minutes < 60) return `${minutes} min ${whole % 60} sec`;
   const hours = Math.floor(minutes / 60);
-  if (hours < 48) return `${hours} 小时 ${minutes % 60} 分`;
-  return `${Math.floor(hours / 24).toLocaleString()} 天 ${hours % 24} 小时`;
+  if (hours < 48) return `${hours} hr ${minutes % 60} min`;
+  return `${Math.floor(hours / 24).toLocaleString()} days ${hours % 24} hr`;
 }
 
 /** 进度读数「已做 / 总数」：服务端偶尔报出超过总数的已做数，按总数封顶。 */
@@ -282,27 +282,27 @@ export function readableErrorHeadline(text: string | null | undefined): string {
 }
 
 const OUTCOME_LABELS: Record<string, string> = {
-  partial: '处理已结束，部分项目需处理', complete: '处理完成', interrupted: '处理已中断',
-  '没有新写法': '未发现新别名', '已装上': '已保存资料图片',
-  '已装着认得准的小图': '已保留身份核对通过的小尺寸图片',
-  '档案已不存在': '资料记录已不存在', '资料未过期': '现有资料仍在有效期内',
-  '图太小': '图片分辨率不足', '官网未取得': '未取得厂牌官网信息',
-  '两站都没有作品一览': '两个来源均未提供作品列表',
-  '哪一站都没对上她': '未找到与该人物相符的资料页',
-  '两站都没对上她': '两个来源均未找到与该人物相符的资料页',
-  '三站都没对上她': '三个来源均未找到与该人物相符的资料页',
-  '已有身份': '已有创作者分类', '已变': '资料已被其他操作修改，本次未保存',
+  partial: 'Processing finished; some items need attention', complete: 'Processing complete', interrupted: 'Processing interrupted',
+  '没有新写法': 'No new aliases found', '已装上': 'Profile image saved',
+  '已装着认得准的小图': 'Kept the small image that passed identity verification',
+  '档案已不存在': 'The profile record no longer exists', '资料未过期': 'Existing profile details are still current',
+  '图太小': 'Image resolution is too low', '官网未取得': 'Official studio website information unavailable',
+  '两站都没有作品一览': 'Neither source provides a work list',
+  '哪一站都没对上她': 'No matching profile page found',
+  '两站都没对上她': 'Neither source has a matching profile page',
+  '三站都没对上她': 'None of the three sources has a matching profile page',
+  '已有身份': 'Creator category already assigned', '已变': 'The profile was changed by another operation and was not saved',
 };
 const SOURCE_NAMES: Record<string, string> = { avwikidb: 'AVWikiDB', javdb: 'JavDB', 'minnano-av': 'みんなのAV' };
 const OPERATION_LABELS: Record<string, string> = {
-  like: '标记喜欢', seen: '标记看过', later: '加入稍后看', dispose: '移入回收站',
-  restore: '还原', delete: '永久删除', 'empty-trash': '清空回收站',
-  'dismiss-junk': '确认不是垃圾', 'reconsider-junk': '重新判定垃圾', region: '判定产地',
+  like: 'Mark as liked', seen: 'Mark as watched', later: 'Add to Watch Later', dispose: 'Move to trash',
+  restore: 'Restore', delete: 'Delete permanently', 'empty-trash': 'Empty trash',
+  'dismiss-junk': 'Mark as not junk', 'reconsider-junk': 'Reassess as junk', region: 'Determine region',
 };
 const outcomeText = (text: string): string => OUTCOME_LABELS[text] || text
   .replace(/(avwikidb|javdb|minnano-av) (绑定|写入)/gi, (_, site: string, action: string) =>
-    action === '绑定' ? `已关联 ${SOURCE_NAMES[site.toLowerCase()]} 资料页`
-      : `已保存来自 ${SOURCE_NAMES[site.toLowerCase()]} 的资料`);
+    action === '绑定' ? `Linked ${SOURCE_NAMES[site.toLowerCase()]} profile page`
+      : `Saved details from ${SOURCE_NAMES[site.toLowerCase()]}`);
 
 /** 时间戳说成本地的「月-日 时:分」。数据库里存的是 UTC，界面上一律按本机时区读。 */
 export function momentText(stamp: string | null | undefined): string {
@@ -325,7 +325,7 @@ export function summaryItems(summary: Record<string, unknown>): string[] {
   const items = fieldItems(summary);
   // 「发现问题」要说得出是什么问题。原因已写进结论（「人脸模型不可用：…」「人像闸未生效…」）时不再说一遍。
   if (summary?.face_match_unavailable === true && !items.some((line) => /不可用|未生效/.test(line))) {
-    items.push('人脸模型不可用，未做人脸核对');
+    items.push('Face model unavailable; face verification was skipped');
   }
   return items;
 }
@@ -337,11 +337,11 @@ function fieldItems(summary: Record<string, unknown>): string[] {
       && (typeof value === 'number' || typeof value === 'string')
       && String(value) !== '' && (value !== 0 || key === 'checked' || key === 'total'))
     .map(([key, value]) => {
-      if (key === 'followups') return `已安排 ${Number(value).toLocaleString()} 项补充任务`;
+      if (key === 'followups') return `${Number(value).toLocaleString()} follow-up tasks scheduled`;
       if (key === 'error') return readableErrorHeadline(String(value));
       if (key === 'outcome' || key === 'result') return outcomeText(String(value));
       if (key === 'cache_bytes' || key === 'bytes_reclaimed') return `${SUMMARY_LABELS[key]} ${fmtSize(Number(value))}`;
-      if (key === 'operation') return `操作：${OPERATION_LABELS[String(value)] || '批量操作'}`;
+      if (key === 'operation') return `Operation: ${OPERATION_LABELS[String(value)] || 'Bulk operation'}`;
       return `${SUMMARY_LABELS[key]} ${typeof value === 'number' ? value.toLocaleString() : value}`;
     });
 }
